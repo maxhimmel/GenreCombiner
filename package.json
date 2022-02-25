@@ -2,7 +2,7 @@
   "name": "genrecombiner",
   "version": "1.0.0",
   "description": "Combine game genres to create a wholly new and unique experience!",
-  "main": "app.js",
+  "main": "app.html",
   "scripts": {
     "dev": "parcel index.html",
     "build": "parcel build index.html"
