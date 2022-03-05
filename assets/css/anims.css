@@ -1,0 +1,11 @@
+.blink {
+    animation-name: anim-blink;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes anim-blink{
+    0% { border-color: var(--bs-primary); }
+    50% { border-color: var(--bs-warning); }
+    100% { border-color: var(--bs-primary); }
+}
