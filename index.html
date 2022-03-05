@@ -12,9 +12,114 @@
 	<link rel="stylesheet" type="text/css" href="node_modules\@fortawesome\fontawesome-free\css\all.css">
 	<script type="text/javascript" src="node_modules/@fortawesome/fontawesome-free/js/all.js"></script>
 	
+	<!--Genre Combiner-->
+	<link rel="stylesheet" type="text/css" href="assets/css/anims.css">
+
 	<title>Genre Combiner</title>
 </head>
 <body>
+	<!--GET STARTED-->
+	<div class="p-5 mb-4 bg-light rounded-3">
+		<div class="container-fluid py-5">
+			<h1 class="display-5 fw-bold">Get Started</h1>
+			<p class="col-md-8 fs-4">Select how many genres you'd like to choose from.</p>
+			<div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+				<button type="button" class="btn btn-primary">4</button>
+				<button type="button" class="btn btn-primary">8</button>
+				<button type="button" class="btn btn-primary">12</button>
+				<button type="button" class="btn btn-primary">16</button>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<button type="button" class="btn btn-lg btn-success" disabled>Continue</button>
+		</div>
+	</div>
+	
+	<!--GENRE RANDOMIZER-->
+	<div class="p-5 mb-4 bg-light rounded-3">
+		<div class="container-fluid py-5">
+			<h1 class="display-5 fw-bold">Genres</h1>
+			<p class="col-md-8 fs-4">Randomly replace any of these genres.</p>
+			<div class="d-inline-flex flex-column">
+				<div class="d-flex bg-primary bg-opacity-25 rounded-3 mt-2 p-2">
+					<button type="button" class="w-100 px-5 btn btn-lg btn-primary">RTS</button>
+					<button type="button" class="ms-2 btn btn-lg btn-primary">
+						<i class="fa-solid fa-shuffle"></i>
+					</button>
+				</div>
+				<div class="d-flex bg-primary bg-opacity-25 rounded-3 mt-2 p-2">
+					<button type="button" class="w-100 px-5 btn btn-lg btn-primary">Puzzle</button>
+					<button type="button" class="ms-2 btn btn-lg btn-primary">
+						<i class="fa-solid fa-shuffle"></i>
+					</button>
+				</div>
+				<div class="d-flex bg-primary bg-opacity-25 rounded-3 mt-2 p-2">
+					<button type="button" class="w-100 px-5 btn btn-lg btn-primary">Fishing</button>
+					<button type="button" class="ms-2 btn btn-lg btn-primary">
+						<i class="fa-solid fa-shuffle"></i>
+					</button>
+				</div>
+				<div class="d-flex bg-primary bg-opacity-25 rounded-3 mt-2 p-2">
+					<button type="button" class="w-100 px-5 btn btn-lg btn-primary">Pinball</button>
+					<button type="button" class="ms-2 btn btn-lg btn-primary">
+						<i class="fa-solid fa-shuffle"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<button type="button" class="btn btn-lg btn-success" disabled>Continue</button>
+		</div>
+	</div>
+		
+	<!--GENRE COMBINER-->
+	<div class="p-5 mb-4 bg-light rounded-3">
+		<div class="container-fluid py-5">
+			<h1 class="display-5 fw-bold">Genres</h1>
+			<p class="col-md-8 fs-4">Rearrange combined genres.</p>
+			<div class="d-inline-flex flex-column">
+				<!--SAMPLE: The default appearance.-->
+				<div class="d-flex bg-primary bg-opacity-25 rounded-3 mt-2 p-2">
+					<button type="button" class="w-100 px-5 btn btn-lg btn-primary">FPS</button>
+					<div class="mx-1 align-self-center btn-lg">
+						<i class="fa-solid fa-plus"></i>
+					</div>
+					<button type="button" class="w-100 px-5 btn btn-lg btn-primary">Pinball</button>
+				</div>
+				
+				<!--SAMPLE: A selected genre ready to pair with another.-->
+				<div class="d-flex bg-primary bg-opacity-25 rounded-3 mt-2 p-2">
+					<button type="button" class="border border-4 border-warning w-100 px-5 btn btn-lg btn-primary">RTS</button>
+					<div class="mx-1 align-self-center btn-lg">
+						<i class="fa-solid fa-plus"></i>
+					</div>
+					<button type="button" class="w-100 px-5 btn btn-lg btn-primary" disabled>Puzzle</button>
+				</div>
+
+				<!--SAMPLE: Genres that are able to be swapped with the currently selected genre.-->
+				<div class="d-flex bg-primary bg-opacity-25 rounded-3 mt-2 p-2">
+					<button type="button" class="blink border-4 w-100 px-5 btn btn-lg btn-primary">Platformer</button>
+					<div class="mx-1 align-self-center btn-lg">
+						<i class="fa-solid fa-plus"></i>
+					</div>
+					<button type="button" class="blink border-4 w-100 px-5 btn btn-lg btn-primary">SHMUP</button>
+				</div>
+
+				<!--SAMPLE: Swapped genres appear locked + disabled.-->
+				<div class="d-flex bg-dark bg-opacity-25 rounded-3 mt-2 p-2">
+					<button type="button" class="w-100 px-5 btn btn-lg btn-primary" disabled>Rhythm</button>
+					<div class="mx-1 align-self-center btn-lg">
+						<i class="fa-solid fa-lock"></i>
+					</div>
+					<button type="button" class="w-100 px-5 btn btn-lg btn-primary" disabled>JRPG</button>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<button type="button" class="btn btn-lg btn-success" disabled>Continue</button>
+		</div>
+	</div>
+
 	<!--Scripts-->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
