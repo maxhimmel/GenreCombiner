@@ -11,7 +11,7 @@ export class Observable<TItem>
         if ( newItem !== this._item )
         {
             this._item = newItem;
-            this._changed.Invoke( this._owner, newItem );
+            this._changed.invoke( this._owner, newItem );
         }
     }
     
