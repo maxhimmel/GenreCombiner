@@ -4,7 +4,7 @@ namespace Utility
     {
         static FisherYatesShuffle<T>( array: Array<T> ): void
         {
-            for ( var idx: number = array.length - 1; idx > 0; --idx )
+            for ( let idx: number = array.length - 1; idx > 0; --idx )
             {
                 const randIdx: number = Random.Range( 0, idx + 1 );
 
