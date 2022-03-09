@@ -1,4 +1,4 @@
-namespace Events
+namespace GenreCombiner.Events
 {
     export type Signature<TArg extends EventArgs> = ( sender: any, args: TArg ) => void;
 

@@ -1,4 +1,4 @@
-namespace Utility
+namespace GenreCombiner.Utility
 {
     export class Arrays
     {

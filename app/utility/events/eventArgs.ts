@@ -1,4 +1,4 @@
-namespace Events
+namespace GenreCombiner.Events
 {
     export class EventArgs
     {
