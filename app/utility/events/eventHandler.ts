@@ -1,8 +1,7 @@
 import * as Events from "./ievent";
-import { EventArgs } from "./eventArgs";
 import { ArrayUtil } from "../arrays";
 
-export class EventHandler<TArg extends EventArgs> implements Events.IEvent<TArg>
+export class EventHandler<TArg> implements Events.IEvent<TArg>
 {
     private _handlers: Events.Signature<TArg>[] = [];
 
