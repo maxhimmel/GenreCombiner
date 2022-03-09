@@ -2,6 +2,8 @@ import { Random } from "./random";
 
 export class ArrayUtil
 {
+    private constructor() { }
+
     static FisherYatesShuffle<T>( array: Array<T> ): void
     {
         for ( let idx: number = array.length - 1; idx > 0; --idx )
