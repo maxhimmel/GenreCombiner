@@ -1,7 +1,4 @@
-namespace GenreCombiner.Events
+export class EventArgs
 {
-    export class EventArgs
-    {
-        public static readonly Empty: EventArgs = new EventArgs();
-    }
+    public static readonly Empty: EventArgs = new EventArgs();
 }

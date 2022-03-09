@@ -1,10 +1,7 @@
-namespace GenreCombiner.Utility
+export class Random
 {
-    export class Random
+    static Range( min: number, max: number ): number
     {
-        static Range( min: number, max: number ): number
-        {
-            return Math.floor( Math.random() * ( max - min ) ) + min;
-        }
+        return Math.floor( Math.random() * ( max - min ) ) + min;
     }
 }

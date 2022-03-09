@@ -1,27 +1,28 @@
-namespace GenreCombiner.Events
+import * as Events from "./ievent";
+import { EventArgs } from "./eventArgs";
+import { ArrayUtil } from "../arrays";
+
+export class EventHandler<TArg extends EventArgs> implements Events.IEvent<TArg>
 {
-    export class EventHandler<TArg> implements IEvent<TArg>
+    private _handlers: Events.Signature<TArg>[] = [];
+
+    Subscribe( func: Events.Signature<TArg> ): void
     {
-        private _handlers: Signature<TArg>[] = [];
+        this._handlers.push( func );
+    }
 
-        Subscribe( func: Signature<TArg> ): void
-        {
-            this._handlers.push( func );
-        }
+    Unsubscribe( func: Events.Signature<TArg> ): void
+    {
+        ArrayUtil.Remove( this._handlers, func );
+    }
 
-        Unsubscribe( func: Signature<TArg> ): void
-        {
-            Utility.Arrays.Remove( this._handlers, func );
-        }
+    Invoke( sender: any, arg: TArg ): void
+    {
+        this._handlers.forEach( handle => handle( sender, arg ) );
+    }
 
-        Invoke( sender: any, arg: TArg ): void
-        {
-            this._handlers.forEach( handle => handle( sender, arg ) );
-        }
-
-        get Event(): IEvent<TArg>
-        {
-            return this;
-        }
+    get Event(): Events.IEvent<TArg>
+    {
+        return this;
     }
 }

@@ -1,26 +1,25 @@
-namespace GenreCombiner.Utility
+import { Random } from "./random";
+
+export class ArrayUtil
 {
-    export class Arrays
+    static FisherYatesShuffle<T>( array: Array<T> ): void
     {
-        static FisherYatesShuffle<T>( array: Array<T> ): void
+        for ( let idx: number = array.length - 1; idx > 0; --idx )
         {
-            for ( let idx: number = array.length - 1; idx > 0; --idx )
-            {
-                const randIdx: number = Random.Range( 0, idx + 1 );
+            const randIdx: number = Random.Range( 0, idx + 1 );
 
-                const temp: T = array[idx];
-                array[idx] = array[randIdx];
-                array[randIdx] = temp;
-            }
+            const temp: T = array[idx];
+            array[idx] = array[randIdx];
+            array[randIdx] = temp;
         }
+    }
 
-        static Remove<T>( array: Array<T>, item: T ): void
+    static Remove<T>( array: Array<T>, item: T ): void
+    {
+        const index: number = array.indexOf( item );
+        if ( index >= 0 )
         {
-            const index: number = array.indexOf( item );
-            if ( index >= 0 )
-            {
-                array.splice( index, 1 );
-            }
+            array.splice( index, 1 );
         }
     }
 }
