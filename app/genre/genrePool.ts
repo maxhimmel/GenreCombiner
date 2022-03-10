@@ -10,6 +10,15 @@ export class GenrePool
     private _genreIndices: number[] = [];
     private _genres: Observable<GenreModel>[] = [];
 
+    // TODO:
+    // We could also separate this out into 2 functions:
+        // allocate(size)
+        // load()
+    // This would be helpful as such:
+        // pool.allocate(4)
+        // forEach( pool.getGenreChangedEvents(), (event) => { event.subscribe( onGenreChanged ); } )
+        // pool.load()
+
     init( size: number ): void
     {
         this.initRandomIndices();
