@@ -3,6 +3,11 @@ import { ArrayUtil } from "../arrays";
 
 export class EventHandler<TArg> implements Events.IEvent<TArg>
 {
+    get event(): Events.IEvent<TArg>
+    {
+        return this;
+    }
+
     private _handlers: Events.Signature<TArg>[] = [];
 
     subscribe( func: Events.Signature<TArg> ): void
@@ -20,8 +25,8 @@ export class EventHandler<TArg> implements Events.IEvent<TArg>
         this._handlers.forEach( handle => handle( sender, arg ) );
     }
 
-    get event(): Events.IEvent<TArg>
+    clear(): void
     {
-        return this;
+        this._handlers.splice( 0, this._handlers.length );
     }
 }
