@@ -1,14 +1,14 @@
 import { GenreModel } from "./genreModel";
-import { Observable } from "../utility/observable";
+import { DeltaArgs, Observable } from "../utility/observable";
 import { IEvent } from "../utility/events/ievent";
 
 export class GenreComboModel
 {
-    get queuedSwapSlotChanged(): IEvent<number>
+    get queuedSwapSlotChanged(): IEvent<DeltaArgs<number>>
     {
         return this._queuedSwapSlot.changed;
     }
-    get battlePointsChanged(): IEvent<number>
+    get battlePointsChanged(): IEvent<DeltaArgs<number>>
     {
         return this._battlePoints.changed;
     }

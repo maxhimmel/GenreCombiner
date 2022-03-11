@@ -2,7 +2,7 @@ import { genreDatabase } from "./genreDatabase";
 import { GenreModel } from "./genreModel";
 import { ArrayUtil } from "../utility/arrays";
 import { IEvent } from "../utility/events/ievent";
-import { Observable } from "../utility/observable";
+import { DeltaArgs, Observable } from "../utility/observable";
 
 export class GenrePool
 {
@@ -76,7 +76,7 @@ export class GenrePool
         return this._nextGenreIndex < 0 || this._nextGenreIndex >= this._genreIndices.length;
     }
 
-    *getGenreChangedEvents(): Generator<IEvent<GenreModel>>
+    *getGenreChangedEvents(): Generator<IEvent<DeltaArgs<GenreModel>>>
     {
         for ( let idx: number = 0; idx < this._genres.length; ++idx )
         {
