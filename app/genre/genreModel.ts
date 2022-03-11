@@ -1,5 +1,7 @@
 export class GenreModel
 {
+    static readonly empty = new GenreModel( -1, "ERROR" );
+
     readonly id: number;
     readonly name: string;
 
