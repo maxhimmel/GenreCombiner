@@ -17,6 +17,10 @@ export class GenreComboModel
     {
         return this._queuedSwapSlot.item;
     }
+    get battlePoints(): number
+    {
+        return this._battlePoints.item;
+    }
 
     readonly combo: Observable<GenreModel>[];
     readonly isLocked: Observable<boolean>;
