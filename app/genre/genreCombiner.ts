@@ -4,6 +4,11 @@ import { GenreComboModel } from "./genreComboModel";
 
 export class GenreCombiner
 {
+    get genreCombos(): GenreComboModel[]
+    {
+        return this._genreCombos;
+    }
+
     private readonly _genreCombos: GenreComboModel[];
 
     constructor( genres: GenreModel[] )
@@ -19,7 +24,6 @@ export class GenreCombiner
             const rhs = genres[(idx * 2) + 1];
 
             this._genreCombos[idx] = new GenreComboModel( lhs, rhs );
-            console.log( "%s + %s", lhs.name, rhs.name );
         }
     }
 
