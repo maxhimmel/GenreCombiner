@@ -1,18 +1,6 @@
 import { EventHandler } from "./events/eventHandler";
 import { IEvent } from "./events/ievent";
 
-export class DeltaArgs<TItem>
-{
-    readonly current: TItem;
-    readonly prev: TItem;
-
-    constructor( current: TItem, prev: TItem )
-    {
-        this.current = current;
-        this.prev = prev;
-    }
-}
-
 export class Observable<TItem>
 {
     get item(): TItem
@@ -44,5 +32,17 @@ export class Observable<TItem>
     {
         this._owner = owner;
         this._item = item;
+    }
+}
+
+export class DeltaArgs<TItem>
+{
+    readonly current: TItem;
+    readonly prev: TItem;
+
+    constructor( current: TItem, prev: TItem )
+    {
+        this.current = current;
+        this.prev = prev;
     }
 }
