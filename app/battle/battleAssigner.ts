@@ -15,6 +15,11 @@ export class BattleAssigner
 
     addBattlePoint( comboSlot: number ): void
     {
+        if ( this.remainingPoints.item <= 0 )
+        {
+            throw new RangeError( "Cannot assign anymore battle points." );
+        }
+
         if ( this.remainingPoints.item > 0 )
         {
             const combo = this.getGenreCombo( comboSlot );
@@ -29,11 +34,13 @@ export class BattleAssigner
         const combo = this.getGenreCombo( comboSlot );
         const points = combo.battlePoints;
 
-        if ( points > 0 )
+        if ( points <= 0 )
         {
-            combo.removeBattlePoint();
-            ++this.remainingPoints.item;
+            throw new RangeError( "Cannot remove anymore battle points." );
         }
+
+        combo.removeBattlePoint();
+        ++this.remainingPoints.item;
     }
 
     private getGenreCombo( index: number ): GenreComboModel
