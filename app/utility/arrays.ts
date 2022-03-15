@@ -24,4 +24,19 @@ export class ArrayUtil
             array.splice( index, 1 );
         }
     }
+
+    static createRange( count: number, start: number = 0 ): number[]
+    {
+        const range: number[] = new Array( count );
+        for ( let idx: number = 0; idx < count; ++idx )
+        {
+            range[idx] = idx + start;
+        }
+        return range;
+    }
+
+    static clear<T>( array: Array<T> ): void
+    {
+        array.splice( 0, array.length );
+    }
 }

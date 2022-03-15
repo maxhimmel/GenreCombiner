@@ -27,6 +27,6 @@ export class EventHandler<TArg> implements Events.IEvent<TArg>
 
     clear(): void
     {
-        this._handlers.splice( 0, this._handlers.length );
+        ArrayUtil.clear( this._handlers );
     }
 }
