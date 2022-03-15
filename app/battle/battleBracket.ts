@@ -142,8 +142,8 @@ export class BattleBracket
 
 export class BattlePair
 {
-    lhsCombo: GenreComboModel;
-    rhsCombo: GenreComboModel;
+    readonly lhsCombo: GenreComboModel;
+    readonly rhsCombo: GenreComboModel;
 
     constructor( lhsCombo: GenreComboModel, rhsCombo: GenreComboModel )
     {
