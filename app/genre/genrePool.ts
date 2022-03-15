@@ -27,12 +27,7 @@ export class GenrePool
 
     private initRandomIndices(): void
     {
-        this._genreIndices = new Array( genreDatabase.count );
-        for ( let idx: number = 0; idx < this._genreIndices.length; ++idx )
-        {
-            this._genreIndices[idx] = idx;
-        }
-
+        this._genreIndices = ArrayUtil.createRange( genreDatabase.count );
         ArrayUtil.fisherYatesShuffle( this._genreIndices );
     }
 
