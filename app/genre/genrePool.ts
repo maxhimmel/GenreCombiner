@@ -6,58 +6,62 @@ import { DeltaArgs, Observable } from "../utility/observable";
 
 export class GenrePool
 {
-    private _nextGenreIndex: number = 0;
-    private _genreIndices: number[] = [];
-    private _genres: Observable<GenreModel>[] = [];
-
-    // TODO:
-    // We could also separate this out into 2 functions:
-        // allocate(size)
-        // load()
-    // This would be helpful as such:
-        // pool.allocate(4)
-        // forEach( pool.getGenreChangedEvents(), (event) => { event.subscribe( onGenreChanged ); } )
-        // pool.load()
-
-    init( size: number ): void
+    get count(): number
     {
-        this.initRandomIndices();
-        this.initGenrePool( size );
+        return this._genres.length;
     }
 
-    private initRandomIndices(): void
+    get unusedGenreCount(): number
     {
-        this._genreIndices = ArrayUtil.createRange( genreDatabase.count );
-        ArrayUtil.fisherYatesShuffle( this._genreIndices );
+        return this._genreIndices.length - this._nextGenreIndex;
     }
 
-    private initGenrePool( size: number ): void
+    get isPoolEmpty(): boolean
     {
-        this._genres = new Array( size );
+        return this._nextGenreIndex < 0 || this._nextGenreIndex >= this._genreIndices.length;
+    }
+
+    private _nextGenreIndex: number;
+    private readonly _genreIndices: number[];
+    private readonly _genres: Observable<GenreModel>[];
+
+    constructor( size: number )
+    {
+        this._nextGenreIndex = 0;
+        this._genreIndices = this.allocateRandomIndices();
+        this._genres = this.allocateGenrePool( size );
+    }
+
+    private allocateRandomIndices(): number[]
+    {
+        const result = ArrayUtil.createRange( genreDatabase.count );
+        ArrayUtil.fisherYatesShuffle( result );
+
+        return result;
+    }
+
+    private allocateGenrePool( size: number ): Observable<GenreModel>[]
+    {
+        const result = new Array<Observable<GenreModel>>( size );
         for ( let idx = 0; idx < size; ++idx )
         {
-            const nextGenre = this.getNextGenre();
-            this._genres[idx] = new Observable( this, nextGenre );
+            result[idx] = new Observable( this, GenreModel.empty );
         }
+
+        return result;
     }
 
-    private getNextGenre(): GenreModel
+    load(): void
     {
-        if ( this.isPoolEmpty() )
+        for ( let idx = 0; idx < this._genres.length; ++idx )
         {
-            throw new RangeError();
+            this.replaceGenre( idx );
         }
-
-        const randIdx = this._genreIndices[this._nextGenreIndex];
-        const randGenre = genreDatabase.getGenre( randIdx );
-
-        ++this._nextGenreIndex;
-        return randGenre;
     }
 
     replaceGenre( slotIndex: number )
     {
-        if ( this.isPoolEmpty() )
+        if ( this.isPoolEmpty )
         {
             throw new RangeError();
         }
@@ -66,9 +70,17 @@ export class GenrePool
         genreObservable.item = this.getNextGenre();
     }
 
-    isPoolEmpty(): boolean
+    private getNextGenre(): GenreModel
     {
-        return this._nextGenreIndex < 0 || this._nextGenreIndex >= this._genreIndices.length;
+        if ( this.isPoolEmpty )
+        {
+            throw new RangeError();
+        }
+
+        const randIdx = this._genreIndices[this._nextGenreIndex++];
+        const randGenre = genreDatabase.getGenre( randIdx );
+
+        return randGenre;
     }
 
     *getGenreChangedEvents(): Generator<IEvent<DeltaArgs<GenreModel>>>
@@ -77,5 +89,17 @@ export class GenrePool
         {
             yield this._genres[idx].changed;
         }
+    }
+
+    export(): GenreModel[]
+    {
+        const genres: GenreModel[] = new Array( this._genres.length );
+        for ( let idx: number = 0; idx < genres.length; ++idx )
+        {
+            const genreObservable = this._genres[idx];
+            genres[idx] = genreObservable.item;
+        }
+
+        return genres;
     }
 }
