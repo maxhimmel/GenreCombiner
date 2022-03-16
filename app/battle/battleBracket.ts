@@ -80,6 +80,20 @@ export class BattleBracket
 
             battleTier[idx] = new BattlePair( lhsCombo, rhsCombo );
         }
+
+        const usedComboCount: number = battleTier.length * 2;
+        this.handleUnevenBracket( usedComboCount, genreCombos, randomIndices );
+    }
+
+    private handleUnevenBracket( unplacedComboIndex: number, genreCombos: GenreComboModel[], comboIndices: number[] ): void
+    {
+        for ( let idx: number = unplacedComboIndex; idx < genreCombos.length; ++idx )
+        {
+            const comboIdx: number = comboIndices[idx];
+            const combo: GenreComboModel = genreCombos[comboIdx];
+
+            this._winnerCombos.push( combo );
+        }
     }
 
     resolveNextBattle(): BattleResult
@@ -137,6 +151,19 @@ export class BattleBracket
                 ArrayUtil.clear( this._winnerCombos );
             }
         }
+    }
+
+    getTotalBattleCount(): number
+    {
+        let sum: number = 0;
+
+        for ( let idx: number = 0; idx < this._bracket.length; ++idx )
+        {
+            const battles: BattlePair[] = this.getBattlesInTier( idx );
+            sum += battles.length;
+        }
+
+        return sum;
     }
 }
 
