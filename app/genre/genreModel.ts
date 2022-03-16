@@ -10,4 +10,9 @@ export class GenreModel
         this.id = id;
         this.name = name;
     }
+
+    toString(): string
+    {
+        return this.name;
+    }
 }

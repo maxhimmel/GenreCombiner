@@ -3,6 +3,11 @@ import { Observable } from "../utility/observable";
 
 export class BattleAssigner
 {
+    get comboCount(): number
+    {
+        return this._genreCombos.length;    
+    }
+
     readonly remainingPoints: Observable<number>;
 
     private readonly _genreCombos: GenreComboModel[];
@@ -59,5 +64,17 @@ export class BattleAssigner
         {
             yield combo;
         }
+    }
+
+    export(): GenreComboModel[]
+    {
+        const result: GenreComboModel[] = new Array( this._genreCombos.length );
+        
+        for ( let idx: number = 0; idx < result.length; ++idx )
+        {
+            result[idx] = this._genreCombos[idx];
+        }
+
+        return result;
     }
 }

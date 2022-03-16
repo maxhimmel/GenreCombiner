@@ -4,6 +4,11 @@ import { GenreComboModel } from "./genreComboModel";
 
 export class GenreCombiner
 {
+    get count(): number
+    {
+        return this._genreCombos.length;
+    }
+
     get genreCombos(): GenreComboModel[]
     {
         return this._genreCombos;
@@ -29,32 +34,19 @@ export class GenreCombiner
 
     queueGenreForSwap( comboSlot: number, genreSlot: number ): void
     {
-        if ( comboSlot < 0 || comboSlot >= this._genreCombos.length )
-        {
-            throw new RangeError();
-        }
-
-        const combo = this._genreCombos[comboSlot];
+        const combo = this.getGenreCombo( comboSlot );
         combo.queueForSwap( genreSlot );
     }
 
     swapGenres( lhsComboSlot: number, rhsComboSlot: number ): void
     {
-        if ( lhsComboSlot < 0 || lhsComboSlot >= this._genreCombos.length )
-        {
-            throw new RangeError();
-        }
-        if ( rhsComboSlot < 0 || rhsComboSlot >= this._genreCombos.length )
-        {
-            throw new RangeError();
-        }
         if ( lhsComboSlot === rhsComboSlot )
         {
             throw new Error( "Cannot swap genres within the same slot." );
         }
 
-        const lhsCombo = this._genreCombos[lhsComboSlot];
-        const rhsCombo = this._genreCombos[rhsComboSlot];
+        const lhsCombo = this.getGenreCombo( lhsComboSlot );
+        const rhsCombo = this.getGenreCombo( rhsComboSlot );
 
         if ( lhsCombo.queuedSwapSlot === -1 || rhsCombo.queuedSwapSlot === -1 )
         {
@@ -75,12 +67,7 @@ export class GenreCombiner
 
     cancelSwapQueue( comboSlot: number ): void
     {
-        if ( comboSlot < 0 || comboSlot >= this._genreCombos.length )
-        {
-            throw new RangeError();
-        }
-
-        const combo = this._genreCombos[comboSlot];
+        const combo = this.getGenreCombo( comboSlot );
         combo.cancelSwapQueue();
     }
 
@@ -90,5 +77,28 @@ export class GenreCombiner
         {
             yield this._genreCombos[idx];
         }
+    }
+
+    getGenreCombo( comboSlot: number ): GenreComboModel
+    {
+        if ( comboSlot < 0 || comboSlot >= this._genreCombos.length )
+        {
+            throw new RangeError();
+        }
+
+        return this._genreCombos[comboSlot];
+    }
+
+    export(): GenreComboModel[]
+    {
+        const result: GenreComboModel[] = new Array( this._genreCombos.length );
+
+        for ( let idx: number = 0; idx < result.length; ++idx )
+        {
+            const combo: GenreComboModel = this._genreCombos[idx];
+            result[idx] = combo;
+        }
+
+        return result;
     }
 }
