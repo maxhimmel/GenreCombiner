@@ -3,6 +3,11 @@ import { IEvent } from "./events/ievent";
 
 export class Observable<TItem>
 {
+    get changed(): IEvent<DeltaArgs<TItem>>
+    {
+        return this._changed;
+    }
+
     get item(): TItem
     {
         return this._item;
@@ -17,11 +22,6 @@ export class Observable<TItem>
 
             this._changed.invoke( this._owner, args );
         }
-    }
-
-    get changed(): IEvent<DeltaArgs<TItem>>
-    {
-        return this._changed;
     }
 
     private readonly _owner: any;
