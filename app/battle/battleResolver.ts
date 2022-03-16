@@ -111,7 +111,7 @@ export class BattleResolver
         const winner = this._lhsRollCount > 0 ? this._lhsCombo : this._rhsCombo;
         const loser = this._lhsRollCount <= 0 ? this._lhsCombo : this._rhsCombo;
 
-        return new BattleResult( winner, loser, rounds );
+        return new BattleResult( winner, loser, this._lhsCombo, this._rhsCombo, rounds );
     }
 }
 
@@ -119,12 +119,16 @@ export class BattleResult
 {
     readonly winner: GenreComboModel;
     readonly loser: GenreComboModel;
+    readonly lhsCombo: GenreComboModel;
+    readonly rhsCombo: GenreComboModel;
     readonly rounds: BattleRound[];
 
-    constructor( winner: GenreComboModel, loser: GenreComboModel, rounds: BattleRound[] )
+    constructor( winner: GenreComboModel, loser: GenreComboModel, lhsCombo: GenreComboModel, rhsCombo: GenreComboModel, rounds: BattleRound[] )
     {
         this.winner = winner;
         this.loser = loser;
+        this.lhsCombo = lhsCombo;
+        this.rhsCombo = rhsCombo;
         this.rounds = rounds;
     }
 }
