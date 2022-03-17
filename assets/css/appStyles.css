@@ -654,7 +654,7 @@ progress {
     max-width: 1320px;
   }
 }
-.row, .dice-container {
+.row, .bracket-container, .dice-container {
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   display: flex;
@@ -663,7 +663,7 @@ progress {
   margin-right: calc(-0.5 * var(--bs-gutter-x));
   margin-left: calc(-0.5 * var(--bs-gutter-x));
 }
-.row > *, .dice-container > * {
+.row > *, .bracket-container > *, .dice-container > * {
   flex-shrink: 0;
   width: 100%;
   max-width: 100%;
@@ -672,7 +672,7 @@ progress {
   margin-top: var(--bs-gutter-y);
 }
 
-.col {
+.col, .col-bracket {
   flex: 1 0 0%;
 }
 
@@ -686,7 +686,7 @@ progress {
   width: 100%;
 }
 
-.row-cols-2 > * {
+.row-cols-2 > *, .bracket-container > * {
   flex: 0 0 auto;
   width: 50%;
 }
@@ -2493,7 +2493,7 @@ textarea.form-control-lg {
   clip: rect(0, 0, 0, 0);
   pointer-events: none;
 }
-.btn-check[disabled] + .btn, .btn-check[disabled] + .btn-continue, .btn-check[disabled] + .btn-shuffle, .btn-check[disabled] + .btn-genre, .btn-check[disabled] + .btn-pool-size, .btn-check:disabled + .btn, .btn-check:disabled + .btn-continue, .btn-check:disabled + .btn-shuffle, .btn-check:disabled + .btn-genre, .btn-check:disabled + .btn-pool-size {
+.btn-check[disabled] + .btn, .btn-check[disabled] + .btn-bracket-win, .btn-check[disabled] + .btn-bracket-lose, .btn-check[disabled] + .btn-bracket, .btn-check[disabled] + .btn-bracket-battle, .btn-check[disabled] + .btn-remove-point, .btn-check[disabled] + .btn-add-point, .btn-check[disabled] + .btn-continue, .btn-check[disabled] + .btn-shuffle, .btn-check[disabled] + .btn-genre, .btn-check[disabled] + .btn-pool-size, .btn-check:disabled + .btn, .btn-check:disabled + .btn-bracket-win, .btn-check:disabled + .btn-bracket-lose, .btn-check:disabled + .btn-bracket, .btn-check:disabled + .btn-bracket-battle, .btn-check:disabled + .btn-remove-point, .btn-check:disabled + .btn-add-point, .btn-check:disabled + .btn-continue, .btn-check:disabled + .btn-shuffle, .btn-check:disabled + .btn-genre, .btn-check:disabled + .btn-pool-size {
   pointer-events: none;
   filter: none;
   opacity: 0.65;
@@ -2652,11 +2652,11 @@ textarea.form-control-lg {
 .input-group > .form-select:focus {
   z-index: 3;
 }
-.input-group .btn, .input-group .btn-continue, .input-group .btn-shuffle, .input-group .btn-genre, .input-group .btn-pool-size {
+.input-group .btn, .input-group .btn-bracket-win, .input-group .btn-bracket-lose, .input-group .btn-bracket, .input-group .btn-bracket-battle, .input-group .btn-remove-point, .input-group .btn-add-point, .input-group .btn-continue, .input-group .btn-shuffle, .input-group .btn-genre, .input-group .btn-pool-size {
   position: relative;
   z-index: 2;
 }
-.input-group .btn:focus, .input-group .btn-continue:focus, .input-group .btn-shuffle:focus, .input-group .btn-genre:focus, .input-group .btn-pool-size:focus {
+.input-group .btn:focus, .input-group .btn-bracket-win:focus, .input-group .btn-bracket-lose:focus, .input-group .btn-bracket:focus, .input-group .btn-bracket-battle:focus, .input-group .btn-remove-point:focus, .input-group .btn-add-point:focus, .input-group .btn-continue:focus, .input-group .btn-shuffle:focus, .input-group .btn-genre:focus, .input-group .btn-pool-size:focus {
   z-index: 3;
 }
 
@@ -2679,6 +2679,12 @@ textarea.form-control-lg {
 .input-group-lg > .form-select,
 .input-group-lg > .input-group-text,
 .input-group-lg > .btn,
+.input-group-lg > .btn-bracket-win,
+.input-group-lg > .btn-bracket-lose,
+.input-group-lg > .btn-bracket,
+.input-group-lg > .btn-bracket-battle,
+.input-group-lg > .btn-remove-point,
+.input-group-lg > .btn-add-point,
 .input-group-lg > .btn-continue,
 .input-group-lg > .btn-shuffle,
 .input-group-lg > .btn-genre,
@@ -2692,6 +2698,12 @@ textarea.form-control-lg {
 .input-group-sm > .form-select,
 .input-group-sm > .input-group-text,
 .input-group-sm > .btn,
+.input-group-sm > .btn-bracket-win,
+.input-group-sm > .btn-bracket-lose,
+.input-group-sm > .btn-bracket,
+.input-group-sm > .btn-bracket-battle,
+.input-group-sm > .btn-remove-point,
+.input-group-sm > .btn-add-point,
 .input-group-sm > .btn-continue,
 .input-group-sm > .btn-shuffle,
 .input-group-sm > .btn-genre,
@@ -2900,7 +2912,7 @@ textarea.form-control-lg {
   z-index: 3;
 }
 
-.btn, .btn-continue, .btn-shuffle, .btn-genre, .btn-pool-size {
+.btn, .btn-bracket-win, .btn-bracket-lose, .btn-bracket, .btn-bracket-battle, .btn-remove-point, .btn-add-point, .btn-continue, .btn-shuffle, .btn-genre, .btn-pool-size {
   display: inline-block;
   font-weight: 400;
   line-height: 1.5;
@@ -2918,47 +2930,47 @@ textarea.form-control-lg {
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 @media (prefers-reduced-motion: reduce) {
-  .btn, .btn-continue, .btn-shuffle, .btn-genre, .btn-pool-size {
+  .btn, .btn-bracket-win, .btn-bracket-lose, .btn-bracket, .btn-bracket-battle, .btn-remove-point, .btn-add-point, .btn-continue, .btn-shuffle, .btn-genre, .btn-pool-size {
     transition: none;
   }
 }
-.btn:hover, .btn-continue:hover, .btn-shuffle:hover, .btn-genre:hover, .btn-pool-size:hover {
+.btn:hover, .btn-bracket-win:hover, .btn-bracket-lose:hover, .btn-bracket:hover, .btn-bracket-battle:hover, .btn-remove-point:hover, .btn-add-point:hover, .btn-continue:hover, .btn-shuffle:hover, .btn-genre:hover, .btn-pool-size:hover {
   color: #212529;
 }
-.btn-check:focus + .btn, .btn-check:focus + .btn-continue, .btn-check:focus + .btn-shuffle, .btn-check:focus + .btn-genre, .btn-check:focus + .btn-pool-size, .btn:focus, .btn-continue:focus, .btn-shuffle:focus, .btn-genre:focus, .btn-pool-size:focus {
+.btn-check:focus + .btn, .btn-check:focus + .btn-bracket-win, .btn-check:focus + .btn-bracket-lose, .btn-check:focus + .btn-bracket, .btn-check:focus + .btn-bracket-battle, .btn-check:focus + .btn-remove-point, .btn-check:focus + .btn-add-point, .btn-check:focus + .btn-continue, .btn-check:focus + .btn-shuffle, .btn-check:focus + .btn-genre, .btn-check:focus + .btn-pool-size, .btn:focus, .btn-bracket-win:focus, .btn-bracket-lose:focus, .btn-bracket:focus, .btn-bracket-battle:focus, .btn-remove-point:focus, .btn-add-point:focus, .btn-continue:focus, .btn-shuffle:focus, .btn-genre:focus, .btn-pool-size:focus {
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
-.btn:disabled, .btn-continue:disabled, .btn-shuffle:disabled, .btn-genre:disabled, .btn-pool-size:disabled, .btn.disabled, .disabled.btn-continue, .disabled.btn-shuffle, .disabled.btn-genre, .disabled.btn-pool-size, fieldset:disabled .btn, fieldset:disabled .btn-continue, fieldset:disabled .btn-shuffle, fieldset:disabled .btn-genre, fieldset:disabled .btn-pool-size {
+.btn:disabled, .btn-bracket-win:disabled, .btn-bracket-lose:disabled, .btn-bracket:disabled, .btn-bracket-battle:disabled, .btn-remove-point:disabled, .btn-add-point:disabled, .btn-continue:disabled, .btn-shuffle:disabled, .btn-genre:disabled, .btn-pool-size:disabled, .btn.disabled, .disabled.btn-bracket-win, .disabled.btn-bracket-lose, .disabled.btn-bracket, .disabled.btn-bracket-battle, .disabled.btn-remove-point, .disabled.btn-add-point, .disabled.btn-continue, .disabled.btn-shuffle, .disabled.btn-genre, .disabled.btn-pool-size, fieldset:disabled .btn, fieldset:disabled .btn-bracket-win, fieldset:disabled .btn-bracket-lose, fieldset:disabled .btn-bracket, fieldset:disabled .btn-bracket-battle, fieldset:disabled .btn-remove-point, fieldset:disabled .btn-add-point, fieldset:disabled .btn-continue, fieldset:disabled .btn-shuffle, fieldset:disabled .btn-genre, fieldset:disabled .btn-pool-size {
   pointer-events: none;
   opacity: 0.65;
 }
 
-.btn-primary, .btn-shuffle, .btn-genre, .btn-pool-size {
+.btn-primary, .btn-bracket, .btn-bracket-battle, .btn-shuffle, .btn-genre, .btn-pool-size {
   color: #fff;
   background-color: #0d6efd;
   border-color: #0d6efd;
 }
-.btn-primary:hover, .btn-shuffle:hover, .btn-genre:hover, .btn-pool-size:hover {
+.btn-primary:hover, .btn-bracket:hover, .btn-bracket-battle:hover, .btn-shuffle:hover, .btn-genre:hover, .btn-pool-size:hover {
   color: #fff;
   background-color: #0b5ed7;
   border-color: #0a58ca;
 }
-.btn-check:focus + .btn-primary, .btn-check:focus + .btn-shuffle, .btn-check:focus + .btn-genre, .btn-check:focus + .btn-pool-size, .btn-primary:focus, .btn-shuffle:focus, .btn-genre:focus, .btn-pool-size:focus {
+.btn-check:focus + .btn-primary, .btn-check:focus + .btn-bracket, .btn-check:focus + .btn-bracket-battle, .btn-check:focus + .btn-shuffle, .btn-check:focus + .btn-genre, .btn-check:focus + .btn-pool-size, .btn-primary:focus, .btn-bracket:focus, .btn-bracket-battle:focus, .btn-shuffle:focus, .btn-genre:focus, .btn-pool-size:focus {
   color: #fff;
   background-color: #0b5ed7;
   border-color: #0a58ca;
   box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
 }
-.btn-check:checked + .btn-primary, .btn-check:checked + .btn-shuffle, .btn-check:checked + .btn-genre, .btn-check:checked + .btn-pool-size, .btn-check:active + .btn-primary, .btn-check:active + .btn-shuffle, .btn-check:active + .btn-genre, .btn-check:active + .btn-pool-size, .btn-primary:active, .btn-shuffle:active, .btn-genre:active, .btn-pool-size:active, .btn-primary.active, .active.btn-shuffle, .active.btn-genre, .active.btn-pool-size, .show > .btn-primary.dropdown-toggle, .show > .dropdown-toggle.btn-shuffle, .show > .dropdown-toggle.btn-genre, .show > .dropdown-toggle.btn-pool-size {
+.btn-check:checked + .btn-primary, .btn-check:checked + .btn-bracket, .btn-check:checked + .btn-bracket-battle, .btn-check:checked + .btn-shuffle, .btn-check:checked + .btn-genre, .btn-check:checked + .btn-pool-size, .btn-check:active + .btn-primary, .btn-check:active + .btn-bracket, .btn-check:active + .btn-bracket-battle, .btn-check:active + .btn-shuffle, .btn-check:active + .btn-genre, .btn-check:active + .btn-pool-size, .btn-primary:active, .btn-bracket:active, .btn-bracket-battle:active, .btn-shuffle:active, .btn-genre:active, .btn-pool-size:active, .btn-primary.active, .active.btn-bracket, .active.btn-bracket-battle, .active.btn-shuffle, .active.btn-genre, .active.btn-pool-size, .show > .btn-primary.dropdown-toggle, .show > .dropdown-toggle.btn-bracket, .show > .dropdown-toggle.btn-bracket-battle, .show > .dropdown-toggle.btn-shuffle, .show > .dropdown-toggle.btn-genre, .show > .dropdown-toggle.btn-pool-size {
   color: #fff;
   background-color: #0a58ca;
   border-color: #0a53be;
 }
-.btn-check:checked + .btn-primary:focus, .btn-check:checked + .btn-shuffle:focus, .btn-check:checked + .btn-genre:focus, .btn-check:checked + .btn-pool-size:focus, .btn-check:active + .btn-primary:focus, .btn-check:active + .btn-shuffle:focus, .btn-check:active + .btn-genre:focus, .btn-check:active + .btn-pool-size:focus, .btn-primary:active:focus, .btn-shuffle:active:focus, .btn-genre:active:focus, .btn-pool-size:active:focus, .btn-primary.active:focus, .active.btn-shuffle:focus, .active.btn-genre:focus, .active.btn-pool-size:focus, .show > .btn-primary.dropdown-toggle:focus, .show > .dropdown-toggle.btn-shuffle:focus, .show > .dropdown-toggle.btn-genre:focus, .show > .dropdown-toggle.btn-pool-size:focus {
+.btn-check:checked + .btn-primary:focus, .btn-check:checked + .btn-bracket:focus, .btn-check:checked + .btn-bracket-battle:focus, .btn-check:checked + .btn-shuffle:focus, .btn-check:checked + .btn-genre:focus, .btn-check:checked + .btn-pool-size:focus, .btn-check:active + .btn-primary:focus, .btn-check:active + .btn-bracket:focus, .btn-check:active + .btn-bracket-battle:focus, .btn-check:active + .btn-shuffle:focus, .btn-check:active + .btn-genre:focus, .btn-check:active + .btn-pool-size:focus, .btn-primary:active:focus, .btn-bracket:active:focus, .btn-bracket-battle:active:focus, .btn-shuffle:active:focus, .btn-genre:active:focus, .btn-pool-size:active:focus, .btn-primary.active:focus, .active.btn-bracket:focus, .active.btn-bracket-battle:focus, .active.btn-shuffle:focus, .active.btn-genre:focus, .active.btn-pool-size:focus, .show > .btn-primary.dropdown-toggle:focus, .show > .dropdown-toggle.btn-bracket:focus, .show > .dropdown-toggle.btn-bracket-battle:focus, .show > .dropdown-toggle.btn-shuffle:focus, .show > .dropdown-toggle.btn-genre:focus, .show > .dropdown-toggle.btn-pool-size:focus {
   box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
 }
-.btn-primary:disabled, .btn-shuffle:disabled, .btn-genre:disabled, .btn-pool-size:disabled, .btn-primary.disabled, .disabled.btn-shuffle, .disabled.btn-genre, .disabled.btn-pool-size {
+.btn-primary:disabled, .btn-bracket:disabled, .btn-bracket-battle:disabled, .btn-shuffle:disabled, .btn-genre:disabled, .btn-pool-size:disabled, .btn-primary.disabled, .disabled.btn-bracket, .disabled.btn-bracket-battle, .disabled.btn-shuffle, .disabled.btn-genre, .disabled.btn-pool-size {
   color: #fff;
   background-color: #0d6efd;
   border-color: #0d6efd;
@@ -2994,31 +3006,31 @@ textarea.form-control-lg {
   border-color: #6c757d;
 }
 
-.btn-success, .btn-continue {
+.btn-success, .btn-bracket-win, .btn-add-point, .btn-continue {
   color: #fff;
   background-color: #198754;
   border-color: #198754;
 }
-.btn-success:hover, .btn-continue:hover {
+.btn-success:hover, .btn-bracket-win:hover, .btn-add-point:hover, .btn-continue:hover {
   color: #fff;
   background-color: #157347;
   border-color: #146c43;
 }
-.btn-check:focus + .btn-success, .btn-check:focus + .btn-continue, .btn-success:focus, .btn-continue:focus {
+.btn-check:focus + .btn-success, .btn-check:focus + .btn-bracket-win, .btn-check:focus + .btn-add-point, .btn-check:focus + .btn-continue, .btn-success:focus, .btn-bracket-win:focus, .btn-add-point:focus, .btn-continue:focus {
   color: #fff;
   background-color: #157347;
   border-color: #146c43;
   box-shadow: 0 0 0 0.25rem rgba(60, 153, 110, 0.5);
 }
-.btn-check:checked + .btn-success, .btn-check:checked + .btn-continue, .btn-check:active + .btn-success, .btn-check:active + .btn-continue, .btn-success:active, .btn-continue:active, .btn-success.active, .active.btn-continue, .show > .btn-success.dropdown-toggle, .show > .dropdown-toggle.btn-continue {
+.btn-check:checked + .btn-success, .btn-check:checked + .btn-bracket-win, .btn-check:checked + .btn-add-point, .btn-check:checked + .btn-continue, .btn-check:active + .btn-success, .btn-check:active + .btn-bracket-win, .btn-check:active + .btn-add-point, .btn-check:active + .btn-continue, .btn-success:active, .btn-bracket-win:active, .btn-add-point:active, .btn-continue:active, .btn-success.active, .active.btn-bracket-win, .active.btn-add-point, .active.btn-continue, .show > .btn-success.dropdown-toggle, .show > .dropdown-toggle.btn-bracket-win, .show > .dropdown-toggle.btn-add-point, .show > .dropdown-toggle.btn-continue {
   color: #fff;
   background-color: #146c43;
   border-color: #13653f;
 }
-.btn-check:checked + .btn-success:focus, .btn-check:checked + .btn-continue:focus, .btn-check:active + .btn-success:focus, .btn-check:active + .btn-continue:focus, .btn-success:active:focus, .btn-continue:active:focus, .btn-success.active:focus, .active.btn-continue:focus, .show > .btn-success.dropdown-toggle:focus, .show > .dropdown-toggle.btn-continue:focus {
+.btn-check:checked + .btn-success:focus, .btn-check:checked + .btn-bracket-win:focus, .btn-check:checked + .btn-add-point:focus, .btn-check:checked + .btn-continue:focus, .btn-check:active + .btn-success:focus, .btn-check:active + .btn-bracket-win:focus, .btn-check:active + .btn-add-point:focus, .btn-check:active + .btn-continue:focus, .btn-success:active:focus, .btn-bracket-win:active:focus, .btn-add-point:active:focus, .btn-continue:active:focus, .btn-success.active:focus, .active.btn-bracket-win:focus, .active.btn-add-point:focus, .active.btn-continue:focus, .show > .btn-success.dropdown-toggle:focus, .show > .dropdown-toggle.btn-bracket-win:focus, .show > .dropdown-toggle.btn-add-point:focus, .show > .dropdown-toggle.btn-continue:focus {
   box-shadow: 0 0 0 0.25rem rgba(60, 153, 110, 0.5);
 }
-.btn-success:disabled, .btn-continue:disabled, .btn-success.disabled, .disabled.btn-continue {
+.btn-success:disabled, .btn-bracket-win:disabled, .btn-add-point:disabled, .btn-continue:disabled, .btn-success.disabled, .disabled.btn-bracket-win, .disabled.btn-add-point, .disabled.btn-continue {
   color: #fff;
   background-color: #198754;
   border-color: #198754;
@@ -3084,31 +3096,31 @@ textarea.form-control-lg {
   border-color: #ffc107;
 }
 
-.btn-danger {
+.btn-danger, .btn-bracket-lose, .btn-remove-point {
   color: #fff;
   background-color: #dc3545;
   border-color: #dc3545;
 }
-.btn-danger:hover {
+.btn-danger:hover, .btn-bracket-lose:hover, .btn-remove-point:hover {
   color: #fff;
   background-color: #bb2d3b;
   border-color: #b02a37;
 }
-.btn-check:focus + .btn-danger, .btn-danger:focus {
+.btn-check:focus + .btn-danger, .btn-check:focus + .btn-bracket-lose, .btn-check:focus + .btn-remove-point, .btn-danger:focus, .btn-bracket-lose:focus, .btn-remove-point:focus {
   color: #fff;
   background-color: #bb2d3b;
   border-color: #b02a37;
   box-shadow: 0 0 0 0.25rem rgba(225, 83, 97, 0.5);
 }
-.btn-check:checked + .btn-danger, .btn-check:active + .btn-danger, .btn-danger:active, .btn-danger.active, .show > .btn-danger.dropdown-toggle {
+.btn-check:checked + .btn-danger, .btn-check:checked + .btn-bracket-lose, .btn-check:checked + .btn-remove-point, .btn-check:active + .btn-danger, .btn-check:active + .btn-bracket-lose, .btn-check:active + .btn-remove-point, .btn-danger:active, .btn-bracket-lose:active, .btn-remove-point:active, .btn-danger.active, .active.btn-bracket-lose, .active.btn-remove-point, .show > .btn-danger.dropdown-toggle, .show > .dropdown-toggle.btn-bracket-lose, .show > .dropdown-toggle.btn-remove-point {
   color: #fff;
   background-color: #b02a37;
   border-color: #a52834;
 }
-.btn-check:checked + .btn-danger:focus, .btn-check:active + .btn-danger:focus, .btn-danger:active:focus, .btn-danger.active:focus, .show > .btn-danger.dropdown-toggle:focus {
+.btn-check:checked + .btn-danger:focus, .btn-check:checked + .btn-bracket-lose:focus, .btn-check:checked + .btn-remove-point:focus, .btn-check:active + .btn-danger:focus, .btn-check:active + .btn-bracket-lose:focus, .btn-check:active + .btn-remove-point:focus, .btn-danger:active:focus, .btn-bracket-lose:active:focus, .btn-remove-point:active:focus, .btn-danger.active:focus, .active.btn-bracket-lose:focus, .active.btn-remove-point:focus, .show > .btn-danger.dropdown-toggle:focus, .show > .dropdown-toggle.btn-bracket-lose:focus, .show > .dropdown-toggle.btn-remove-point:focus {
   box-shadow: 0 0 0 0.25rem rgba(225, 83, 97, 0.5);
 }
-.btn-danger:disabled, .btn-danger.disabled {
+.btn-danger:disabled, .btn-bracket-lose:disabled, .btn-remove-point:disabled, .btn-danger.disabled, .disabled.btn-bracket-lose, .disabled.btn-remove-point {
   color: #fff;
   background-color: #dc3545;
   border-color: #dc3545;
@@ -3386,13 +3398,13 @@ textarea.form-control-lg {
   color: #6c757d;
 }
 
-.btn-lg, .combo-divider, .btn-continue, .btn-shuffle, .btn-genre, .btn-group-lg > .btn, .group-pool-size > .btn, .btn-group-lg > .btn-continue, .btn-group-lg > .btn-shuffle, .btn-group-lg > .btn-genre, .btn-group-lg > .btn-pool-size, .group-pool-size > .btn-pool-size {
+.btn-lg, .btn-bracket-win, .btn-bracket-lose, .btn-bracket, .btn-bracket-battle, .combo-divider, .btn-continue, .btn-shuffle, .btn-genre, .btn-group-lg > .btn, .btn-group-lg > .btn-bracket-win, .btn-group-lg > .btn-bracket-lose, .btn-group-lg > .btn-bracket, .btn-group-lg > .btn-bracket-battle, .group-pool-size > .btn, .btn-group-lg > .btn-remove-point, .group-pool-size > .btn-remove-point, .btn-group-lg > .btn-add-point, .group-pool-size > .btn-add-point, .btn-group-lg > .btn-continue, .btn-group-lg > .btn-shuffle, .btn-group-lg > .btn-genre, .btn-group-lg > .btn-pool-size, .group-pool-size > .btn-pool-size {
   padding: 0.5rem 1rem;
   font-size: 1.25rem;
   border-radius: 0.3rem;
 }
 
-.btn-sm, .btn-group-sm > .btn, .btn-group-sm > .btn-continue, .btn-group-sm > .btn-shuffle, .btn-group-sm > .btn-genre, .btn-group-sm > .btn-pool-size {
+.btn-sm, .btn-remove-point, .btn-add-point, .btn-group-sm > .btn, .btn-group-sm > .btn-bracket-win, .btn-group-sm > .btn-bracket-lose, .btn-group-sm > .btn-bracket, .btn-group-sm > .btn-bracket-battle, .btn-group-sm > .btn-remove-point, .btn-group-sm > .btn-add-point, .btn-group-sm > .btn-continue, .btn-group-sm > .btn-shuffle, .btn-group-sm > .btn-genre, .btn-group-sm > .btn-pool-size {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   border-radius: 0.2rem;
@@ -3747,8 +3759,14 @@ textarea.form-control-lg {
   display: inline-flex;
   vertical-align: middle;
 }
-.btn-group > .btn, .group-pool-size > .btn, .btn-group > .btn-continue, .group-pool-size > .btn-continue, .btn-group > .btn-shuffle, .group-pool-size > .btn-shuffle, .btn-group > .btn-genre, .group-pool-size > .btn-genre, .btn-group > .btn-pool-size, .group-pool-size > .btn-pool-size,
+.btn-group > .btn, .btn-group > .btn-bracket-win, .btn-group > .btn-bracket-lose, .btn-group > .btn-bracket, .btn-group > .btn-bracket-battle, .group-pool-size > .btn, .group-pool-size > .btn-bracket-win, .group-pool-size > .btn-bracket-lose, .group-pool-size > .btn-bracket, .group-pool-size > .btn-bracket-battle, .btn-group > .btn-remove-point, .group-pool-size > .btn-remove-point, .btn-group > .btn-add-point, .group-pool-size > .btn-add-point, .btn-group > .btn-continue, .group-pool-size > .btn-continue, .btn-group > .btn-shuffle, .group-pool-size > .btn-shuffle, .btn-group > .btn-genre, .group-pool-size > .btn-genre, .btn-group > .btn-pool-size, .group-pool-size > .btn-pool-size,
 .btn-group-vertical > .btn,
+.btn-group-vertical > .btn-bracket-win,
+.btn-group-vertical > .btn-bracket-lose,
+.btn-group-vertical > .btn-bracket,
+.btn-group-vertical > .btn-bracket-battle,
+.btn-group-vertical > .btn-remove-point,
+.btn-group-vertical > .btn-add-point,
 .btn-group-vertical > .btn-continue,
 .btn-group-vertical > .btn-shuffle,
 .btn-group-vertical > .btn-genre,
@@ -3756,9 +3774,21 @@ textarea.form-control-lg {
   position: relative;
   flex: 1 1 auto;
 }
-.btn-group > .btn-check:checked + .btn, .group-pool-size > .btn-check:checked + .btn, .btn-group > .btn-check:checked + .btn-continue, .group-pool-size > .btn-check:checked + .btn-continue, .btn-group > .btn-check:checked + .btn-shuffle, .group-pool-size > .btn-check:checked + .btn-shuffle, .btn-group > .btn-check:checked + .btn-genre, .group-pool-size > .btn-check:checked + .btn-genre, .btn-group > .btn-check:checked + .btn-pool-size, .group-pool-size > .btn-check:checked + .btn-pool-size,
+.btn-group > .btn-check:checked + .btn, .btn-group > .btn-check:checked + .btn-bracket-win, .btn-group > .btn-check:checked + .btn-bracket-lose, .btn-group > .btn-check:checked + .btn-bracket, .btn-group > .btn-check:checked + .btn-bracket-battle, .group-pool-size > .btn-check:checked + .btn, .group-pool-size > .btn-check:checked + .btn-bracket-win, .group-pool-size > .btn-check:checked + .btn-bracket-lose, .group-pool-size > .btn-check:checked + .btn-bracket, .group-pool-size > .btn-check:checked + .btn-bracket-battle, .btn-group > .btn-check:checked + .btn-remove-point, .group-pool-size > .btn-check:checked + .btn-remove-point, .btn-group > .btn-check:checked + .btn-add-point, .group-pool-size > .btn-check:checked + .btn-add-point, .btn-group > .btn-check:checked + .btn-continue, .group-pool-size > .btn-check:checked + .btn-continue, .btn-group > .btn-check:checked + .btn-shuffle, .group-pool-size > .btn-check:checked + .btn-shuffle, .btn-group > .btn-check:checked + .btn-genre, .group-pool-size > .btn-check:checked + .btn-genre, .btn-group > .btn-check:checked + .btn-pool-size, .group-pool-size > .btn-check:checked + .btn-pool-size,
 .btn-group > .btn-check:focus + .btn,
+.btn-group > .btn-check:focus + .btn-bracket-win,
+.btn-group > .btn-check:focus + .btn-bracket-lose,
+.btn-group > .btn-check:focus + .btn-bracket,
+.btn-group > .btn-check:focus + .btn-bracket-battle,
 .group-pool-size > .btn-check:focus + .btn,
+.group-pool-size > .btn-check:focus + .btn-bracket-win,
+.group-pool-size > .btn-check:focus + .btn-bracket-lose,
+.group-pool-size > .btn-check:focus + .btn-bracket,
+.group-pool-size > .btn-check:focus + .btn-bracket-battle,
+.btn-group > .btn-check:focus + .btn-remove-point,
+.group-pool-size > .btn-check:focus + .btn-remove-point,
+.btn-group > .btn-check:focus + .btn-add-point,
+.group-pool-size > .btn-check:focus + .btn-add-point,
 .btn-group > .btn-check:focus + .btn-continue,
 .group-pool-size > .btn-check:focus + .btn-continue,
 .btn-group > .btn-check:focus + .btn-shuffle,
@@ -3768,7 +3798,19 @@ textarea.form-control-lg {
 .btn-group > .btn-check:focus + .btn-pool-size,
 .group-pool-size > .btn-check:focus + .btn-pool-size,
 .btn-group > .btn:hover,
+.btn-group > .btn-bracket-win:hover,
+.btn-group > .btn-bracket-lose:hover,
+.btn-group > .btn-bracket:hover,
+.btn-group > .btn-bracket-battle:hover,
 .group-pool-size > .btn:hover,
+.group-pool-size > .btn-bracket-win:hover,
+.group-pool-size > .btn-bracket-lose:hover,
+.group-pool-size > .btn-bracket:hover,
+.group-pool-size > .btn-bracket-battle:hover,
+.btn-group > .btn-remove-point:hover,
+.group-pool-size > .btn-remove-point:hover,
+.btn-group > .btn-add-point:hover,
+.group-pool-size > .btn-add-point:hover,
 .btn-group > .btn-continue:hover,
 .group-pool-size > .btn-continue:hover,
 .btn-group > .btn-shuffle:hover,
@@ -3778,7 +3820,19 @@ textarea.form-control-lg {
 .btn-group > .btn-pool-size:hover,
 .group-pool-size > .btn-pool-size:hover,
 .btn-group > .btn:focus,
+.btn-group > .btn-bracket-win:focus,
+.btn-group > .btn-bracket-lose:focus,
+.btn-group > .btn-bracket:focus,
+.btn-group > .btn-bracket-battle:focus,
 .group-pool-size > .btn:focus,
+.group-pool-size > .btn-bracket-win:focus,
+.group-pool-size > .btn-bracket-lose:focus,
+.group-pool-size > .btn-bracket:focus,
+.group-pool-size > .btn-bracket-battle:focus,
+.btn-group > .btn-remove-point:focus,
+.group-pool-size > .btn-remove-point:focus,
+.btn-group > .btn-add-point:focus,
+.group-pool-size > .btn-add-point:focus,
 .btn-group > .btn-continue:focus,
 .group-pool-size > .btn-continue:focus,
 .btn-group > .btn-shuffle:focus,
@@ -3788,7 +3842,19 @@ textarea.form-control-lg {
 .btn-group > .btn-pool-size:focus,
 .group-pool-size > .btn-pool-size:focus,
 .btn-group > .btn:active,
+.btn-group > .btn-bracket-win:active,
+.btn-group > .btn-bracket-lose:active,
+.btn-group > .btn-bracket:active,
+.btn-group > .btn-bracket-battle:active,
 .group-pool-size > .btn:active,
+.group-pool-size > .btn-bracket-win:active,
+.group-pool-size > .btn-bracket-lose:active,
+.group-pool-size > .btn-bracket:active,
+.group-pool-size > .btn-bracket-battle:active,
+.btn-group > .btn-remove-point:active,
+.group-pool-size > .btn-remove-point:active,
+.btn-group > .btn-add-point:active,
+.group-pool-size > .btn-add-point:active,
 .btn-group > .btn-continue:active,
 .group-pool-size > .btn-continue:active,
 .btn-group > .btn-shuffle:active,
@@ -3798,7 +3864,19 @@ textarea.form-control-lg {
 .btn-group > .btn-pool-size:active,
 .group-pool-size > .btn-pool-size:active,
 .btn-group > .btn.active,
+.btn-group > .active.btn-bracket-win,
+.btn-group > .active.btn-bracket-lose,
+.btn-group > .active.btn-bracket,
+.btn-group > .active.btn-bracket-battle,
 .group-pool-size > .btn.active,
+.group-pool-size > .active.btn-bracket-win,
+.group-pool-size > .active.btn-bracket-lose,
+.group-pool-size > .active.btn-bracket,
+.group-pool-size > .active.btn-bracket-battle,
+.btn-group > .active.btn-remove-point,
+.group-pool-size > .active.btn-remove-point,
+.btn-group > .active.btn-add-point,
+.group-pool-size > .active.btn-add-point,
 .btn-group > .active.btn-continue,
 .group-pool-size > .active.btn-continue,
 .btn-group > .active.btn-shuffle,
@@ -3808,31 +3886,67 @@ textarea.form-control-lg {
 .btn-group > .active.btn-pool-size,
 .group-pool-size > .active.btn-pool-size,
 .btn-group-vertical > .btn-check:checked + .btn,
+.btn-group-vertical > .btn-check:checked + .btn-bracket-win,
+.btn-group-vertical > .btn-check:checked + .btn-bracket-lose,
+.btn-group-vertical > .btn-check:checked + .btn-bracket,
+.btn-group-vertical > .btn-check:checked + .btn-bracket-battle,
+.btn-group-vertical > .btn-check:checked + .btn-remove-point,
+.btn-group-vertical > .btn-check:checked + .btn-add-point,
 .btn-group-vertical > .btn-check:checked + .btn-continue,
 .btn-group-vertical > .btn-check:checked + .btn-shuffle,
 .btn-group-vertical > .btn-check:checked + .btn-genre,
 .btn-group-vertical > .btn-check:checked + .btn-pool-size,
 .btn-group-vertical > .btn-check:focus + .btn,
+.btn-group-vertical > .btn-check:focus + .btn-bracket-win,
+.btn-group-vertical > .btn-check:focus + .btn-bracket-lose,
+.btn-group-vertical > .btn-check:focus + .btn-bracket,
+.btn-group-vertical > .btn-check:focus + .btn-bracket-battle,
+.btn-group-vertical > .btn-check:focus + .btn-remove-point,
+.btn-group-vertical > .btn-check:focus + .btn-add-point,
 .btn-group-vertical > .btn-check:focus + .btn-continue,
 .btn-group-vertical > .btn-check:focus + .btn-shuffle,
 .btn-group-vertical > .btn-check:focus + .btn-genre,
 .btn-group-vertical > .btn-check:focus + .btn-pool-size,
 .btn-group-vertical > .btn:hover,
+.btn-group-vertical > .btn-bracket-win:hover,
+.btn-group-vertical > .btn-bracket-lose:hover,
+.btn-group-vertical > .btn-bracket:hover,
+.btn-group-vertical > .btn-bracket-battle:hover,
+.btn-group-vertical > .btn-remove-point:hover,
+.btn-group-vertical > .btn-add-point:hover,
 .btn-group-vertical > .btn-continue:hover,
 .btn-group-vertical > .btn-shuffle:hover,
 .btn-group-vertical > .btn-genre:hover,
 .btn-group-vertical > .btn-pool-size:hover,
 .btn-group-vertical > .btn:focus,
+.btn-group-vertical > .btn-bracket-win:focus,
+.btn-group-vertical > .btn-bracket-lose:focus,
+.btn-group-vertical > .btn-bracket:focus,
+.btn-group-vertical > .btn-bracket-battle:focus,
+.btn-group-vertical > .btn-remove-point:focus,
+.btn-group-vertical > .btn-add-point:focus,
 .btn-group-vertical > .btn-continue:focus,
 .btn-group-vertical > .btn-shuffle:focus,
 .btn-group-vertical > .btn-genre:focus,
 .btn-group-vertical > .btn-pool-size:focus,
 .btn-group-vertical > .btn:active,
+.btn-group-vertical > .btn-bracket-win:active,
+.btn-group-vertical > .btn-bracket-lose:active,
+.btn-group-vertical > .btn-bracket:active,
+.btn-group-vertical > .btn-bracket-battle:active,
+.btn-group-vertical > .btn-remove-point:active,
+.btn-group-vertical > .btn-add-point:active,
 .btn-group-vertical > .btn-continue:active,
 .btn-group-vertical > .btn-shuffle:active,
 .btn-group-vertical > .btn-genre:active,
 .btn-group-vertical > .btn-pool-size:active,
 .btn-group-vertical > .btn.active,
+.btn-group-vertical > .active.btn-bracket-win,
+.btn-group-vertical > .active.btn-bracket-lose,
+.btn-group-vertical > .active.btn-bracket,
+.btn-group-vertical > .active.btn-bracket-battle,
+.btn-group-vertical > .active.btn-remove-point,
+.btn-group-vertical > .active.btn-add-point,
 .btn-group-vertical > .active.btn-continue,
 .btn-group-vertical > .active.btn-shuffle,
 .btn-group-vertical > .active.btn-genre,
@@ -3849,18 +3963,42 @@ textarea.form-control-lg {
   width: auto;
 }
 
-.btn-group > .btn:not(:first-child), .group-pool-size > .btn:not(:first-child), .btn-group > .btn-continue:not(:first-child), .group-pool-size > .btn-continue:not(:first-child), .btn-group > .btn-shuffle:not(:first-child), .group-pool-size > .btn-shuffle:not(:first-child), .btn-group > .btn-genre:not(:first-child), .group-pool-size > .btn-genre:not(:first-child), .btn-group > .btn-pool-size:not(:first-child), .group-pool-size > .btn-pool-size:not(:first-child),
+.btn-group > .btn:not(:first-child), .btn-group > .btn-bracket-win:not(:first-child), .btn-group > .btn-bracket-lose:not(:first-child), .btn-group > .btn-bracket:not(:first-child), .btn-group > .btn-bracket-battle:not(:first-child), .group-pool-size > .btn:not(:first-child), .group-pool-size > .btn-bracket-win:not(:first-child), .group-pool-size > .btn-bracket-lose:not(:first-child), .group-pool-size > .btn-bracket:not(:first-child), .group-pool-size > .btn-bracket-battle:not(:first-child), .btn-group > .btn-remove-point:not(:first-child), .group-pool-size > .btn-remove-point:not(:first-child), .btn-group > .btn-add-point:not(:first-child), .group-pool-size > .btn-add-point:not(:first-child), .btn-group > .btn-continue:not(:first-child), .group-pool-size > .btn-continue:not(:first-child), .btn-group > .btn-shuffle:not(:first-child), .group-pool-size > .btn-shuffle:not(:first-child), .btn-group > .btn-genre:not(:first-child), .group-pool-size > .btn-genre:not(:first-child), .btn-group > .btn-pool-size:not(:first-child), .group-pool-size > .btn-pool-size:not(:first-child),
 .btn-group > .btn-group:not(:first-child),
 .group-pool-size > .btn-group:not(:first-child),
 .btn-group > .group-pool-size:not(:first-child),
 .group-pool-size > .group-pool-size:not(:first-child) {
   margin-left: -1px;
 }
-.btn-group > .btn:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-continue:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn-continue:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-shuffle:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn-shuffle:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-genre:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn-genre:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-pool-size:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn-pool-size:not(:last-child):not(.dropdown-toggle),
+.btn-group > .btn:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-bracket-win:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-bracket-lose:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-bracket:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-bracket-battle:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn-bracket-win:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn-bracket-lose:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn-bracket:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn-bracket-battle:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-remove-point:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn-remove-point:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-add-point:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn-add-point:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-continue:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn-continue:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-shuffle:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn-shuffle:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-genre:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn-genre:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-pool-size:not(:last-child):not(.dropdown-toggle), .group-pool-size > .btn-pool-size:not(:last-child):not(.dropdown-toggle),
 .btn-group > .btn-group:not(:last-child) > .btn,
+.btn-group > .btn-group:not(:last-child) > .btn-bracket-win,
+.btn-group > .btn-group:not(:last-child) > .btn-bracket-lose,
+.btn-group > .btn-group:not(:last-child) > .btn-bracket,
+.btn-group > .btn-group:not(:last-child) > .btn-bracket-battle,
 .group-pool-size > .btn-group:not(:last-child) > .btn,
+.group-pool-size > .btn-group:not(:last-child) > .btn-bracket-win,
+.group-pool-size > .btn-group:not(:last-child) > .btn-bracket-lose,
+.group-pool-size > .btn-group:not(:last-child) > .btn-bracket,
+.group-pool-size > .btn-group:not(:last-child) > .btn-bracket-battle,
 .btn-group > .group-pool-size:not(:last-child) > .btn,
+.btn-group > .group-pool-size:not(:last-child) > .btn-bracket-win,
+.btn-group > .group-pool-size:not(:last-child) > .btn-bracket-lose,
+.btn-group > .group-pool-size:not(:last-child) > .btn-bracket,
+.btn-group > .group-pool-size:not(:last-child) > .btn-bracket-battle,
 .group-pool-size > .group-pool-size:not(:last-child) > .btn,
+.group-pool-size > .group-pool-size:not(:last-child) > .btn-bracket-win,
+.group-pool-size > .group-pool-size:not(:last-child) > .btn-bracket-lose,
+.group-pool-size > .group-pool-size:not(:last-child) > .btn-bracket,
+.group-pool-size > .group-pool-size:not(:last-child) > .btn-bracket-battle,
+.btn-group > .btn-group:not(:last-child) > .btn-remove-point,
+.group-pool-size > .btn-group:not(:last-child) > .btn-remove-point,
+.btn-group > .group-pool-size:not(:last-child) > .btn-remove-point,
+.group-pool-size > .group-pool-size:not(:last-child) > .btn-remove-point,
+.btn-group > .btn-group:not(:last-child) > .btn-add-point,
+.group-pool-size > .btn-group:not(:last-child) > .btn-add-point,
+.btn-group > .group-pool-size:not(:last-child) > .btn-add-point,
+.group-pool-size > .group-pool-size:not(:last-child) > .btn-add-point,
 .btn-group > .btn-group:not(:last-child) > .btn-continue,
 .group-pool-size > .btn-group:not(:last-child) > .btn-continue,
 .btn-group > .group-pool-size:not(:last-child) > .btn-continue,
@@ -3880,9 +4018,21 @@ textarea.form-control-lg {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-.btn-group > .btn:nth-child(n+3), .group-pool-size > .btn:nth-child(n+3), .btn-group > .btn-continue:nth-child(n+3), .group-pool-size > .btn-continue:nth-child(n+3), .btn-group > .btn-shuffle:nth-child(n+3), .group-pool-size > .btn-shuffle:nth-child(n+3), .btn-group > .btn-genre:nth-child(n+3), .group-pool-size > .btn-genre:nth-child(n+3), .btn-group > .btn-pool-size:nth-child(n+3), .group-pool-size > .btn-pool-size:nth-child(n+3),
+.btn-group > .btn:nth-child(n+3), .btn-group > .btn-bracket-win:nth-child(n+3), .btn-group > .btn-bracket-lose:nth-child(n+3), .btn-group > .btn-bracket:nth-child(n+3), .btn-group > .btn-bracket-battle:nth-child(n+3), .group-pool-size > .btn:nth-child(n+3), .group-pool-size > .btn-bracket-win:nth-child(n+3), .group-pool-size > .btn-bracket-lose:nth-child(n+3), .group-pool-size > .btn-bracket:nth-child(n+3), .group-pool-size > .btn-bracket-battle:nth-child(n+3), .btn-group > .btn-remove-point:nth-child(n+3), .group-pool-size > .btn-remove-point:nth-child(n+3), .btn-group > .btn-add-point:nth-child(n+3), .group-pool-size > .btn-add-point:nth-child(n+3), .btn-group > .btn-continue:nth-child(n+3), .group-pool-size > .btn-continue:nth-child(n+3), .btn-group > .btn-shuffle:nth-child(n+3), .group-pool-size > .btn-shuffle:nth-child(n+3), .btn-group > .btn-genre:nth-child(n+3), .group-pool-size > .btn-genre:nth-child(n+3), .btn-group > .btn-pool-size:nth-child(n+3), .group-pool-size > .btn-pool-size:nth-child(n+3),
 .btn-group > :not(.btn-check) + .btn,
+.btn-group > :not(.btn-check) + .btn-bracket-win,
+.btn-group > :not(.btn-check) + .btn-bracket-lose,
+.btn-group > :not(.btn-check) + .btn-bracket,
+.btn-group > :not(.btn-check) + .btn-bracket-battle,
 .group-pool-size > :not(.btn-check) + .btn,
+.group-pool-size > :not(.btn-check) + .btn-bracket-win,
+.group-pool-size > :not(.btn-check) + .btn-bracket-lose,
+.group-pool-size > :not(.btn-check) + .btn-bracket,
+.group-pool-size > :not(.btn-check) + .btn-bracket-battle,
+.btn-group > :not(.btn-check) + .btn-remove-point,
+.group-pool-size > :not(.btn-check) + .btn-remove-point,
+.btn-group > :not(.btn-check) + .btn-add-point,
+.group-pool-size > :not(.btn-check) + .btn-add-point,
 .btn-group > :not(.btn-check) + .btn-continue,
 .group-pool-size > :not(.btn-check) + .btn-continue,
 .btn-group > :not(.btn-check) + .btn-shuffle,
@@ -3892,9 +4042,33 @@ textarea.form-control-lg {
 .btn-group > :not(.btn-check) + .btn-pool-size,
 .group-pool-size > :not(.btn-check) + .btn-pool-size,
 .btn-group > .btn-group:not(:first-child) > .btn,
+.btn-group > .btn-group:not(:first-child) > .btn-bracket-win,
+.btn-group > .btn-group:not(:first-child) > .btn-bracket-lose,
+.btn-group > .btn-group:not(:first-child) > .btn-bracket,
+.btn-group > .btn-group:not(:first-child) > .btn-bracket-battle,
 .group-pool-size > .btn-group:not(:first-child) > .btn,
+.group-pool-size > .btn-group:not(:first-child) > .btn-bracket-win,
+.group-pool-size > .btn-group:not(:first-child) > .btn-bracket-lose,
+.group-pool-size > .btn-group:not(:first-child) > .btn-bracket,
+.group-pool-size > .btn-group:not(:first-child) > .btn-bracket-battle,
 .btn-group > .group-pool-size:not(:first-child) > .btn,
+.btn-group > .group-pool-size:not(:first-child) > .btn-bracket-win,
+.btn-group > .group-pool-size:not(:first-child) > .btn-bracket-lose,
+.btn-group > .group-pool-size:not(:first-child) > .btn-bracket,
+.btn-group > .group-pool-size:not(:first-child) > .btn-bracket-battle,
 .group-pool-size > .group-pool-size:not(:first-child) > .btn,
+.group-pool-size > .group-pool-size:not(:first-child) > .btn-bracket-win,
+.group-pool-size > .group-pool-size:not(:first-child) > .btn-bracket-lose,
+.group-pool-size > .group-pool-size:not(:first-child) > .btn-bracket,
+.group-pool-size > .group-pool-size:not(:first-child) > .btn-bracket-battle,
+.btn-group > .btn-group:not(:first-child) > .btn-remove-point,
+.group-pool-size > .btn-group:not(:first-child) > .btn-remove-point,
+.btn-group > .group-pool-size:not(:first-child) > .btn-remove-point,
+.group-pool-size > .group-pool-size:not(:first-child) > .btn-remove-point,
+.btn-group > .btn-group:not(:first-child) > .btn-add-point,
+.group-pool-size > .btn-group:not(:first-child) > .btn-add-point,
+.btn-group > .group-pool-size:not(:first-child) > .btn-add-point,
+.group-pool-size > .group-pool-size:not(:first-child) > .btn-add-point,
 .btn-group > .btn-group:not(:first-child) > .btn-continue,
 .group-pool-size > .btn-group:not(:first-child) > .btn-continue,
 .btn-group > .group-pool-size:not(:first-child) > .btn-continue,
@@ -3926,12 +4100,12 @@ textarea.form-control-lg {
   margin-right: 0;
 }
 
-.btn-sm + .dropdown-toggle-split, .btn-group-sm > .btn + .dropdown-toggle-split, .btn-group-sm > .btn-continue + .dropdown-toggle-split, .btn-group-sm > .btn-shuffle + .dropdown-toggle-split, .btn-group-sm > .btn-genre + .dropdown-toggle-split, .btn-group-sm > .btn-pool-size + .dropdown-toggle-split {
+.btn-sm + .dropdown-toggle-split, .btn-remove-point + .dropdown-toggle-split, .btn-add-point + .dropdown-toggle-split, .btn-group-sm > .btn + .dropdown-toggle-split, .btn-group-sm > .btn-bracket-win + .dropdown-toggle-split, .btn-group-sm > .btn-bracket-lose + .dropdown-toggle-split, .btn-group-sm > .btn-bracket + .dropdown-toggle-split, .btn-group-sm > .btn-bracket-battle + .dropdown-toggle-split, .btn-group-sm > .btn-remove-point + .dropdown-toggle-split, .btn-group-sm > .btn-add-point + .dropdown-toggle-split, .btn-group-sm > .btn-continue + .dropdown-toggle-split, .btn-group-sm > .btn-shuffle + .dropdown-toggle-split, .btn-group-sm > .btn-genre + .dropdown-toggle-split, .btn-group-sm > .btn-pool-size + .dropdown-toggle-split {
   padding-right: 0.375rem;
   padding-left: 0.375rem;
 }
 
-.btn-lg + .dropdown-toggle-split, .combo-divider + .dropdown-toggle-split, .btn-continue + .dropdown-toggle-split, .btn-shuffle + .dropdown-toggle-split, .btn-genre + .dropdown-toggle-split, .btn-group-lg > .btn + .dropdown-toggle-split, .group-pool-size > .btn + .dropdown-toggle-split, .btn-group-lg > .btn-continue + .dropdown-toggle-split, .group-pool-size > .btn-continue + .dropdown-toggle-split, .btn-group-lg > .btn-shuffle + .dropdown-toggle-split, .group-pool-size > .btn-shuffle + .dropdown-toggle-split, .btn-group-lg > .btn-genre + .dropdown-toggle-split, .group-pool-size > .btn-genre + .dropdown-toggle-split, .btn-group-lg > .btn-pool-size + .dropdown-toggle-split, .group-pool-size > .btn-pool-size + .dropdown-toggle-split {
+.btn-lg + .dropdown-toggle-split, .btn-bracket-win + .dropdown-toggle-split, .btn-bracket-lose + .dropdown-toggle-split, .btn-bracket + .dropdown-toggle-split, .btn-bracket-battle + .dropdown-toggle-split, .combo-divider + .dropdown-toggle-split, .btn-continue + .dropdown-toggle-split, .btn-shuffle + .dropdown-toggle-split, .btn-genre + .dropdown-toggle-split, .btn-group-lg > .btn + .dropdown-toggle-split, .btn-group-lg > .btn-bracket-win + .dropdown-toggle-split, .btn-group-lg > .btn-bracket-lose + .dropdown-toggle-split, .btn-group-lg > .btn-bracket + .dropdown-toggle-split, .btn-group-lg > .btn-bracket-battle + .dropdown-toggle-split, .group-pool-size > .btn + .dropdown-toggle-split, .group-pool-size > .btn-bracket-win + .dropdown-toggle-split, .group-pool-size > .btn-bracket-lose + .dropdown-toggle-split, .group-pool-size > .btn-bracket + .dropdown-toggle-split, .group-pool-size > .btn-bracket-battle + .dropdown-toggle-split, .btn-group-lg > .btn-remove-point + .dropdown-toggle-split, .group-pool-size > .btn-remove-point + .dropdown-toggle-split, .btn-group-lg > .btn-add-point + .dropdown-toggle-split, .group-pool-size > .btn-add-point + .dropdown-toggle-split, .btn-group-lg > .btn-continue + .dropdown-toggle-split, .group-pool-size > .btn-continue + .dropdown-toggle-split, .btn-group-lg > .btn-shuffle + .dropdown-toggle-split, .group-pool-size > .btn-shuffle + .dropdown-toggle-split, .btn-group-lg > .btn-genre + .dropdown-toggle-split, .group-pool-size > .btn-genre + .dropdown-toggle-split, .btn-group-lg > .btn-pool-size + .dropdown-toggle-split, .group-pool-size > .btn-pool-size + .dropdown-toggle-split {
   padding-right: 0.75rem;
   padding-left: 0.75rem;
 }
@@ -3941,19 +4115,31 @@ textarea.form-control-lg {
   align-items: flex-start;
   justify-content: center;
 }
-.btn-group-vertical > .btn, .btn-group-vertical > .btn-continue, .btn-group-vertical > .btn-shuffle, .btn-group-vertical > .btn-genre, .btn-group-vertical > .btn-pool-size,
+.btn-group-vertical > .btn, .btn-group-vertical > .btn-bracket-win, .btn-group-vertical > .btn-bracket-lose, .btn-group-vertical > .btn-bracket, .btn-group-vertical > .btn-bracket-battle, .btn-group-vertical > .btn-remove-point, .btn-group-vertical > .btn-add-point, .btn-group-vertical > .btn-continue, .btn-group-vertical > .btn-shuffle, .btn-group-vertical > .btn-genre, .btn-group-vertical > .btn-pool-size,
 .btn-group-vertical > .btn-group,
 .btn-group-vertical > .group-pool-size {
   width: 100%;
 }
-.btn-group-vertical > .btn:not(:first-child), .btn-group-vertical > .btn-continue:not(:first-child), .btn-group-vertical > .btn-shuffle:not(:first-child), .btn-group-vertical > .btn-genre:not(:first-child), .btn-group-vertical > .btn-pool-size:not(:first-child),
+.btn-group-vertical > .btn:not(:first-child), .btn-group-vertical > .btn-bracket-win:not(:first-child), .btn-group-vertical > .btn-bracket-lose:not(:first-child), .btn-group-vertical > .btn-bracket:not(:first-child), .btn-group-vertical > .btn-bracket-battle:not(:first-child), .btn-group-vertical > .btn-remove-point:not(:first-child), .btn-group-vertical > .btn-add-point:not(:first-child), .btn-group-vertical > .btn-continue:not(:first-child), .btn-group-vertical > .btn-shuffle:not(:first-child), .btn-group-vertical > .btn-genre:not(:first-child), .btn-group-vertical > .btn-pool-size:not(:first-child),
 .btn-group-vertical > .btn-group:not(:first-child),
 .btn-group-vertical > .group-pool-size:not(:first-child) {
   margin-top: -1px;
 }
-.btn-group-vertical > .btn:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-continue:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-shuffle:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-genre:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-pool-size:not(:last-child):not(.dropdown-toggle),
+.btn-group-vertical > .btn:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-bracket-win:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-bracket-lose:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-bracket:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-bracket-battle:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-remove-point:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-add-point:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-continue:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-shuffle:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-genre:not(:last-child):not(.dropdown-toggle), .btn-group-vertical > .btn-pool-size:not(:last-child):not(.dropdown-toggle),
 .btn-group-vertical > .btn-group:not(:last-child) > .btn,
+.btn-group-vertical > .btn-group:not(:last-child) > .btn-bracket-win,
+.btn-group-vertical > .btn-group:not(:last-child) > .btn-bracket-lose,
+.btn-group-vertical > .btn-group:not(:last-child) > .btn-bracket,
+.btn-group-vertical > .btn-group:not(:last-child) > .btn-bracket-battle,
 .btn-group-vertical > .group-pool-size:not(:last-child) > .btn,
+.btn-group-vertical > .group-pool-size:not(:last-child) > .btn-bracket-win,
+.btn-group-vertical > .group-pool-size:not(:last-child) > .btn-bracket-lose,
+.btn-group-vertical > .group-pool-size:not(:last-child) > .btn-bracket,
+.btn-group-vertical > .group-pool-size:not(:last-child) > .btn-bracket-battle,
+.btn-group-vertical > .btn-group:not(:last-child) > .btn-remove-point,
+.btn-group-vertical > .group-pool-size:not(:last-child) > .btn-remove-point,
+.btn-group-vertical > .btn-group:not(:last-child) > .btn-add-point,
+.btn-group-vertical > .group-pool-size:not(:last-child) > .btn-add-point,
 .btn-group-vertical > .btn-group:not(:last-child) > .btn-continue,
 .btn-group-vertical > .group-pool-size:not(:last-child) > .btn-continue,
 .btn-group-vertical > .btn-group:not(:last-child) > .btn-shuffle,
@@ -3965,9 +4151,21 @@ textarea.form-control-lg {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-.btn-group-vertical > .btn ~ .btn, .btn-group-vertical > .btn-continue ~ .btn, .btn-group-vertical > .btn ~ .btn-continue, .btn-group-vertical > .btn-continue ~ .btn-continue, .btn-group-vertical > .btn-shuffle ~ .btn, .btn-group-vertical > .btn-shuffle ~ .btn-continue, .btn-group-vertical > .btn ~ .btn-shuffle, .btn-group-vertical > .btn-continue ~ .btn-shuffle, .btn-group-vertical > .btn-shuffle ~ .btn-shuffle, .btn-group-vertical > .btn-genre ~ .btn, .btn-group-vertical > .btn-genre ~ .btn-continue, .btn-group-vertical > .btn-genre ~ .btn-shuffle, .btn-group-vertical > .btn ~ .btn-genre, .btn-group-vertical > .btn-continue ~ .btn-genre, .btn-group-vertical > .btn-shuffle ~ .btn-genre, .btn-group-vertical > .btn-genre ~ .btn-genre, .btn-group-vertical > .btn-pool-size ~ .btn, .btn-group-vertical > .btn-pool-size ~ .btn-continue, .btn-group-vertical > .btn-pool-size ~ .btn-shuffle, .btn-group-vertical > .btn-pool-size ~ .btn-genre, .btn-group-vertical > .btn ~ .btn-pool-size, .btn-group-vertical > .btn-continue ~ .btn-pool-size, .btn-group-vertical > .btn-shuffle ~ .btn-pool-size, .btn-group-vertical > .btn-genre ~ .btn-pool-size, .btn-group-vertical > .btn-pool-size ~ .btn-pool-size,
+.btn-group-vertical > .btn ~ .btn, .btn-group-vertical > .btn-bracket-win ~ .btn, .btn-group-vertical > .btn-bracket-lose ~ .btn, .btn-group-vertical > .btn-bracket ~ .btn, .btn-group-vertical > .btn ~ .btn-bracket-win, .btn-group-vertical > .btn ~ .btn-bracket-lose, .btn-group-vertical > .btn ~ .btn-bracket, .btn-group-vertical > .btn-bracket-win ~ .btn-bracket-win, .btn-group-vertical > .btn-bracket-lose ~ .btn-bracket-win, .btn-group-vertical > .btn-bracket-win ~ .btn-bracket-lose, .btn-group-vertical > .btn-bracket-lose ~ .btn-bracket-lose, .btn-group-vertical > .btn-bracket ~ .btn-bracket-win, .btn-group-vertical > .btn-bracket ~ .btn-bracket-lose, .btn-group-vertical > .btn-bracket-win ~ .btn-bracket, .btn-group-vertical > .btn-bracket-lose ~ .btn-bracket, .btn-group-vertical > .btn-bracket ~ .btn-bracket, .btn-group-vertical > .btn-bracket-battle ~ .btn, .btn-group-vertical > .btn-bracket-battle ~ .btn-bracket-win, .btn-group-vertical > .btn-bracket-battle ~ .btn-bracket-lose, .btn-group-vertical > .btn-bracket-battle ~ .btn-bracket, .btn-group-vertical > .btn ~ .btn-bracket-battle, .btn-group-vertical > .btn-bracket-win ~ .btn-bracket-battle, .btn-group-vertical > .btn-bracket-lose ~ .btn-bracket-battle, .btn-group-vertical > .btn-bracket ~ .btn-bracket-battle, .btn-group-vertical > .btn-bracket-battle ~ .btn-bracket-battle, .btn-group-vertical > .btn-remove-point ~ .btn, .btn-group-vertical > .btn-remove-point ~ .btn-bracket-win, .btn-group-vertical > .btn-remove-point ~ .btn-bracket-lose, .btn-group-vertical > .btn-remove-point ~ .btn-bracket, .btn-group-vertical > .btn-remove-point ~ .btn-bracket-battle, .btn-group-vertical > .btn-add-point ~ .btn, .btn-group-vertical > .btn-add-point ~ .btn-bracket-win, .btn-group-vertical > .btn-add-point ~ .btn-bracket-lose, .btn-group-vertical > .btn-add-point ~ .btn-bracket, .btn-group-vertical > .btn-add-point ~ .btn-bracket-battle, .btn-group-vertical > .btn ~ .btn-remove-point, .btn-group-vertical > .btn-bracket-win ~ .btn-remove-point, .btn-group-vertical > .btn-bracket-lose ~ .btn-remove-point, .btn-group-vertical > .btn-bracket ~ .btn-remove-point, .btn-group-vertical > .btn-bracket-battle ~ .btn-remove-point, .btn-group-vertical > .btn ~ .btn-add-point, .btn-group-vertical > .btn-bracket-win ~ .btn-add-point, .btn-group-vertical > .btn-bracket-lose ~ .btn-add-point, .btn-group-vertical > .btn-bracket ~ .btn-add-point, .btn-group-vertical > .btn-bracket-battle ~ .btn-add-point, .btn-group-vertical > .btn-remove-point ~ .btn-remove-point, .btn-group-vertical > .btn-add-point ~ .btn-remove-point, .btn-group-vertical > .btn-remove-point ~ .btn-add-point, .btn-group-vertical > .btn-add-point ~ .btn-add-point, .btn-group-vertical > .btn-continue ~ .btn, .btn-group-vertical > .btn-continue ~ .btn-bracket-win, .btn-group-vertical > .btn-continue ~ .btn-bracket-lose, .btn-group-vertical > .btn-continue ~ .btn-bracket, .btn-group-vertical > .btn-continue ~ .btn-bracket-battle, .btn-group-vertical > .btn-continue ~ .btn-remove-point, .btn-group-vertical > .btn-continue ~ .btn-add-point, .btn-group-vertical > .btn ~ .btn-continue, .btn-group-vertical > .btn-bracket-win ~ .btn-continue, .btn-group-vertical > .btn-bracket-lose ~ .btn-continue, .btn-group-vertical > .btn-bracket ~ .btn-continue, .btn-group-vertical > .btn-bracket-battle ~ .btn-continue, .btn-group-vertical > .btn-remove-point ~ .btn-continue, .btn-group-vertical > .btn-add-point ~ .btn-continue, .btn-group-vertical > .btn-continue ~ .btn-continue, .btn-group-vertical > .btn-shuffle ~ .btn, .btn-group-vertical > .btn-shuffle ~ .btn-bracket-win, .btn-group-vertical > .btn-shuffle ~ .btn-bracket-lose, .btn-group-vertical > .btn-shuffle ~ .btn-bracket, .btn-group-vertical > .btn-shuffle ~ .btn-bracket-battle, .btn-group-vertical > .btn-shuffle ~ .btn-remove-point, .btn-group-vertical > .btn-shuffle ~ .btn-add-point, .btn-group-vertical > .btn-shuffle ~ .btn-continue, .btn-group-vertical > .btn ~ .btn-shuffle, .btn-group-vertical > .btn-bracket-win ~ .btn-shuffle, .btn-group-vertical > .btn-bracket-lose ~ .btn-shuffle, .btn-group-vertical > .btn-bracket ~ .btn-shuffle, .btn-group-vertical > .btn-bracket-battle ~ .btn-shuffle, .btn-group-vertical > .btn-remove-point ~ .btn-shuffle, .btn-group-vertical > .btn-add-point ~ .btn-shuffle, .btn-group-vertical > .btn-continue ~ .btn-shuffle, .btn-group-vertical > .btn-shuffle ~ .btn-shuffle, .btn-group-vertical > .btn-genre ~ .btn, .btn-group-vertical > .btn-genre ~ .btn-bracket-win, .btn-group-vertical > .btn-genre ~ .btn-bracket-lose, .btn-group-vertical > .btn-genre ~ .btn-bracket, .btn-group-vertical > .btn-genre ~ .btn-bracket-battle, .btn-group-vertical > .btn-genre ~ .btn-remove-point, .btn-group-vertical > .btn-genre ~ .btn-add-point, .btn-group-vertical > .btn-genre ~ .btn-continue, .btn-group-vertical > .btn-genre ~ .btn-shuffle, .btn-group-vertical > .btn ~ .btn-genre, .btn-group-vertical > .btn-bracket-win ~ .btn-genre, .btn-group-vertical > .btn-bracket-lose ~ .btn-genre, .btn-group-vertical > .btn-bracket ~ .btn-genre, .btn-group-vertical > .btn-bracket-battle ~ .btn-genre, .btn-group-vertical > .btn-remove-point ~ .btn-genre, .btn-group-vertical > .btn-add-point ~ .btn-genre, .btn-group-vertical > .btn-continue ~ .btn-genre, .btn-group-vertical > .btn-shuffle ~ .btn-genre, .btn-group-vertical > .btn-genre ~ .btn-genre, .btn-group-vertical > .btn-pool-size ~ .btn, .btn-group-vertical > .btn-pool-size ~ .btn-bracket-win, .btn-group-vertical > .btn-pool-size ~ .btn-bracket-lose, .btn-group-vertical > .btn-pool-size ~ .btn-bracket, .btn-group-vertical > .btn-pool-size ~ .btn-bracket-battle, .btn-group-vertical > .btn-pool-size ~ .btn-remove-point, .btn-group-vertical > .btn-pool-size ~ .btn-add-point, .btn-group-vertical > .btn-pool-size ~ .btn-continue, .btn-group-vertical > .btn-pool-size ~ .btn-shuffle, .btn-group-vertical > .btn-pool-size ~ .btn-genre, .btn-group-vertical > .btn ~ .btn-pool-size, .btn-group-vertical > .btn-bracket-win ~ .btn-pool-size, .btn-group-vertical > .btn-bracket-lose ~ .btn-pool-size, .btn-group-vertical > .btn-bracket ~ .btn-pool-size, .btn-group-vertical > .btn-bracket-battle ~ .btn-pool-size, .btn-group-vertical > .btn-remove-point ~ .btn-pool-size, .btn-group-vertical > .btn-add-point ~ .btn-pool-size, .btn-group-vertical > .btn-continue ~ .btn-pool-size, .btn-group-vertical > .btn-shuffle ~ .btn-pool-size, .btn-group-vertical > .btn-genre ~ .btn-pool-size, .btn-group-vertical > .btn-pool-size ~ .btn-pool-size,
 .btn-group-vertical > .btn-group:not(:first-child) > .btn,
+.btn-group-vertical > .btn-group:not(:first-child) > .btn-bracket-win,
+.btn-group-vertical > .btn-group:not(:first-child) > .btn-bracket-lose,
+.btn-group-vertical > .btn-group:not(:first-child) > .btn-bracket,
+.btn-group-vertical > .btn-group:not(:first-child) > .btn-bracket-battle,
 .btn-group-vertical > .group-pool-size:not(:first-child) > .btn,
+.btn-group-vertical > .group-pool-size:not(:first-child) > .btn-bracket-win,
+.btn-group-vertical > .group-pool-size:not(:first-child) > .btn-bracket-lose,
+.btn-group-vertical > .group-pool-size:not(:first-child) > .btn-bracket,
+.btn-group-vertical > .group-pool-size:not(:first-child) > .btn-bracket-battle,
+.btn-group-vertical > .btn-group:not(:first-child) > .btn-remove-point,
+.btn-group-vertical > .group-pool-size:not(:first-child) > .btn-remove-point,
+.btn-group-vertical > .btn-group:not(:first-child) > .btn-add-point,
+.btn-group-vertical > .group-pool-size:not(:first-child) > .btn-add-point,
 .btn-group-vertical > .btn-group:not(:first-child) > .btn-continue,
 .btn-group-vertical > .group-pool-size:not(:first-child) > .btn-continue,
 .btn-group-vertical > .btn-group:not(:first-child) > .btn-shuffle,
@@ -4932,7 +5130,7 @@ textarea.form-control-lg {
   border-bottom-right-radius: 0.2rem;
 }
 
-.badge {
+.badge, .point-container {
   display: inline-block;
   padding: 0.35em 0.65em;
   font-size: 0.75em;
@@ -4944,11 +5142,11 @@ textarea.form-control-lg {
   vertical-align: baseline;
   border-radius: 0.25rem;
 }
-.badge:empty {
+.badge:empty, .point-container:empty {
   display: none;
 }
 
-.btn .badge, .btn-continue .badge, .btn-shuffle .badge, .btn-genre .badge, .btn-pool-size .badge {
+.btn .badge, .btn-bracket-win .badge, .btn-bracket-lose .badge, .btn-bracket .badge, .btn-bracket-battle .badge, .btn-remove-point .badge, .btn-add-point .badge, .btn-continue .badge, .btn-shuffle .badge, .btn-genre .badge, .btn-pool-size .badge, .btn .point-container, .btn-bracket-win .point-container, .btn-bracket-lose .point-container, .btn-bracket .point-container, .btn-bracket-battle .point-container, .btn-remove-point .point-container, .btn-add-point .point-container, .btn-continue .point-container, .btn-shuffle .point-container, .btn-genre .point-container, .btn-pool-size .point-container {
   position: relative;
   top: -1px;
 }
@@ -6387,7 +6585,7 @@ textarea.form-control-lg {
   background-color: currentColor;
   opacity: 0.5;
 }
-.placeholder.btn::before, .placeholder.btn-continue::before, .placeholder.btn-shuffle::before, .placeholder.btn-genre::before, .placeholder.btn-pool-size::before {
+.placeholder.btn::before, .placeholder.btn-bracket-win::before, .placeholder.btn-bracket-lose::before, .placeholder.btn-bracket::before, .placeholder.btn-bracket-battle::before, .placeholder.btn-remove-point::before, .placeholder.btn-add-point::before, .placeholder.btn-continue::before, .placeholder.btn-shuffle::before, .placeholder.btn-genre::before, .placeholder.btn-pool-size::before {
   display: inline-block;
   content: "";
 }
@@ -6728,7 +6926,7 @@ textarea.form-control-lg {
   display: table-cell !important;
 }
 
-.d-flex {
+.d-flex, .point-modifier-container, .point-container {
   display: flex !important;
 }
 
@@ -6944,7 +7142,7 @@ textarea.form-control-lg {
   width: 75% !important;
 }
 
-.w-100, .btn-genre {
+.w-100, .btn-bracket-win, .btn-bracket-lose, .btn-bracket, .btn-genre {
   width: 100% !important;
 }
 
@@ -7004,7 +7202,7 @@ textarea.form-control-lg {
   flex-direction: row !important;
 }
 
-.flex-column, .column-container {
+.flex-column, .point-modifier-container, .column-container {
   flex-direction: column !important;
 }
 
@@ -7100,7 +7298,7 @@ textarea.form-control-lg {
   align-items: flex-end !important;
 }
 
-.align-items-center {
+.align-items-center, .point-container {
   align-items: center !important;
 }
 
@@ -7148,7 +7346,7 @@ textarea.form-control-lg {
   align-self: flex-end !important;
 }
 
-.align-self-center, .combo-divider {
+.align-self-center, .combo-divider, .point-modifier-container {
   align-self: center !important;
 }
 
@@ -7192,7 +7390,7 @@ textarea.form-control-lg {
   order: 6 !important;
 }
 
-.m-0 {
+.m-0, .bracket-container {
   margin: 0 !important;
 }
 
@@ -7294,7 +7492,7 @@ textarea.form-control-lg {
   margin-top: 0 !important;
 }
 
-.mt-1 {
+.mt-1, .btn-remove-point {
   margin-top: 0.25rem !important;
 }
 
@@ -7378,11 +7576,11 @@ textarea.form-control-lg {
   margin-left: 0 !important;
 }
 
-.ms-1 {
+.ms-1, .btn-remove-point, .btn-add-point {
   margin-left: 0.25rem !important;
 }
 
-.ms-2, .btn-shuffle {
+.ms-2, .btn-shuffle, .point-container {
   margin-left: 0.5rem !important;
 }
 
@@ -7402,15 +7600,15 @@ textarea.form-control-lg {
   margin-left: auto !important;
 }
 
-.p-0 {
+.p-0, .bracket-container {
   padding: 0 !important;
 }
 
-.p-1 {
+.p-1, .col-bracket {
   padding: 0.25rem !important;
 }
 
-.p-2, .selection-container, .selection-container-locked {
+.p-2, .bg-container, .selection-container, .selection-container-locked {
   padding: 0.5rem !important;
 }
 
@@ -7441,7 +7639,7 @@ textarea.form-control-lg {
   padding-left: 0.5rem !important;
 }
 
-.px-3 {
+.px-3, .point-container {
   padding-right: 1rem !important;
   padding-left: 1rem !important;
 }
@@ -7451,7 +7649,7 @@ textarea.form-control-lg {
   padding-left: 1.5rem !important;
 }
 
-.px-5, .btn-genre {
+.px-5, .btn-bracket-battle, .btn-genre {
   padding-right: 3rem !important;
   padding-left: 3rem !important;
 }
@@ -7594,7 +7792,7 @@ textarea.form-control-lg {
   font-size: calc(1.325rem + 0.9vw) !important;
 }
 
-.fs-3 {
+.fs-3, .point-container {
   font-size: calc(1.3rem + 0.6vw) !important;
 }
 
@@ -7796,7 +7994,7 @@ textarea.form-control-lg {
   --bs-text-opacity: 1;
 }
 
-.bg-primary, .selection-container, .selection-container-locked {
+.bg-primary, .point-container, .bg-container, .selection-container, .selection-container-locked {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
 }
@@ -7860,11 +8058,11 @@ textarea.form-control-lg {
   --bs-bg-opacity: 0.1;
 }
 
-.bg-opacity-25, .selection-container, .selection-container-locked {
+.bg-opacity-25, .bg-container, .selection-container, .selection-container-locked {
   --bs-bg-opacity: 0.25;
 }
 
-.bg-opacity-50 {
+.bg-opacity-50, .point-container {
   --bs-bg-opacity: 0.5;
 }
 
@@ -7916,7 +8114,7 @@ textarea.form-control-lg {
   border-radius: 0.25rem !important;
 }
 
-.rounded-3, .selection-container, .selection-container-locked, .main-container {
+.rounded-3, .point-container, .bg-container, .selection-container, .selection-container-locked, .main-container {
   border-radius: 0.3rem !important;
 }
 
@@ -11220,7 +11418,7 @@ textarea.form-control-lg {
     font-size: 2rem !important;
   }
 
-  .fs-3 {
+  .fs-3, .point-container {
     font-size: 1.75rem !important;
   }
 

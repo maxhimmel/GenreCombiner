@@ -18,18 +18,40 @@
     @extend .fs-4;
 }
 
+.bg-container {
+    @extend .bg-primary;
+    @extend .bg-opacity-25;
+    @extend .rounded-3;
+    @extend .p-2;
+}
+
 .column-container {
     @extend .d-inline-flex;
     @extend .flex-column;
 }
 
 .selection-container {
+    @extend .bg-container;
     @extend .d-inline-flex;
-    @extend .bg-primary;
-    @extend .bg-opacity-25;
-    @extend .rounded-3; 
     @extend .mt-2;
-    @extend .p-2;
+}
+
+.point-container {
+    @extend .badge;
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .bg-primary;
+    @extend .bg-opacity-50;
+    @extend .rounded-3;
+    @extend .ms-2;
+    @extend .px-3;
+    @extend .fs-3;
+}
+
+.point-modifier-container {
+    @extend .d-flex;
+    @extend .flex-column;
+    @extend .align-self-center;
 }
 
 .selection-container-locked {
@@ -63,6 +85,23 @@
     @extend .btn-success;
 }
 
+%btn-battle-point {
+    @extend .ms-1;
+    @extend .btn;
+    @extend .btn-sm;
+}
+
+.btn-add-point {
+    @extend %btn-battle-point;
+    @extend .btn-success;
+}
+
+.btn-remove-point {
+    @extend %btn-battle-point;
+    @extend .btn-danger;
+    @extend .mt-1;
+}
+
 .dice-container {
     @extend .row;
     @extend .row-cols-auto;
@@ -88,4 +127,44 @@
 .swap-available {
     @extend .blink;
     @extend .border-4;
+}
+
+.bracket-container {
+    @extend .row;
+    @extend .row-cols-2;
+    @extend .p-0;
+    @extend .m-0;
+}
+
+.col-bracket {
+    @extend .col;
+    @extend .p-1;
+}
+
+.btn-bracket-battle {
+    @extend .px-5;
+    @extend .btn;
+    @extend .btn-lg;
+    @extend .btn-primary;
+}
+
+%btn-bracket-base {
+    @extend .w-100;
+    @extend .btn;
+    @extend .btn-lg;
+}
+
+.btn-bracket {
+    @extend %btn-bracket-base;
+    @extend .btn-primary;
+}
+
+.btn-bracket-lose {
+    @extend %btn-bracket-base;
+    @extend .btn-danger;
+}
+
+.btn-bracket-win {
+    @extend %btn-bracket-base;
+    @extend .btn-success;
 }
