@@ -90,7 +90,7 @@
 				
 				<!--SAMPLE: A selected genre ready to pair with another.-->
 				<div class="selection-container">
-					<button type="button" class="swap-queued btn-genre">RTS</button>
+					<button type="button" class="btn-genre swap-queued">RTS</button>
 					<div class="combo-divider">
 						<i class="fa-solid fa-plus"></i>
 					</div>
@@ -99,11 +99,11 @@
 
 				<!--SAMPLE: Genres that are able to be swapped with the currently selected genre.-->
 				<div class="selection-container">
-					<button type="button" class="swap-available btn-genre">Platformer</button>
+					<button type="button" class="btn-genre swap-available">Platformer</button>
 					<div class="combo-divider">
 						<i class="fa-solid fa-plus"></i>
 					</div>
-					<button type="button" class="swap-available btn-genre">SHMUP</button>
+					<button type="button" class="btn-genre swap-available">SHMUP</button>
 				</div>
 
 				<!--SAMPLE: Swapped genres appear locked + disabled.-->
@@ -133,17 +133,17 @@
 						<i class="mx-2 fa-solid fa-plus"></i>
 						JRPG
 					</button>
-					<div class="d-flex align-items-center ms-2 fs-3 px-3 rounded-3 badge bg-primary bg-opacity-50">
+					<div class="point-container">
 						0
 						<div class="align-self-center ms-1">
 							<i class="fa-lg fa-solid fa-hand-fist"></i>
 						</div>
 					</div>
-					<div class="d-flex flex-column align-self-center">
-						<button type="button" class="ms-1 btn btn-sm btn-success">
+					<div class="point-modifier-container">
+						<button type="button" class="btn-add-point">
 							<i class="fa-solid fa-plus"></i>
 						</button>
-						<button type="button" class="ms-1 mt-1 btn btn-sm btn-danger">
+						<button type="button" class="btn-remove-point">
 							<i class="fa-solid fa-minus"></i>
 						</button>
 					</div>
@@ -163,7 +163,7 @@
 			<div class="mt-2 column-container">
 				<div class="column-container">
 					<div class="d-inline-flex justify-content-center">
-						<button type="button" class="smash px-5 btn btn-lg btn-primary">
+						<button type="button" class="smash btn-bracket-battle">
 							Rhythm
 							<i class="mx-2 fa-solid fa-plus"></i>
 							JRPG
@@ -171,14 +171,14 @@
 						<div class="align-self-center mx-3">
 							<i class="fa-4x fa-solid fa-hand-fist"></i>
 						</div>
-						<button type="button" class="hurt px-5 btn btn-lg btn-primary">
+						<button type="button" class="hurt btn-bracket-battle">
 							Puzzle
 							<i class="mx-2 fa-solid fa-plus"></i>
 							Racing
 						</button>
 					</div>
 
-					<div class="mt-3 column-container bg-primary bg-opacity-25 p-2 rounded-3">
+					<div class="mt-3 column-container bg-container">
 						<div class="container-fluid p-0">
 							<div class="row p-0 m-0 justify-content-center">
 								<div class="col-5">
@@ -254,36 +254,36 @@
 					</div>
 				</div>
 
-				<div class="mt-5 column-container bg-primary bg-opacity-25 p-2 rounded-3">
+				<div class="mt-5 column-container bg-container">
 					<div class="container-fluid p-0">
-						<div class="row row-cols-2 p-0 m-0">
+						<div class="bracket-container">
 							<!--This genre is currently battling - so we grey it out.-->
-							<div class="col p-1">
-								<button type="button" class="w-100 btn btn-lg btn-primary" disabled>
+							<div class="col-bracket">
+								<button type="button" class="btn-bracket" disabled>
 									Rhythm
 									<i class="mx-2 fa-solid fa-plus"></i>
 									JRPG
 								</button>
 							</div>
 							<!--This genre is currently battling - so we grey it out.-->
-							<div class="col p-1">
-								<button type="button" class="w-100 btn btn-lg btn-primary" disabled>
+							<div class="col-bracket">
+								<button type="button" class="btn-bracket" disabled>
 									Puzzle
 									<i class="mx-2 fa-solid fa-plus"></i>
 									Racing
 								</button>
 							</div>
 							<!--This genre lost a previous battle.-->
-							<div class="col p-1">
-								<button type="button" class="w-100 btn btn-lg btn-danger">
+							<div class="col-bracket">
+								<button type="button" class="btn-bracket-lose">
 									SHMUP
 									<i class="mx-2 fa-solid fa-plus"></i>
 									FPS
 								</button>
 							</div>
 							<!--This genre won EVERY battle!-->
-							<div class="col p-1">
-								<button type="button" class="w-100 btn btn-lg btn-success">
+							<div class="col-bracket">
+								<button type="button" class="btn-bracket-win">
 									Pinball
 									<i class="mx-2 fa-solid fa-plus"></i>
 									Fishing
