@@ -1,0 +1,91 @@
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "./anims.scss";
+
+.main-container {
+    @extend .p-5;
+    @extend .mb-4;
+    @extend .bg-light;
+    @extend .rounded-3;
+}
+
+.title {
+    @extend .display-5;
+    @extend .fw-bold;
+}
+
+.description {
+    @extend .col-md-8;
+    @extend .fs-4;
+}
+
+.column-container {
+    @extend .d-inline-flex;
+    @extend .flex-column;
+}
+
+.selection-container {
+    @extend .d-inline-flex;
+    @extend .bg-primary;
+    @extend .bg-opacity-25;
+    @extend .rounded-3; 
+    @extend .mt-2;
+    @extend .p-2;
+}
+
+.selection-container-locked {
+    @extend .selection-container;
+    @extend .bg-dark;
+}
+
+.btn-pool-size {
+    @extend .btn;
+    @extend .btn-primary;
+}
+
+.btn-genre {
+    @extend .w-100;
+    @extend .px-5;
+    @extend .btn;
+    @extend .btn-lg;
+    @extend .btn-primary;
+}
+
+.btn-shuffle {
+    @extend .ms-2;
+    @extend .btn;
+    @extend .btn-lg;
+    @extend .btn-primary;
+}
+
+.btn-continue {
+    @extend .btn;
+    @extend .btn-lg;
+    @extend .btn-success;
+}
+
+.dice-container {
+    @extend .row;
+    @extend .row-cols-auto;
+    @extend .justify-content-center;
+}
+
+.group-pool-size {
+    @extend .btn-group;
+    @extend .btn-group-lg;
+}
+
+.combo-divider {
+    @extend .mx-1;
+    @extend .align-self-center;
+    @extend .btn-lg;
+}
+
+.swap-queued {
+    @extend .border-4;
+    @extend .border-warning;
+}
+
+.swap-available {
+    @extend .blink;
+    @extend .border-4;
+}
