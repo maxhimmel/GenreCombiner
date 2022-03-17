@@ -1,0 +1,185 @@
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "./anims.scss";
+
+.main-container {
+    @extend .p-5;
+    @extend .mb-4;
+    @extend .bg-light;
+    @extend .rounded-3;
+}
+
+.title {
+    @extend .display-5;
+    @extend .fw-bold;
+    @extend .position-relative;
+    @extend .d-inline-flex;
+}
+
+.badge-allotment {
+    @extend .badge;
+    @extend .rounded-pill;
+    @extend .bg-warning;
+    // @extend .border;
+    // @extend .border-3;
+    // @extend .border-secondary;
+    @extend .position-absolute;
+    @extend .translate-middle;
+    left: 130%;
+    top: 50%;
+}
+
+.description {
+    @extend .col-md-8;
+    @extend .fs-4;
+}
+
+.bg-container {
+    @extend .bg-primary;
+    @extend .bg-opacity-25;
+    @extend .rounded-3;
+    @extend .p-2;
+}
+
+.column-container {
+    @extend .d-inline-flex;
+    @extend .flex-column;
+}
+
+.selection-container {
+    @extend .bg-container;
+    @extend .d-inline-flex;
+    @extend .mt-2;
+}
+
+.point-container {
+    @extend .badge;
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .bg-primary;
+    @extend .bg-opacity-50;
+    @extend .rounded-3;
+    @extend .ms-2;
+    @extend .px-3;
+    @extend .fs-3;
+}
+
+.point-modifier-container {
+    @extend .d-flex;
+    @extend .flex-column;
+    @extend .align-self-center;
+}
+
+.selection-container-locked {
+    @extend .selection-container;
+    @extend .bg-dark;
+}
+
+.btn-pool-size {
+    @extend .btn;
+    @extend .btn-primary;
+}
+
+.btn-genre {
+    @extend .w-100;
+    @extend .px-5;
+    @extend .btn;
+    @extend .btn-lg;
+    @extend .btn-primary;
+}
+
+.btn-shuffle {
+    @extend .ms-2;
+    @extend .btn;
+    @extend .btn-lg;
+    @extend .btn-primary;
+}
+
+.btn-continue {
+    @extend .btn;
+    @extend .btn-lg;
+    @extend .btn-success;
+}
+
+%btn-battle-point {
+    @extend .ms-1;
+    @extend .btn;
+    @extend .btn-sm;
+}
+
+.btn-add-point {
+    @extend %btn-battle-point;
+    @extend .btn-success;
+}
+
+.btn-remove-point {
+    @extend %btn-battle-point;
+    @extend .btn-danger;
+    @extend .mt-1;
+}
+
+.dice-container {
+    @extend .row;
+    @extend .row-cols-auto;
+    @extend .justify-content-center;
+}
+
+.group-pool-size {
+    @extend .btn-group;
+    @extend .btn-group-lg;
+}
+
+.combo-divider {
+    @extend .mx-1;
+    @extend .align-self-center;
+    @extend .btn-lg;
+}
+
+.swap-queued {
+    @extend .border-4;
+    @extend .border-warning;
+}
+
+.swap-available {
+    @extend .blink;
+    @extend .border-4;
+}
+
+.bracket-container {
+    @extend .row;
+    @extend .row-cols-2;
+    @extend .p-0;
+    @extend .m-0;
+}
+
+.col-bracket {
+    @extend .col;
+    @extend .p-1;
+}
+
+.btn-bracket-battle {
+    @extend .px-5;
+    @extend .btn;
+    @extend .btn-lg;
+    @extend .btn-primary;
+}
+
+%btn-bracket-base {
+    @extend .w-100;
+    @extend .btn;
+    @extend .btn-lg;
+}
+
+.btn-bracket {
+    @extend %btn-bracket-base;
+    @extend .btn-primary;
+}
+
+.btn-bracket-lose {
+    @extend %btn-bracket-base;
+    @extend .btn-danger;
+}
+
+.btn-bracket-win {
+    @extend %btn-bracket-base;
+    @extend .btn-success;
+}

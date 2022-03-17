@@ -1,0 +1,68 @@
+/*
+    https://www.lenastanley.com/2020/06/roll-dice.html
+*/
+
+.dice {
+    --size: 60px;
+
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+}
+
+.dot {
+    position: absolute;
+    width: calc(var(--size) * 0.2);
+    height: calc(var(--size) * 0.2);
+    margin-top: calc(var(--size) * 0.2 * 0.5 * -1);
+    margin-right: calc(var(--size) * 0.2 * 0.25);
+    margin-bottom: calc(var(--size) * 0.2 * 0.25);
+    margin-left: calc(var(--size) * 0.2 * 0.5 * -1);
+    border-radius: 20px;
+    background-color: #f25f5c;
+    box-shadow: inset 2px 2px #d90429;
+}
+
+.side {
+    position: absolute;
+    background-color: #ffF;
+    border-radius:5px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #e5e5e5;
+}
+
+.two-1, .three-1, .four-1, .five-1, .six-1 {
+    top: 20%;
+    left: 20%; 
+}
+
+.four-3, .five-3, .six-4 {
+    top: 20%;
+    left: 80%; 
+}
+
+.one-1, .three-2, .five-5 {
+    top: 50%;
+    left: 50%; 
+}
+
+.four-2, .five-2, .six-3 {
+    top: 80%;
+    left: 20%; 
+}
+
+.two-2, .three-3, .four-4, .five-4, .six-6 {
+    top: 80%;
+    left: 80%; 
+}
+
+.six-2 {
+    top: 50%;
+    left: 20%; 
+}
+
+.six-5 {
+    top: 50%;
+    left: 80%; 
+}
