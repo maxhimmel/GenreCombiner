@@ -11,6 +11,21 @@
 .title {
     @extend .display-5;
     @extend .fw-bold;
+    @extend .position-relative;
+    @extend .d-inline-flex;
+}
+
+.badge-allotment {
+    @extend .badge;
+    @extend .rounded-pill;
+    @extend .bg-warning;
+    // @extend .border;
+    // @extend .border-3;
+    // @extend .border-secondary;
+    @extend .position-absolute;
+    @extend .translate-middle;
+    left: 130%;
+    top: 50%;
 }
 
 .description {

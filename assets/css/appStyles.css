@@ -5130,7 +5130,7 @@ textarea.form-control-lg {
   border-bottom-right-radius: 0.2rem;
 }
 
-.badge, .point-container {
+.badge, .point-container, .badge-allotment {
   display: inline-block;
   padding: 0.35em 0.65em;
   font-size: 0.75em;
@@ -5142,11 +5142,11 @@ textarea.form-control-lg {
   vertical-align: baseline;
   border-radius: 0.25rem;
 }
-.badge:empty, .point-container:empty {
+.badge:empty, .point-container:empty, .badge-allotment:empty {
   display: none;
 }
 
-.btn .badge, .btn-bracket-win .badge, .btn-bracket-lose .badge, .btn-bracket .badge, .btn-bracket-battle .badge, .btn-remove-point .badge, .btn-add-point .badge, .btn-continue .badge, .btn-shuffle .badge, .btn-genre .badge, .btn-pool-size .badge, .btn .point-container, .btn-bracket-win .point-container, .btn-bracket-lose .point-container, .btn-bracket .point-container, .btn-bracket-battle .point-container, .btn-remove-point .point-container, .btn-add-point .point-container, .btn-continue .point-container, .btn-shuffle .point-container, .btn-genre .point-container, .btn-pool-size .point-container {
+.btn .badge, .btn-bracket-win .badge, .btn-bracket-lose .badge, .btn-bracket .badge, .btn-bracket-battle .badge, .btn-remove-point .badge, .btn-add-point .badge, .btn-continue .badge, .btn-shuffle .badge, .btn-genre .badge, .btn-pool-size .badge, .btn .point-container, .btn-bracket-win .point-container, .btn-bracket-lose .point-container, .btn-bracket .point-container, .btn-bracket-battle .point-container, .btn-remove-point .point-container, .btn-add-point .point-container, .btn-continue .point-container, .btn-shuffle .point-container, .btn-genre .point-container, .btn-pool-size .point-container, .btn .badge-allotment, .btn-bracket-win .badge-allotment, .btn-bracket-lose .badge-allotment, .btn-bracket .badge-allotment, .btn-bracket-battle .badge-allotment, .btn-remove-point .badge-allotment, .btn-add-point .badge-allotment, .btn-continue .badge-allotment, .btn-shuffle .badge-allotment, .btn-genre .badge-allotment, .btn-pool-size .badge-allotment {
   position: relative;
   top: -1px;
 }
@@ -6930,7 +6930,7 @@ textarea.form-control-lg {
   display: flex !important;
 }
 
-.d-inline-flex, .selection-container, .selection-container-locked, .column-container {
+.d-inline-flex, .selection-container, .selection-container-locked, .column-container, .title {
   display: inline-flex !important;
 }
 
@@ -6958,11 +6958,11 @@ textarea.form-control-lg {
   position: static !important;
 }
 
-.position-relative {
+.position-relative, .title {
   position: relative !important;
 }
 
-.position-absolute {
+.position-absolute, .badge-allotment {
   position: absolute !important;
 }
 
@@ -7022,7 +7022,7 @@ textarea.form-control-lg {
   right: 100% !important;
 }
 
-.translate-middle {
+.translate-middle, .badge-allotment {
   transform: translate(-50%, -50%) !important;
 }
 
@@ -8014,7 +8014,7 @@ textarea.form-control-lg {
   background-color: rgba(var(--bs-info-rgb), var(--bs-bg-opacity)) !important;
 }
 
-.bg-warning {
+.bg-warning, .badge-allotment {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-warning-rgb), var(--bs-bg-opacity)) !important;
 }
@@ -8122,7 +8122,7 @@ textarea.form-control-lg {
   border-radius: 50% !important;
 }
 
-.rounded-pill {
+.rounded-pill, .badge-allotment {
   border-radius: 50rem !important;
 }
 
@@ -11527,6 +11527,10 @@ textarea.form-control-lg {
   90% {
     transform: scale(1) rotate(0deg);
   }
+}
+.badge-allotment {
+  left: 130%;
+  top: 50%;
 }
 
 /*# sourceMappingURL=appStyles.css.map */
