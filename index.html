@@ -9,7 +9,6 @@
 	<script type="text/javascript" src="node_modules/@fortawesome/fontawesome-free/js/all.js"></script>
 	
 	<!--Genre Combiner-->
-	<link rel="stylesheet" type="text/css" href="assets/sass/anims.scss">
 	<link rel="stylesheet" type="text/css" href="assets/sass/dice.scss">
 	<!--This style sheet includes Bootstrap's stylings as well-->
 	<link rel="stylesheet" type="text/css" href="assets/sass/appStyles.scss">
@@ -18,58 +17,62 @@
 </head>
 <body>
 	<!--GET STARTED-->
-	<div class="main-container">
-		<div class="container-fluid py-5">
-			<h1 class="title">Get Started</h1>
-			<p class="description">Select how many genres you'd like to choose from.</p>
-			<div class="selection-container">
-				<div class="group-pool-size" role="group">
-					<button type="button" class="btn-pool-size">4</button>
-					<button type="button" class="btn-pool-size">8</button>
-					<button type="button" class="btn-pool-size">12</button>
-					<button type="button" class="btn-pool-size">16</button>
+	<div class="main-container fade-drop">
+		<div class="container-fluid py-5" style="overflow: hidden">
+			<div class="fade-drop">
+				<h1 class="title">Get Started</h1>
+				<p class="description">Select how many genres you'd like to choose from.</p>
+				<div class="selection-container">
+					<div class="group-pool-size" role="group">
+						<button type="button" class="btn-pool-size">4</button>
+						<button type="button" class="btn-pool-size">8</button>
+						<button type="button" class="btn-pool-size">12</button>
+						<button type="button" class="btn-pool-size">16</button>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="container-fluid">
-			<button type="button" class="btn-continue" disabled>Continue</button>
+			<button type="button" class="btn-continue">Continue</button>
 		</div>
 	</div>
 	
 	<!--RANDOMIZER-->
 	<div class="main-container">
-		<div class="container-fluid py-5">
-			<h1 class="title">Genres<span class="badge-allotment">2</span></h1>
-			<p class="description">Randomly replace any of these genres.</p>
-			<div class="column-container">
-				<div class="selection-container">
-					<button type="button" class="btn-genre">RTS</button>
-					<button type="button" class="btn-shuffle">
-						<i class="fa-solid fa-shuffle"></i>
-					</button>
-				</div>
-				<div class="selection-container">
-					<button type="button" class="btn-genre">Puzzle</button>
-					<button type="button" class="btn-shuffle">
-						<i class="fa-solid fa-shuffle"></i>
-					</button>
-				</div>
-				<div class="selection-container">
-					<button type="button" class="btn-genre">Fishing</button>
-					<button type="button" class="btn-shuffle">
-						<i class="fa-solid fa-shuffle"></i>
-					</button>
-				</div>
-				<div class="selection-container">
-					<button type="button" class="btn-genre">Pinball</button>
-					<button type="button" class="btn-shuffle">
-						<i class="fa-solid fa-shuffle"></i>
-					</button>
+		<div class="fade-dropper show">
+			<div class="container-fluid py-5">
+				<h1 class="title">Genres<span class="badge-allotment">2</span></h1>
+				<p class="description">Randomly replace any of these genres.</p>
+				<div class="column-container">
+					<div class="selection-container">
+						<button type="button" class="btn-genre">RTS</button>
+						<button type="button" class="btn-shuffle">
+							<i class="fa-solid fa-shuffle"></i>
+						</button>
+					</div>
+					<div class="selection-container">
+						<button type="button" class="btn-genre">Puzzle</button>
+						<button type="button" class="btn-shuffle">
+							<i class="fa-solid fa-shuffle"></i>
+						</button>
+					</div>
+					<div class="selection-container">
+						<button type="button" class="btn-genre">Fishing</button>
+						<button type="button" class="btn-shuffle">
+							<i class="fa-solid fa-shuffle"></i>
+						</button>
+					</div>
+					<div class="selection-container">
+						<button type="button" class="btn-genre">Pinball</button>
+						<button type="button" class="btn-shuffle">
+							<i class="fa-solid fa-shuffle"></i>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="container-fluid">
-			<button type="button" class="btn-continue" disabled>Continue</button>
+			<button type="button" class="btn-continue">Continue</button>
 		</div>
 	</div>
 		
@@ -117,7 +120,7 @@
 			</div>
 		</div>
 		<div class="container-fluid">
-			<button type="button" class="btn-continue" disabled>Continue</button>
+			<button type="button" class="btn-continue">Continue</button>
 		</div>
 	</div>
 		
@@ -151,7 +154,7 @@
 			</div>
 		</div>
 		<div class="container-fluid">
-			<button type="button" class="btn-continue" disabled>Continue</button>
+			<button type="button" class="btn-continue">Continue</button>
 		</div>
 	</div>
 		
@@ -295,7 +298,7 @@
 			</div>
 		</div>
 		<div class="container-fluid">
-			<button type="button" class="btn-continue" disabled>Continue</button>
+			<button type="button" class="btn-continue">Continue</button>
 		</div>
 	</div>
 
