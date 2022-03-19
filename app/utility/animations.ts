@@ -30,7 +30,7 @@ export class AnimUtil
     private static completeFadeDrop( element: HTMLElement ): void
     {
         element.classList.remove( "fade-dropping" );
-        element.classList.add( "fade-dropper" );
+        element.classList.add( "fade-drop" );
 
         const isShowing: boolean = ( element.style.height !== "0px" && element.style.height !== "" );
         element.classList.toggle( "show", isShowing );
@@ -45,7 +45,7 @@ export class AnimUtil
         const startOpacity: number = isShowRequested ? 0 : 100;
         this.setFadeDrop( element, startHeight, startOpacity );
 
-        element.classList.remove( "fade-dropper", "show" );
+        element.classList.remove( "fade-drop", "show" );
         element.classList.add( "fade-dropping" );
 
         const endHeight: number = isShowRequested ? element.scrollHeight : 0;
