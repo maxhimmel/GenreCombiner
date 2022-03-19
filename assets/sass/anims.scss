@@ -56,3 +56,37 @@
         transform: scale(1) rotate(0deg);
     }
 }
+
+.fade-drop {
+    animation-name: anim-fade-drop;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    overflow: hidden;
+}
+
+@keyframes anim-fade-drop {
+    0% { 
+        opacity: 0%; 
+        transform: translateY(-100%);
+    }    
+    90% { 
+        opacity: 100%; 
+        transform: translateY(0%);
+    }
+}
+
+.fade-dropper:not(.show) {
+    display: none;
+}
+
+.fade-dropping {
+    $duration: 1s;
+
+    height: 0;
+    opacity: 0%;
+    overflow: hidden;
+    transition: 
+        height $duration ease-in-out, 
+        opacity $duration ease-in-out;
+}
