@@ -1,7 +1,7 @@
 import { genreDatabase } from "./genreDatabase";
 import { GenreModel } from "./genreModel";
 import { ArrayUtil } from "../utility/arrays";
-import { IEvent } from "../utility/events/ievent";
+import { IEvent } from "../utility/events/iEvent";
 import { DeltaArgs, Observable } from "../utility/observable";
 
 export class GenrePool

@@ -1,4 +1,4 @@
-import * as Events from "./ievent";
+import * as Events from "./iEvent";
 import { ArrayUtil } from "../arrays";
 
 export class EventHandler<TArg> implements Events.IEvent<TArg>

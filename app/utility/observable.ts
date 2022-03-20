@@ -1,5 +1,5 @@
 import { EventHandler } from "./events/eventHandler";
-import { IEvent } from "./events/ievent";
+import { IEvent } from "./events/iEvent";
 
 export class Observable<TItem>
 {

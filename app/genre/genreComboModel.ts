@@ -1,6 +1,6 @@
 import { GenreModel } from "./genreModel";
 import { DeltaArgs, Observable } from "../utility/observable";
-import { IEvent } from "../utility/events/ievent";
+import { IEvent } from "../utility/events/iEvent";
 
 export class GenreComboModel
 {
