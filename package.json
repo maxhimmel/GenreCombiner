@@ -2,6 +2,10 @@
   "name": "genrecombiner",
   "version": "1.0.0",
   "description": "Combine game genres to create a wholly new and unique experience!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/maxhimmel/GenreCombiner.git"
+  },
   "scripts": {
     "dev": "parcel index.html",
     "build": "parcel build index.html"
