@@ -17,7 +17,24 @@
 </head>
 <body>
 	<!--GET STARTED-->
-	<div class="main-container">
+	<div class="main-container" id="mainContainer">
+		<div class="fade-drop" id="fadeDropper">
+			<div class="container-fluid py-5">
+				<h1 class="title" id="title">Title<span class="badge-allotment d-none">2</span></h1>
+				<p class="description" id="description">Description</p>
+				<div id="subContainer">
+					<!--Sub menus will be injected here-->
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<button type="button" class="btn-continue" id="continue">Continue</button>
+		</div>
+	</div>
+
+	
+	<!--GET STARTED-->
+	<!-- <div class="main-container">
 		<div class="container-fluid py-5">
 			<h1 class="title">Get Started</h1>
 			<p class="description">Select how many genres you'd like to choose from.</p>
@@ -33,10 +50,10 @@
 		<div class="container-fluid">
 			<button type="button" class="btn-continue">Continue</button>
 		</div>
-	</div>
+	</div> -->
 	
 	<!--RANDOMIZER-->
-	<div class="main-container">
+	<!-- <div class="main-container">
 		<div class="fade-drop show">
 			<div class="container-fluid py-5">
 				<h1 class="title">Genres<span class="badge-allotment">2</span></h1>
@@ -72,15 +89,15 @@
 		<div class="container-fluid">
 			<button type="button" class="btn-continue">Continue</button>
 		</div>
-	</div>
+	</div> -->
 		
 	<!--COMBINER-->
-	<div class="main-container">
+	<!-- <div class="main-container">
 		<div class="container-fluid py-5">
 			<h1 class="title">Combos<span class="badge-allotment">2</span></h1>
 			<p class="description">Rearrange and create your own combinations.</p>
 			<div class="column-container">
-				<!--SAMPLE: The default appearance.-->
+				<!- -SAMPLE: The default appearance.- ->
 				<div class="selection-container">
 					<button type="button" class="btn-genre">FPS</button>
 					<div class="combo-divider">
@@ -89,7 +106,7 @@
 					<button type="button" class="btn-genre">Pinball</button>
 				</div>
 				
-				<!--SAMPLE: A selected genre ready to pair with another.-->
+				<!- -SAMPLE: A selected genre ready to pair with another.- ->
 				<div class="selection-container">
 					<button type="button" class="btn-genre swap-queued">RTS</button>
 					<div class="combo-divider">
@@ -98,7 +115,7 @@
 					<button type="button" class="btn-genre" disabled>Puzzle</button>
 				</div>
 
-				<!--SAMPLE: Genres that are able to be swapped with the currently selected genre.-->
+				<!- -SAMPLE: Genres that are able to be swapped with the currently selected genre.- ->
 				<div class="selection-container">
 					<button type="button" class="btn-genre swap-available">Platformer</button>
 					<div class="combo-divider">
@@ -107,7 +124,7 @@
 					<button type="button" class="btn-genre swap-available">SHMUP</button>
 				</div>
 
-				<!--SAMPLE: Swapped genres appear locked + disabled.-->
+				<!- -SAMPLE: Swapped genres appear locked + disabled.- ->
 				<div class="selection-container-locked">
 					<button type="button" class="btn-genre" disabled>Rhythm</button>
 					<div class="combo-divider">
@@ -120,10 +137,10 @@
 		<div class="container-fluid">
 			<button type="button" class="btn-continue">Continue</button>
 		</div>
-	</div>
+	</div> -->
 		
 	<!--ASSIGNER-->
-	<div class="main-container">
+	<!-- <div class="main-container">
 		<div class="container-fluid py-5">
 			<h1 class="title">Points<span class="badge-allotment">6</span></h1>
 			<p class="description">Assign battle points to increase a combo's odds.</p>
@@ -154,10 +171,10 @@
 		<div class="container-fluid">
 			<button type="button" class="btn-continue">Continue</button>
 		</div>
-	</div>
+	</div> -->
 		
 	<!--BATTLER-->
-	<div class="main-container">
+	<!-- <div class="main-container">
 		<div class="container-fluid py-5">
 			<h1 class="title">Battle</h1>
 			<p class="description">May the best combo win!</p>
@@ -258,7 +275,7 @@
 				<div class="mt-5 column-container bg-container">
 					<div class="container-fluid p-0">
 						<div class="bracket-container">
-							<!--This genre is currently battling - so we grey it out.-->
+							<!- -This genre is currently battling - so we grey it out.- ->
 							<div class="col-bracket">
 								<button type="button" class="btn-bracket" disabled>
 									Rhythm
@@ -266,7 +283,7 @@
 									JRPG
 								</button>
 							</div>
-							<!--This genre is currently battling - so we grey it out.-->
+							<!- -This genre is currently battling - so we grey it out.- ->
 							<div class="col-bracket">
 								<button type="button" class="btn-bracket" disabled>
 									Puzzle
@@ -274,7 +291,7 @@
 									Racing
 								</button>
 							</div>
-							<!--This genre lost a previous battle.-->
+							<!- -This genre lost a previous battle.- ->
 							<div class="col-bracket">
 								<button type="button" class="btn-bracket-lose">
 									SHMUP
@@ -282,7 +299,7 @@
 									FPS
 								</button>
 							</div>
-							<!--This genre won EVERY battle!-->
+							<!- -This genre won EVERY battle!- ->
 							<div class="col-bracket">
 								<button type="button" class="btn-bracket-win">
 									Pinball
@@ -298,7 +315,7 @@
 		<div class="container-fluid">
 			<button type="button" class="btn-continue">Continue</button>
 		</div>
-	</div>
+	</div> -->
 
 	<!--Scripts-->
 	<script type="module" src="app/app.ts"></script>
