@@ -1,5 +1,6 @@
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 @import "./anims.scss";
+@import "./dice.scss";
 
 .main-container {
     @extend .p-5;
@@ -121,6 +122,11 @@
     @extend .row;
     @extend .row-cols-auto;
     @extend .justify-content-center;
+}
+
+.dice-battle {
+    @extend .dice;
+    @extend .m-1;
 }
 
 .group-pool-size {
