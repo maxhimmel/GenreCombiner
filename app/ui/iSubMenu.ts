@@ -2,7 +2,9 @@ export interface ISubMenu
 {
     get title(): string;
     get description(): string;
-    get element(): HTMLElement;
+
+    attach( parent: HTMLElement ): void;
+    remove(): void;
 }
 
 class EmptySubMenu implements ISubMenu
@@ -15,16 +17,15 @@ class EmptySubMenu implements ISubMenu
     {
         return "Something went wrong.";
     }
-    get element(): HTMLElement
+    
+    attach( parent: HTMLElement ): void
     {
-        return this._element;
+        throw new Error( "Method not implemented." );
     }
 
-    private readonly _element: HTMLElement;
-
-    constructor()
+    remove(): void
     {
-        this._element = document.createElement( "template" );
+        throw new Error( "Method not implemented." );
     }
 }
 
