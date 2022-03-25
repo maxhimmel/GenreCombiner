@@ -3,11 +3,6 @@ import { ArrayUtil } from "../arrays";
 
 export class EventHandler<TArg> implements Events.IEvent<TArg>
 {
-    get event(): Events.IEvent<TArg>
-    {
-        return this;
-    }
-
     private _handlers: Events.Signature<TArg>[] = [];
 
     subscribe( func: Events.Signature<TArg> ): void
