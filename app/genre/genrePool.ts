@@ -1,8 +1,7 @@
 import { genreDatabase } from "./genreDatabase";
 import { GenreModel } from "./genreModel";
 import { ArrayUtil } from "../utility/arrays";
-import { IEvent } from "../utility/events/iEvent";
-import { DeltaArgs, Observable } from "../utility/observable";
+import { Observable } from "../utility/observable";
 
 export class GenrePool
 {
@@ -10,12 +9,10 @@ export class GenrePool
     {
         return this._genres.length;
     }
-
     get unusedGenreCount(): number
     {
         return this._genreIndices.length - this._nextGenreIndex;
     }
-
     get isPoolEmpty(): boolean
     {
         return this._nextGenreIndex < 0 || this._nextGenreIndex >= this._genreIndices.length;
@@ -66,8 +63,18 @@ export class GenrePool
             throw new RangeError();
         }
 
-        const genreObservable = this._genres[slotIndex];
+        const genreObservable = this.getGenreAt( slotIndex );
         genreObservable.item = this.getNextGenre();
+    }
+
+    private getGenreAt( slotIndex: number ): Observable<GenreModel>
+    {
+        if ( slotIndex < 0 || slotIndex >= this._genres.length )
+        {
+            throw new RangeError();
+        }
+
+        return this._genres[slotIndex];
     }
 
     private getNextGenre(): GenreModel
@@ -83,11 +90,11 @@ export class GenrePool
         return randGenre;
     }
 
-    *getGenreChangedEvents(): Generator<IEvent<DeltaArgs<GenreModel>>>
+    *getGenreObservables(): Generator<Observable<GenreModel>>
     {
-        for ( let idx: number = 0; idx < this._genres.length; ++idx )
+        for ( let genre of this._genres )
         {
-            yield this._genres[idx].changed;
+            yield genre;
         }
     }
 

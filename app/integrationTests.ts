@@ -63,16 +63,16 @@ class IntegrationTests
         const genrePool: GenrePool = new GenrePool( poolSize );
         console.warn( `GenrePool created of size ${poolSize}.` );
 
-        for ( let genreChangeEvent of genrePool.getGenreChangedEvents() )
+        for ( let genre of genrePool.getGenreObservables() )
         {
-            genreChangeEvent.subscribe( this.onGenrePoolChanged );
+            genre.changed.subscribe( this.onGenrePoolChanged );
         }
 
         genrePool.load();
 
-        for ( let genreChangeEvent of genrePool.getGenreChangedEvents() )
+        for ( let genre of genrePool.getGenreObservables() )
         {
-            genreChangeEvent.unsubscribe( this.onGenrePoolChanged );
+            genre.changed.unsubscribe( this.onGenrePoolChanged );
         }
 
         return genrePool;
@@ -88,9 +88,9 @@ class IntegrationTests
 
     private testPoolReplacement( genrePool: GenrePool ): void
     {
-        for ( let genreChangeEvent of genrePool.getGenreChangedEvents() )
+        for ( let genre of genrePool.getGenreObservables() )
         {
-            genreChangeEvent.subscribe( this.onGenrePoolChanged );
+            genre.changed.subscribe( this.onGenrePoolChanged );
         }
 
         const maxReplacements: number = Math.min( genrePool.count, genrePool.unusedGenreCount );
@@ -107,9 +107,9 @@ class IntegrationTests
             genrePool.replaceGenre( randIdx );
         }
 
-        for ( let genreChangeEvent of genrePool.getGenreChangedEvents() )
+        for ( let genre of genrePool.getGenreObservables() )
         {
-            genreChangeEvent.unsubscribe( this.onGenrePoolChanged );
+            genre.changed.unsubscribe( this.onGenrePoolChanged );
         }
     }
 
