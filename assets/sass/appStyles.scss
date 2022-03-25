@@ -77,7 +77,8 @@
 
 .btn-pool-size {
     @extend .btn;
-    @extend .btn-primary;
+    @extend .btn-outline-primary;
+    //@extend .btn-primary;
 }
 
 .btn-genre {
