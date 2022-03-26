@@ -16,9 +16,8 @@ export class GenrePoolItem
     private readonly _shuffled: EventHandler<number> = new EventHandler();
     private readonly _slotIndex: number = -1;
 
-    private _root: HTMLElement | null = null;
     private _labelElement: HTMLElement | null = null;
-    private _shuffleButton: HTMLElement | null = null;
+    private _replaceButton: HTMLElement | null = null;
 
     constructor( slotIndex: number )
     {
@@ -37,11 +36,10 @@ export class GenrePoolItem
 
     private config = ( element: HTMLElement ): void =>
     {
-        this._root = element;
         this._labelElement = element.querySelector( ".btn-genre" );
 
-        this._shuffleButton = element.querySelector( ".btn-shuffle" );
-        this._shuffleButton?.addEventListener( "click", this.onShuffleClicked );
+        this._replaceButton = element.querySelector( ".btn-shuffle" );
+        this._replaceButton?.addEventListener( "click", this.onShuffleClicked );
     }
 
     private onShuffleClicked = () =>
@@ -57,8 +55,8 @@ export class GenrePoolItem
         }
     }
 
-    remove(): void
+    setReplacingActive( isActive: boolean ): void
     {
-        this._root?.remove();
+        this._replaceButton?.toggleAttribute( "disabled", !isActive );
     }
 }

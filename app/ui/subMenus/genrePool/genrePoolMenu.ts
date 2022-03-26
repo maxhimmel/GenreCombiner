@@ -27,6 +27,7 @@ export class GenrePoolMenu extends SubMenu
 
     private readonly _shuffled: EventHandler<number> = new EventHandler();
     private readonly _replacementCount: Observable<number>;
+    private readonly _poolItems: GenrePoolItem[] = [];
 
     constructor(
         container: HTMLElement,
@@ -39,6 +40,7 @@ export class GenrePoolMenu extends SubMenu
         for ( let genre of genres )
         {
             const item = new GenrePoolItem( slotIndex++ );
+            this._poolItems.push( item );
 
             item.init( genre, this._container );
             item.shuffled.subscribe( this.onShuffled );
@@ -50,5 +52,13 @@ export class GenrePoolMenu extends SubMenu
     private onShuffled = ( sender: any, slotIndex: number ): void =>
     {
         this._shuffled.invoke( sender, slotIndex );
+    }
+
+    setReplacingActive( isActive: boolean ): void
+    {
+        for ( let item of this._poolItems )
+        {
+            item.setReplacingActive( isActive );
+        }
     }
 }

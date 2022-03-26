@@ -18,6 +18,8 @@ export class GenrePool
         return this._nextGenreIndex < 0 || this._nextGenreIndex >= this._genreIndices.length;
     }
 
+    readonly replacementCount: Observable<number>;
+
     private _nextGenreIndex: number;
     private readonly _genreIndices: number[];
     private readonly _genres: Observable<GenreModel>[];
@@ -27,6 +29,8 @@ export class GenrePool
         this._nextGenreIndex = 0;
         this._genreIndices = this.allocateRandomIndices();
         this._genres = this.allocateGenrePool( size );
+
+        this.replacementCount = new Observable( this, -1 );
     }
 
     private allocateRandomIndices(): number[]
@@ -52,8 +56,19 @@ export class GenrePool
     {
         for ( let idx = 0; idx < this._genres.length; ++idx )
         {
-            this.replaceGenre( idx );
+            const genreObservable = this.getGenreAt( idx );
+            genreObservable.item = this.getNextGenre();
         }
+
+        const replacements = this.evaluateReplacementCount( this.count );
+        this.replacementCount.item = replacements;
+    }
+
+    private evaluateReplacementCount( poolSize: number ): number
+    {
+        const replacements: number = Math.floor( poolSize / 2 );
+
+        return Math.min( replacements, this.unusedGenreCount );
     }
 
     replaceGenre( slotIndex: number )
@@ -62,6 +77,12 @@ export class GenrePool
         {
             throw new RangeError();
         }
+        if ( this.replacementCount.item <= 0 )
+        {
+            throw new Error();
+        }
+        
+        --this.replacementCount.item;
 
         const genreObservable = this.getGenreAt( slotIndex );
         genreObservable.item = this.getNextGenre();

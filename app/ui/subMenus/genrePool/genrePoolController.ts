@@ -1,25 +1,37 @@
 import { GenrePool } from "../../../genre/genrePool";
+import { DeltaArgs } from "../../../utility/observable";
 import { SubMenuRequest } from "../../menuContainer";
 import { GenrePoolMenu } from "./genrePoolMenu";
 
 export class GenrePoolController
 {
     private readonly _genrePool: GenrePool;
+    private _menu: GenrePoolMenu | null = null;
 
     constructor( poolSize: number )
     {
         this._genrePool = new GenrePool( poolSize );
         this._genrePool.load();
+
+        this._genrePool.replacementCount.changed.subscribe( this.onReplacementsDepleted );
     }
     
+    private onReplacementsDepleted = ( sender: any, changeArgs: DeltaArgs<number> ): void =>
+    {
+        if ( changeArgs.current <= 0 )
+        {
+            this._menu?.setReplacingActive( false );
+        }
+    }
+
     createSubMenuRequest(): SubMenuRequest
     {
         return new SubMenuRequest( ( root: HTMLElement ) =>
         {
-            const menu = new GenrePoolMenu( root, this._genrePool.getGenreObservables(), this._genrePool.replacementCount );
-            menu.shuffled.subscribe( this.onShuffleRequested );
+            this._menu = new GenrePoolMenu( root, this._genrePool.getGenreObservables(), this._genrePool.replacementCount );
+            this._menu.shuffled.subscribe( this.onShuffleRequested );
 
-            return menu;
+            return this._menu;
         } );
     }
 
