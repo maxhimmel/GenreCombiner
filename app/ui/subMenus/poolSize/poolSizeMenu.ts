@@ -1,14 +1,19 @@
 import rootTemplate from "bundle-text:../../../../assets/html/poolSize/poolSizeContainer.html"
 
 import { IEvent } from "../../../utility/events/iEvent";
-import { ISubMenu } from "../../iSubMenu";
+import { SubMenu } from "../../iSubMenu";
 import { HtmlTemplateBuilder } from "../../../utility/htmlTemplateBuilder";
 import { EventHandler } from "../../../utility/events/eventHandler";
 import { PoolSizeButton } from "./poolSizeButton";
 import { ArrayUtil } from "../../../utility/arrays";
+import { Observable } from "../../../utility/observable";
 
-export class PoolSizeMenu implements ISubMenu
+export class PoolSizeMenu extends SubMenu
 {
+    get allotment(): Observable<number> | null
+    {
+        return null;
+    }
     get sizeSelected(): IEvent<number>
     {
         return this._sizeSelected;
@@ -23,29 +28,24 @@ export class PoolSizeMenu implements ISubMenu
         return "Select how many genres you'd like to choose from.";
     }
 
-    private readonly _root: HTMLElement;
-    private readonly _itemContainer: HTMLElement;
+    private _itemContainer: HTMLElement | null = null;
     private readonly _sizeSelected: EventHandler<number>;
     private readonly _sizeButtons: PoolSizeButton[] = [];
 
-    constructor()
+    constructor( container: HTMLElement )
     {
-        this._root = new HtmlTemplateBuilder( rootTemplate )
-            .instant();
-        
-        this._itemContainer = this._root.querySelector( ".group-pool-size" ) as HTMLElement;
+        super( container );
+
+        new HtmlTemplateBuilder( rootTemplate )
+            .config( element => this.config( element ) )
+            .build( container );
 
         this._sizeSelected = new EventHandler();
     }
 
-    attach( parent: HTMLElement ): void
+    private config = ( element: HTMLElement ): void =>
     {
-        parent.appendChild( this._root );
-    }
-
-    remove(): void
-    {
-        this._root.remove();
+        this._itemContainer = element.querySelector( ".group-pool-size" );
     }
 
     select( size: number ): void
@@ -69,7 +69,7 @@ export class PoolSizeMenu implements ISubMenu
             const newButton = new PoolSizeButton();
             this._sizeButtons.push( newButton );
 
-            newButton.init( size, this._itemContainer );
+            newButton.init( size, this._itemContainer as HTMLElement );
             newButton.sizeSelected.subscribe( this.onSizeSelected );
         }
     }
@@ -80,7 +80,7 @@ export class PoolSizeMenu implements ISubMenu
         {
             sizeButton.remove();
         }
-        
+
         ArrayUtil.clear( this._sizeButtons );
     }
 
