@@ -1,4 +1,5 @@
 import { AsyncUtil } from "./async";
+import "../utility/extensions";
 
 export class AnimUtil
 {
@@ -58,12 +59,6 @@ export class AnimUtil
         element.style.height = `${heightPixel}px`;
         element.style.opacity = `${opacityPercent}%`;
 
-        this.reflow( element );
-    }
-
-    // See: Bootstrap.bundle.js
-    private static reflow( elem: HTMLElement ): void
-    {
-        elem.offsetHeight;
+        element.reflow();
     }
 }
