@@ -1,6 +1,7 @@
 import { AnimUtil } from "../utility/animations";
 import { EventHandler } from "../utility/events/eventHandler";
 import { IEvent } from "../utility/events/iEvent";
+import { DeltaArgs } from "../utility/observable";
 import { ISubMenu, emptySubMenu } from "./iSubMenu";
 
 export class MenuContainer
@@ -25,7 +26,7 @@ export class MenuContainer
         this._currentSubMenu = emptySubMenu;
 
         const root = document.querySelector( `#${MenuContainer.ElementID.Root}` ) as HTMLElement;
-        this.cacheElements( root as HTMLElement );
+        this.cacheElements( root );
 
         const continueElement = this.getElement( MenuContainer.ElementID.Continue );
         continueElement.addEventListener( "click", this.onContinueClicked );
@@ -54,18 +55,18 @@ export class MenuContainer
         this._continueClicked.invoke( this );
     }
 
-    async pushSubMenu( subMenu: ISubMenu ): Promise<void>
+    async pushSubMenu( subMenuReqest: SubMenuRequest ): Promise<void>
     {
         if ( this._isAnimatingSubMenu )
         {
-            throw new Error( `Cannot push '${subMenu}' while animating fade-dropping.` );
+            throw new Error( `Cannot push new sub menu while animating fade-dropping.` );
         }
 
         this._isAnimatingSubMenu = true;
         this.setContinueActive( false );
 
         await this.tryHideAndRemoveActiveSubMenu();
-        await this.addAndShowNewSubMenu( subMenu );
+        await this.addAndShowNewSubMenu( subMenuReqest );
 
         this.setContinueActive( true );
         this._isAnimatingSubMenu = false;
@@ -82,7 +83,9 @@ export class MenuContainer
         if ( this.isSubMenuActive() )
         {
             await this.toggleSubMenuCollapse();
-            this._currentSubMenu.remove();
+
+            this.tryListenForAllotmentChanges( this._currentSubMenu, false );
+            this.removeSubMenu();
         }
     }
 
@@ -91,26 +94,79 @@ export class MenuContainer
         return this._currentSubMenu !== emptySubMenu;
     }
 
-    private async addAndShowNewSubMenu( newSubMenu: ISubMenu ): Promise<void>
-    {
-        this._currentSubMenu = newSubMenu;
-
-        const subContainer = this.getElement( MenuContainer.ElementID.Sub );
-        newSubMenu.attach( subContainer );
-
-        const title = this.getElement( MenuContainer.ElementID.Title );
-        title.childNodes[0].textContent = newSubMenu.title;
-
-        const description = this.getElement( MenuContainer.ElementID.Description );
-        description.innerText = newSubMenu.description;
-
-        await this.toggleSubMenuCollapse();
-    }
-
     private async toggleSubMenuCollapse(): Promise<void>
     {
         const fadeDropper = this.getElement( MenuContainer.ElementID.FadeDropper );
         await AnimUtil.toggleFadeDrop( fadeDropper );
+    }
+
+    private removeSubMenu(): void
+    {
+        const subMenuContainer = this.getElement( MenuContainer.ElementID.Sub );
+        while ( subMenuContainer.firstElementChild !== null )
+        {
+            subMenuContainer.lastElementChild?.remove();
+        }
+    }
+
+    private async addAndShowNewSubMenu( subMenuRequest: SubMenuRequest ): Promise<void>
+    {
+        const subContainer = this.getElement( MenuContainer.ElementID.Sub );
+        const newSubMenu = subMenuRequest.create( subContainer );
+        this._currentSubMenu = newSubMenu;
+
+        this.setElementText( MenuContainer.ElementID.Title, newSubMenu.title );
+        this.setElementText( MenuContainer.ElementID.Description, newSubMenu.description );
+        this.tryListenForAllotmentChanges( newSubMenu, true );
+
+        await this.toggleSubMenuCollapse();
+    }
+
+    private tryListenForAllotmentChanges( subMenu: ISubMenu, isListening: boolean ): boolean
+    {
+        if ( subMenu.allotment === null )
+        {
+            return false;
+        }
+
+        if ( isListening )
+        {
+            subMenu.allotment.changed.subscribe( this.onSubMenuAllotmentChanged );
+        }
+        else
+        {
+            subMenu.allotment.changed.unsubscribe( this.onSubMenuAllotmentChanged );
+        }
+
+        this.setElementText( MenuContainer.ElementID.Allotment, subMenu.allotment.item.toString() );
+        this.setElementVisible( MenuContainer.ElementID.Allotment, isListening );
+
+        return true;
+    }
+
+    private onSubMenuAllotmentChanged = ( sender: any, changedArgs: DeltaArgs<number> ): void =>
+    {
+        this.setElementText( MenuContainer.ElementID.Allotment, changedArgs.current.toString() );
+    }
+
+    private setElementText( id: MenuContainer.ElementID, text: string ): void
+    {
+        const element = this.getElement( id );
+        element.childNodes[0].textContent = text;
+    }
+
+    private setElementVisible( id: MenuContainer.ElementID, isVisible: boolean ): void
+    {
+        const element = this.getElement( id );
+
+        if ( isVisible )
+        {
+            element.classList.remove( "d-none" );
+        }
+        else
+        {
+            element.classList.add( "d-none" );
+        }
     }
 
     private getElement( id: MenuContainer.ElementID ): HTMLElement
@@ -135,5 +191,20 @@ export namespace MenuContainer
         FadeDropper = "fadeDropper",
         Continue = "continue",
         Allotment = "badgeAllotment"
+    }
+}
+
+export class SubMenuRequest
+{
+    private readonly _createFn: ( root: HTMLElement ) => ISubMenu;
+
+    constructor( createFn: ( root: HTMLElement ) => ISubMenu  )
+    {
+        this._createFn = createFn;
+    }
+
+    create( root: HTMLElement ): ISubMenu
+    {
+        return this._createFn( root );
     }
 }
