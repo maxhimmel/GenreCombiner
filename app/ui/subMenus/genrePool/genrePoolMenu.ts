@@ -1,15 +1,16 @@
-import htmlTemplate from "bundle-text:../../../../assets/html/genrePool/genrePoolContainer.html"
-
 import { GenreModel } from "../../../genre/genreModel";
 import { EventHandler } from "../../../utility/events/eventHandler";
 import { IEvent } from "../../../utility/events/iEvent";
-import { HtmlTemplateBuilder } from "../../../utility/htmlTemplateBuilder";
-import { DeltaArgs, Observable } from "../../../utility/observable";
-import { ISubMenu } from "../../iSubMenu";
+import { Observable } from "../../../utility/observable";
+import { SubMenu } from "../../iSubMenu";
 import { GenrePoolItem } from "./genrePoolItem";
 
-export class GenrePoolMenu implements ISubMenu
+export class GenrePoolMenu extends SubMenu
 {
+    get allotment(): Observable<number> | null
+    {
+        return this._replacementCount;
+    }
     get shuffled(): IEvent<number>
     {
         return this._shuffled;
@@ -25,34 +26,25 @@ export class GenrePoolMenu implements ISubMenu
     }
 
     private readonly _shuffled: EventHandler<number> = new EventHandler();
-    private readonly _root: HTMLElement;
+    private readonly _replacementCount: Observable<number>;
 
-    constructor()
+    constructor(
+        container: HTMLElement,
+        genres: Generator<Observable<GenreModel>>,
+        replacementCount: Observable<number> )
     {
-        this._root = new HtmlTemplateBuilder( htmlTemplate )
-            .instant();
-    }
+        super( container );
 
-    attach( parent: HTMLElement ): void
-    {
-        parent.appendChild( this._root );
-    }
-
-    remove(): void
-    {
-        this._root.remove();
-    }
-
-    init( genres: Generator<Observable<GenreModel>> ): void
-    {
         let slotIndex: number = 0;
         for ( let genre of genres )
         {
             const item = new GenrePoolItem( slotIndex++ );
 
-            item.init( genre, this._root );
+            item.init( genre, this._container );
             item.shuffled.subscribe( this.onShuffled );
         }
+
+        this._replacementCount = replacementCount;
     }
 
     private onShuffled = ( sender: any, slotIndex: number ): void =>
