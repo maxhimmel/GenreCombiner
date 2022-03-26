@@ -3,6 +3,7 @@ import { EventHandler } from "../utility/events/eventHandler";
 import { IEvent } from "../utility/events/iEvent";
 import { DeltaArgs } from "../utility/observable";
 import { ISubMenu, emptySubMenu } from "./iSubMenu";
+import "../utility/extensions";
 
 export class MenuContainer
 {
@@ -146,7 +147,17 @@ export class MenuContainer
 
     private onSubMenuAllotmentChanged = ( sender: any, changedArgs: DeltaArgs<number> ): void =>
     {
+        this.playAllotmentBounceAnim();
         this.setElementText( MenuContainer.ElementID.Allotment, changedArgs.current.toString() );
+    }
+
+    private playAllotmentBounceAnim(): void
+    {
+        const allotment = this.getElement( MenuContainer.ElementID.Allotment );
+
+        allotment.classList.remove( "allotment-bounce" );
+        allotment.reflow();
+        allotment.classList.add( "allotment-bounce" );
     }
 
     private setElementText( id: MenuContainer.ElementID, text: string ): void
