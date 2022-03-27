@@ -1,9 +1,11 @@
 import { PoolSize } from "../../../genre/poolSize";
 import { Observable } from "../../../utility/observable";
 import { SubMenuRequest } from "../../menuContainer";
+import { GenrePoolController } from "../genrePool/genrePoolController";
+import { IController } from "../iController";
 import { PoolSizeMenu } from "./poolSizeMenu";
 
-export class PoolSizeController
+export class PoolSizeController implements IController
 {
     readonly desiredSize: Observable<number>;
 
@@ -32,5 +34,10 @@ export class PoolSizeController
     {
         this.desiredSize.item = size;
         console.log( `Size: ${size}` );
+    }
+
+    getNextController(): IController
+    {
+        return new GenrePoolController( this.desiredSize.item );
     }
 }

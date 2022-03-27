@@ -1,9 +1,10 @@
 import { GenrePool } from "../../../genre/genrePool";
 import { DeltaArgs } from "../../../utility/observable";
 import { SubMenuRequest } from "../../menuContainer";
+import { IController } from "../iController";
 import { GenrePoolMenu } from "./genrePoolMenu";
 
-export class GenrePoolController
+export class GenrePoolController implements IController
 {
     private readonly _genrePool: GenrePool;
     private _menu: GenrePoolMenu | null = null;
@@ -38,5 +39,10 @@ export class GenrePoolController
     private onShuffleRequested = ( sender: any, slotIndex: number ): void =>
     {
         this._genrePool.replaceGenre( slotIndex );
+    }
+
+    getNextController(): IController
+    {
+        throw new Error( "Method not implemented." );
     }
 }
