@@ -67,8 +67,9 @@
     @extend .badge;
     @extend .d-flex;
     @extend .align-items-center;
-    @extend .bg-primary;
-    @extend .bg-opacity-50;
+    // @extend .bg-primary;
+    @extend .bg-warning;
+    //@extend .bg-opacity-50;
     @extend .rounded-3;
     @extend .ms-2;
     @extend .px-3;
