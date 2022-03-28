@@ -1,4 +1,13 @@
+@import "./variables.scss";
+
+// Bootstrap
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+// Font awesome
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+
+// Custom
 @import "./anims.scss";
 @import "./dice.scss";
 
@@ -47,6 +56,11 @@
     @extend .bg-container;
     @extend .d-inline-flex;
     @extend .mt-2;
+
+    &.locked {
+        @extend .bg-container;
+        @extend .bg-dark;
+    }
 }
 
 .point-container {
@@ -65,11 +79,6 @@
     @extend .d-flex;
     @extend .flex-column;
     @extend .align-self-center;
-}
-
-.selection-container-locked {
-    @extend .selection-container;
-    @extend .bg-dark;
 }
 
 .btn-pool-size {
@@ -134,10 +143,16 @@
     @extend .btn-group-lg;
 }
 
-.combo-divider {
+.combo-divider-icon {
     @extend .mx-1;
     @extend .align-self-center;
     @extend .btn-lg;
+    
+    @include fa-icon-solid($fa-var-plus);
+
+    &.locked {
+        @include fa-icon-solid($fa-var-lock);
+    }
 }
 
 .swap-queued {
