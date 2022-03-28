@@ -1,6 +1,7 @@
 import { GenrePool } from "../../../genre/genrePool";
 import { DeltaArgs } from "../../../utility/observable";
 import { SubMenuRequest } from "../../menuContainer";
+import { GenreCombinerController } from "../genreCombiner/genreCombinerController";
 import { IController } from "../iController";
 import { GenrePoolMenu } from "./genrePoolMenu";
 
@@ -43,6 +44,6 @@ export class GenrePoolController implements IController
 
     getNextController(): IController
     {
-        throw new Error( "Method not implemented." );
+        return new GenreCombinerController( this._genrePool.export() );
     }
 }
