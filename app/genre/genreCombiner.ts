@@ -1,6 +1,7 @@
 import { ArrayUtil } from "../utility/arrays";
 import { GenreModel } from "./genreModel";
 import { GenreComboModel } from "./genreComboModel";
+import { Observable } from "../utility/observable";
 
 export class GenreCombiner
 {
@@ -9,10 +10,7 @@ export class GenreCombiner
         return this._genreCombos.length;
     }
 
-    get genreCombos(): GenreComboModel[]
-    {
-        return this._genreCombos;
-    }
+    readonly swapCount: Observable<number>;
 
     private readonly _genreCombos: GenreComboModel[];
 
@@ -30,10 +28,18 @@ export class GenreCombiner
 
             this._genreCombos[idx] = new GenreComboModel( lhs, rhs );
         }
+
+        const swapCount = Math.floor( comboCount / 2 );
+        this.swapCount = new Observable( this, swapCount );
     }
 
     queueGenreForSwap( comboSlot: number, genreSlot: number ): void
     {
+        if ( this.swapCount.item <= 0 )
+        {
+            throw new RangeError();
+        }
+
         const combo = this.getGenreCombo( comboSlot );
         combo.queueForSwap( genreSlot );
     }
@@ -63,6 +69,8 @@ export class GenreCombiner
 
         lhsCombo.isLocked.item = true;
         rhsCombo.isLocked.item = true;
+
+        --this.swapCount.item;
     }
 
     cancelSwapQueue( comboSlot: number ): void
