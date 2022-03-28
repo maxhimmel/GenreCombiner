@@ -30,7 +30,7 @@ export class Observable<TItem>
 
     constructor( owner: any, item: TItem )
     {
-        this._owner = owner;
+        this._owner = owner ?? this;
         this._item = item;
     }
 }
