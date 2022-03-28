@@ -4,6 +4,8 @@ import { IEvent } from "../utility/events/iEvent";
 
 export class GenreComboModel
 {
+    static readonly EMPTY_SLOT: number = -1;
+
     get queuedSwapSlotChanged(): IEvent<DeltaArgs<number>>
     {
         return this._queuedSwapSlot.changed;
@@ -34,11 +36,11 @@ export class GenreComboModel
         for ( let idx: number = 0; idx < genreArgs.length; ++idx )
         {
             const genre = genreArgs[idx];
-            this.combo[idx] = new Observable( this, genre );
+            this.combo[idx] = new Observable( null, genre );
         }
 
         this.isLocked = new Observable<boolean>( this, false );
-        this._queuedSwapSlot = new Observable( this, -1 );
+        this._queuedSwapSlot = new Observable( this, GenreComboModel.EMPTY_SLOT );
         this._battlePoints = new Observable( this, 0 );
     }
 
@@ -64,7 +66,7 @@ export class GenreComboModel
 
     private isQueuedForSwap(): boolean
     {
-        return this._queuedSwapSlot.item !== -1;
+        return this._queuedSwapSlot.item !== GenreComboModel.EMPTY_SLOT;
     }
 
     private isSwapCanceled( swapSlot: number ): boolean
@@ -74,7 +76,7 @@ export class GenreComboModel
 
     cancelSwapQueue(): void
     {
-        this._queuedSwapSlot.item = -1;
+        this._queuedSwapSlot.item = GenreComboModel.EMPTY_SLOT;
     }
 
     addBattlePoint(): void
