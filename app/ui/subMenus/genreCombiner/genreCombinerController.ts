@@ -1,6 +1,7 @@
 import { GenreCombiner } from "../../../genre/genreCombiner";
 import { GenreModel } from "../../../genre/genreModel";
 import { SubMenuRequest } from "../../menuContainer";
+import { BattleAssignerController } from "../battleAssigner/battleAssignerController";
 import { IController } from "../iController";
 import { GenreCombinerMenu } from "./genreCombinerMenu";
 import { SlotLookup } from "./genreComboItem";
@@ -54,6 +55,6 @@ export class GenreCombinerController implements IController
 
     getNextController(): IController
     {
-        throw new Error( "Method not implemented." );
+        return new BattleAssignerController( this._genreCombiner.export() );
     }
 }
