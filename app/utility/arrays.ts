@@ -25,6 +25,14 @@ export class ArrayUtil
         }
     }
 
+    static removeAt<T>( array: Array<T>, index: number ): void
+    {
+        if ( index >= 0 && index < array.length )
+        {
+            array.splice( index, 1 );
+        }
+    }
+
     static createRange( count: number, start: number = 0 ): number[]
     {
         const range: number[] = new Array( count );
