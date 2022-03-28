@@ -190,9 +190,8 @@ class IntegrationTests
     //#region BattleAssigner
     private testBattleAssignerInitialization( combos: GenreComboModel[] ): BattleAssigner
     {
-        const battlePointAllotment: number = Random.range( 2, 9 );
-        const battleAssigner: BattleAssigner = new BattleAssigner( battlePointAllotment, combos );
-        console.warn( `BattleAssigner created with ${battlePointAllotment} point(s) & ${combos.length} combos.` );
+        const battleAssigner: BattleAssigner = new BattleAssigner( combos );
+        console.warn( `BattleAssigner created with ${battleAssigner.remainingPoints.item} point(s) & ${combos.length} combos.` );
 
         return battleAssigner;
     }

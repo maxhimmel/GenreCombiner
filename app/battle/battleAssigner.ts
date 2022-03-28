@@ -12,9 +12,11 @@ export class BattleAssigner
 
     private readonly _genreCombos: GenreComboModel[];
 
-    constructor( pointAllotment: number, genreCombos: GenreComboModel[] )
+    constructor( genreCombos: GenreComboModel[] )
     {
         this._genreCombos = genreCombos;
+
+        const pointAllotment = genreCombos.length * 2;
         this.remainingPoints = new Observable( this, pointAllotment );
     }
 
