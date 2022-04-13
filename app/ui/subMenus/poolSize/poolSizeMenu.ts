@@ -37,15 +37,15 @@ export class PoolSizeMenu extends SubMenu
         super( container );
 
         new HtmlTemplateBuilder( rootTemplate )
-            .config( element => this.config( element ) )
+            .config( this.config )
             .build( container );
 
         this._sizeSelected = new EventHandler();
     }
 
-    private config = ( element: HTMLElement ): void =>
+    private config = ( root: HTMLElement ): void =>
     {
-        this._itemContainer = element.querySelector( ".group-pool-size" );
+        this._itemContainer = root.querySelector( ".group-pool-size" );
     }
 
     select( size: number ): void

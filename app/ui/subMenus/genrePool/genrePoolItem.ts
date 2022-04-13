@@ -27,18 +27,18 @@ export class GenrePoolItem
     init( genreModel: Observable<GenreModel>, parent: HTMLElement ): void
     {
         new HtmlTemplateBuilder( htmlTemplate )
-            .config( elem => this.config( elem ) )
+            .config( this.config )
             .build( parent );
 
         genreModel.changed.subscribe( this.update );
         this.update( this, new DeltaArgs( genreModel.item, GenreModel.empty ) );
     }
 
-    private config = ( element: HTMLElement ): void =>
+    private config = ( root: HTMLElement ): void =>
     {
-        this._labelElement = element.querySelector( ".btn-genre" );
+        this._labelElement = root.querySelector( ".btn-genre" );
 
-        this._replaceButton = element.querySelector( ".btn-shuffle" );
+        this._replaceButton = root.querySelector( ".btn-shuffle" );
         this._replaceButton?.addEventListener( "click", this.onShuffleClicked );
     }
 

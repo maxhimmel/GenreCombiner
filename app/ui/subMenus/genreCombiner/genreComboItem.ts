@@ -32,7 +32,7 @@ export class GenreComboItem
         this._slotIndex = slotIndex;
 
         new HtmlTemplateBuilder( html )
-            .config( root => this.config( root ) )
+            .config( this.config )
             .build( parent );
     }
 

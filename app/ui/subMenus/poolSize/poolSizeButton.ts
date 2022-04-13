@@ -30,14 +30,14 @@ export class PoolSizeButton
             .build( parent );
     }
 
-    private config = (element: HTMLElement ): void =>
+    private config = (root: HTMLElement ): void =>
     {
         const id = `sizeItem${this._size}`;
 
-        this._inputElement = element.querySelector( "input" ) as HTMLInputElement;
+        this._inputElement = root.querySelector( "input" ) as HTMLInputElement;
         this._inputElement.id = id;
 
-        this._labelElement = element.querySelector( "label" ) as HTMLLabelElement;
+        this._labelElement = root.querySelector( "label" ) as HTMLLabelElement;
         this._labelElement.htmlFor = id;
 
         this._labelElement.innerText = this._size.toString();
