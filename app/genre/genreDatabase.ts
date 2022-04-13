@@ -1,4 +1,4 @@
-import { rawGenres } from "../../assets/genres.json";
+import { rawGenres } from "../../assets/data/genres.json";
 import { GenreModel } from "./genreModel";
 
 class GenreDatabase
