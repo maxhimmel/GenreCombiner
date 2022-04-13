@@ -1,7 +1,3 @@
-:root {
-    --smash-dir: 1;
-}
-
 .blink {
     animation-name: anim-blink;
     animation-duration: 1s;
@@ -15,23 +11,44 @@
 }
 
 .smash {
-    animation-name: anim-smash;
     animation-duration: 1s;
     animation-iteration-count: infinite;
     animation-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
-    transform-origin: bottom left;
+    &.lhs {
+        animation-name: anim-smash-lhs;
+        transform-origin: bottom left;
+    }
+    &.rhs {
+        animation-name: anim-smash-rhs;
+        transform-origin: bottom right;
+    }
 }
 
-@keyframes anim-smash {
+@keyframes anim-smash-lhs {
     0% { 
         transform: rotate(0deg);
     }
     50% { 
-        transform: rotate(calc(-70deg * var(--smash-dir)));
+        transform: rotate(-70deg);
     }
     60% { 
-        transform: rotate(calc(-70deg * var(--smash-dir))) scale(1.35);
+        transform: rotate(-70deg) scale(1.35);
+    }
+    100% { 
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes anim-smash-rhs {
+    0% { 
+        transform: rotate(0deg);
+    }
+    50% { 
+        transform: rotate(70deg);
+    }
+    60% { 
+        transform: rotate(70deg) scale(1.35);
     }
     100% { 
         transform: rotate(0deg);
@@ -39,13 +56,31 @@
 }
 
 .hurt {
-    animation-name: anim-hurt;
     animation-duration: 1s;
     animation-iteration-count: infinite;
     animation-timing-function: cubic-bezier(0.12, 0.85, 0.64, 1.71);
+
+    &.lhs {
+        animation-name: anim-hurt-lhs;
+    }
+    &.rhs {
+        animation-name: anim-hurt-rhs;
+    }
 }
 
-@keyframes anim-hurt {
+@keyframes anim-hurt-lhs {
+    73% {
+        transform: scale(1) rotate(0deg);
+    }
+    80% { 
+        transform: scale(0.7) rotate(30deg);
+    }
+    90% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+@keyframes anim-hurt-rhs {
     73% {
         transform: scale(1) rotate(0deg);
     }
@@ -62,7 +97,7 @@
 }
 
 .fade-dropping {
-    $duration: 1s;
+    $duration: 0.5s;
 
     height: 0;
     opacity: 0%;
@@ -84,4 +119,73 @@
     30%  { transform: scale(.9, 1.1) }
     50%  { transform: scale(1, 1) }
     100% { transform: scale(1, 1) }
+}
+
+.dice-lose {
+    animation-name: anim-dice-lose;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes anim-dice-lose {
+    0% { border-color: white; }
+    10% { border-color: var(--bs-danger); }
+    20% { border-color: white; }
+    30% { border-color: var(--bs-danger); }
+    40% { border-color: white; }
+    50% { border-color: var(--bs-danger); }
+    60% { border-color: white; }
+}
+
+.dice-win {
+    animation-name: anim-dice-win;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes anim-dice-win {
+    0% { border-color: white; }
+    10% { border-color: var(--bs-success); }
+    20% { border-color: white; }
+    30% { border-color: var(--bs-success); }
+    40% { border-color: white; }
+    50% { border-color: var(--bs-success); }
+    60% { border-color: white; }
+}
+
+.dice-tie {
+    animation-name: anim-dice-tie;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes anim-dice-tie {
+    0% { border-color: white; }
+    10% { border-color: black; }
+    20% { border-color: white; }
+    30% { border-color: black; }
+    40% { border-color: white; }
+    50% { border-color: black; }
+    60% { border-color: white; }
+}
+
+.height-adjust {
+    $duration: 0.5s;
+
+    height: auto;
+    overflow: hidden;
+    transition: 
+        height $duration ease-in-out;
+}
+
+.anim-pull-down {
+    $duration: 0.5s;
+
+    height: auto;
+    transform: none;
+
+    overflow: hidden;
+    transition: 
+        transform $duration ease-in-out,
+        max-height $duration ease-in-out;
 }

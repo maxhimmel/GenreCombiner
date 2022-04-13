@@ -19,8 +19,8 @@
     margin-bottom: calc(var(--size) * 0.2 * 0.25);
     margin-left: calc(var(--size) * 0.2 * 0.5 * -1);
     border-radius: 20px;
-    background-color: #f25f5c;
-    box-shadow: inset 2px 2px #d90429;
+    background-color: gray;
+    box-shadow: inset 2px 2px black;
 }
 
 .side {
@@ -29,7 +29,7 @@
     border-radius:5px;
     width: 100%;
     height: 100%;
-    border: 1px solid #e5e5e5;
+    border: 4px solid #e5e5e5;
 }
 
 .two-1, .three-1, .four-1, .five-1, .six-1 {
