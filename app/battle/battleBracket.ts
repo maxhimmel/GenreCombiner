@@ -167,7 +167,7 @@ export class BattleBracket
     }
 }
 
-export class BattlePair
+class BattlePair
 {
     readonly lhsCombo: GenreComboModel;
     readonly rhsCombo: GenreComboModel;

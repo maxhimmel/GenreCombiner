@@ -86,7 +86,7 @@ export class BattleResolver
         return round;
     }
 
-    private getWinningSide( lhsDie: number, rhsDie: number, lhsRollCount: number, rhsRollCount: number ): -1|0|1
+    private getWinningSide( lhsDie: number, rhsDie: number, lhsRollCount: number, rhsRollCount: number ): GenreSide
     {
         if ( rhsDie > lhsDie )
         {
@@ -137,11 +137,25 @@ export class BattleRound
 {
     readonly lhsDiceRolls: number[];
     readonly rhsDiceRolls: number[];
-    readonly winners: number[] = [];
+    readonly winners: GenreSide[] = [];
 
     constructor( lhsRolls: number[], rhsRolls: number[] )
     {
         this.lhsDiceRolls = lhsRolls;
         this.rhsDiceRolls = rhsRolls;
     }
+
+    getWinningSide(): GenreSide
+    {
+        let sum: number = 0;
+
+        for ( const winningSide of this.winners )
+        {
+            sum += winningSide;
+        }
+
+        return Math.sign( sum ) as GenreSide;
+    }
 }
+
+export type GenreSide = -1 | 0 | 1;
