@@ -1,6 +1,7 @@
 import { BattleAssigner } from "../../../battle/battleAssigner";
 import { GenreComboModel } from "../../../genre/genreComboModel";
 import { SubMenuRequest } from "../../menuContainer";
+import { BattlerController } from "../battler/battlerController";
 import { IController } from "../iController";
 import { BattleAssignerMenu, PointModification } from "./battleAssignerMenu";
 
@@ -38,6 +39,6 @@ export class BattleAssignerController implements IController
 
     getNextController(): IController
     {
-        throw new Error( "Method not implemented." );
+        return new BattlerController( this._battleAssigner.export() );
     }
 }
