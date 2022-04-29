@@ -8,15 +8,22 @@ import { BattlerMenu } from "./battlerMenu";
 
 export class BattlerController implements IController
 {
+    private readonly BATTLE_START_DELAY: number = 1;
+
     private readonly _battler: BattleBracket;
     private readonly _combos: GenreComboModel[];
 
     private _menu: BattlerMenu | null = null;
+    private _currentRound: number = 0;
+    private _currentBattle: BattleResult;
 
     constructor( combos: GenreComboModel[] )
     {
         this._combos = combos;
         this._battler = new BattleBracket( combos );
+
+        this._currentRound = 0;
+        this._currentBattle = this._battler.resolveNextBattle();
     }
 
     createSubMenuRequest(): SubMenuRequest
@@ -24,32 +31,50 @@ export class BattlerController implements IController
         return new SubMenuRequest( root =>
         {
             this._menu = new BattlerMenu( root, this._combos );
-
-            this.update();
+            this._menu.battleStartClicked.subscribe( this.onBattleStarted );
+            this._menu.initializeBattle( this._currentBattle );
 
             return this._menu;
         } );
     }
 
-    private async update(): Promise<void>
+    private onBattleStarted = async ( sender: any ): Promise<void> =>
     {
-        console.log( "START!" );
+        await AsyncUtil.delay( this.BATTLE_START_DELAY );
 
-        while ( !this._battler.isEmpty )
+        while ( this.isBattling() )
         {
-            const battle: BattleResult = this._battler.resolveNextBattle();
+            const round: BattleRound = this._currentBattle.rounds[this._currentRound++];
 
-            await this._menu?.updateBattleStart( battle );
+            await this._menu?.updateRound( round );
 
-            for ( const round of battle.rounds )
+            if ( this.isBattling() )
             {
-                await this._menu?.updateRound( round );
+                this._menu?.nextRound();
             }
-
-            await this._menu?.updateBattleEnd( battle );
         }
 
-        console.log( "COMPLETE!" );
+        await this.onBattleEnded();
+    }
+
+    private isBattling(): boolean
+    {
+        return this._currentRound < this._currentBattle.rounds.length;
+    }
+
+    private async onBattleEnded(): Promise<void>
+    {
+        await this._menu?.updateBattleEnd( this._currentBattle );
+
+        if ( this._battler.isEmpty )
+        {
+        }
+        else
+        {
+            this._currentRound = 0;
+            this._currentBattle = this._battler.resolveNextBattle();
+            this._menu?.initializeBattle( this._currentBattle );
+        }
     }
 
     getNextController(): IController

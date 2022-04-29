@@ -17,14 +17,17 @@ export class BattleComboItem
     private config = ( root: HTMLElement ): void =>
     {
         this._root = root;
+        this._root.style.transform = "scale(0)";
     }
 
-    update( combo: GenreComboModel ): void
+    async update( combo: GenreComboModel ): Promise<void>
     {
         if ( this._root === null )
         {
             return;
         }
+        
+        await this.playTransition( "anim-shrink", "scale(0)" );
 
         if ( this._root.firstChild !== null )
         {
@@ -34,18 +37,50 @@ export class BattleComboItem
         {
             this._root.lastChild.textContent = combo.combo[1].item.name;
         }
+
+        await this.playTransition( "anim-grow", "scale(1)" );
+    }
+
+    private async playTransition( name: string, value: string ): Promise<void>
+    {
+        if ( this._root !== null )
+        {
+            if ( !this._root.classList.toggle( name ) )
+            {
+                return;
+            }
+
+            window.requestAnimationFrame( () =>
+            {
+                if ( this._root !== null )
+                {
+                    this._root.style.transform = value;
+                }
+            } );
+            await this._root.waitForTransitionEnd();
+            
+            this._root.classList.toggle( name );
+        }
     }
 
     async playWinAnimation(direction: number): Promise<void>
     {
         const side = this.getSideClassName( direction );
         this._root?.classList.add( "smash", side );
+
+        await this._root?.waitForAnimationEnd();
+
+        this.clearAnimations();
     }
 
     async playLoseAnimation(direction: number): Promise<void>
     {
         const side = this.getSideClassName( direction );
         this._root?.classList.add( "hurt", side );
+
+        await this._root?.waitForAnimationEnd();
+
+        this.clearAnimations();
     }
 
     private getSideClassName( side: number ): string
@@ -58,7 +93,7 @@ export class BattleComboItem
         return side < 0 ? "lhs" : "rhs";
     }
 
-    clearAnimations(): void
+    private clearAnimations(): void
     {
         this._root?.classList.remove( "smash", "hurt", "lhs", "rhs" );
     }

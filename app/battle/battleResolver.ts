@@ -31,7 +31,7 @@ export class BattleResolver
             const lhsDice: number[] = this.createDiceRolls( this._lhsRollCount );
             const rhsDice: number[] = this.createDiceRolls( this._rhsRollCount );
 
-            const round = this.resolveRound( lhsDice, rhsDice );
+            const round = this.resolveRound( rounds.length, lhsDice, rhsDice );
             rounds.push( round );
         }
 
@@ -60,9 +60,9 @@ export class BattleResolver
         return rhs - lhs;
     }
 
-    private resolveRound(lhsDice: number[], rhsDice: number[]): BattleRound
+    private resolveRound( index: number, lhsDice: number[], rhsDice: number[] ): BattleRound
     {
-        const round = new BattleRound( lhsDice, rhsDice );
+        const round = new BattleRound( index, lhsDice, rhsDice );
 
         const maxRolls = Math.min( this._lhsRollCount, this._rhsRollCount );
         for ( let idx: number = 0; idx < maxRolls; ++idx )
@@ -135,12 +135,14 @@ export class BattleResult
 
 export class BattleRound
 {
+    readonly index: number;
     readonly lhsDiceRolls: number[];
     readonly rhsDiceRolls: number[];
     readonly winners: GenreSide[] = [];
 
-    constructor( lhsRolls: number[], rhsRolls: number[] )
+    constructor( index: number, lhsRolls: number[], rhsRolls: number[] )
     {
+        this.index = index;
         this.lhsDiceRolls = lhsRolls;
         this.rhsDiceRolls = rhsRolls;
     }

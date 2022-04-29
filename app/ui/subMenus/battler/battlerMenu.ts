@@ -6,12 +6,15 @@ import { SubMenu } from "../../iSubMenu";
 import { BattleResult, BattleRound } from "../../../battle/battleResolver";
 import { BattleComboItem } from "./battleComboItem";
 import { DiceMenu } from "./dice/diceMenu";
-import { AsyncUtil } from "../../../utility/async";
 import { GenreComboModel } from "../../../genre/genreComboModel";
 import { BattlerPoolMenu } from "./pool/battlerPoolMenu";
+import { IEvent } from "../../../utility/events/iEvent";
+import { AsyncUtil } from "../../../utility/async";
 
 export class BattlerMenu extends SubMenu
 {
+    private readonly ROUND_END_DELAY: number = 0.5;
+    
     get allotment(): Observable<number> | null
     {
         return null;
@@ -23,6 +26,11 @@ export class BattlerMenu extends SubMenu
     get description(): string
     {
         return "May the best combo win!";
+    }
+
+    get battleStartClicked(): IEvent<void>
+    {
+        return this._diceMenu.battleStartClicked;
     }
 
     private _lhsContainer: HTMLElement | null = null;
@@ -54,40 +62,46 @@ export class BattlerMenu extends SubMenu
         this._rhsComboItem = new BattleComboItem( this._rhsContainer as HTMLElement );
     }
 
-    async updateBattleStart( battle: BattleResult ): Promise<void>
+    async initializeBattle( battle: BattleResult ): Promise<void>
     {
         this._lhsComboItem?.update( battle.lhsCombo );
         this._rhsComboItem?.update( battle.rhsCombo );
 
         this._poolMenu.setBattlers( battle.lhsCombo, battle.rhsCombo, true );
+
+        this._diceMenu.initializeBattle( battle );
     }
 
     async updateRound( round: BattleRound )
     {
         await this._diceMenu.update( round );
 
-        // const winningSide = round.getWinningSide();
-        // if ( winningSide === 0 )
-        // {
-        //     // Tied!
-        //     return;
-        // }
+        const winningSide = round.getWinningSide();
+        if ( winningSide === 0 )
+        {
+            // Tied!
+            return;
+        }
 
-        // let roundWinner: BattleComboItem | null = winningSide < 0 ? this._lhsComboItem : this._rhsComboItem;
-        // let roundLoser: BattleComboItem | null = winningSide < 0 ? this._rhsComboItem : this._lhsComboItem;
+        let roundWinner: BattleComboItem | null = winningSide < 0 ? this._lhsComboItem : this._rhsComboItem;
+        let roundLoser: BattleComboItem | null = winningSide < 0 ? this._rhsComboItem : this._lhsComboItem;
 
-        // roundWinner?.playWinAnimation( winningSide );
-        // roundLoser?.playLoseAnimation( winningSide * -1 );
+        roundWinner?.playWinAnimation( winningSide );
+        await roundLoser?.playLoseAnimation( winningSide * -1 );
 
-        // await AsyncUtil.delay( 1.5 );
+        await AsyncUtil.delay( this.ROUND_END_DELAY );
+    }
 
-        // roundWinner?.clearAnimations();
-        // roundLoser?.clearAnimations();
+    nextRound(): void
+    {
+        this._diceMenu.nextRound();
     }
 
     async updateBattleEnd( battle: BattleResult ): Promise<void>
     {
         this._poolMenu.setBattlers( battle.lhsCombo, battle.rhsCombo, false );
         this._poolMenu.setLoser( battle.loser );
+
+        await this._diceMenu.battleEnd();
     }
 }

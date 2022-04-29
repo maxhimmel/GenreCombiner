@@ -1,23 +1,42 @@
 import html from "bundle-text:../../../../../assets/html/battler/dice/diceContainer.html"
+import htmlRoundIndicator from "bundle-text:../../../../../assets/html/battler/dice/diceRoundIndicator.html"
+import htmlRound from "bundle-text:../../../../../assets/html/battler/dice/diceRound.html"
 
+import "../../../../utility/extensions";
 import { HtmlTemplateBuilder } from "../../../../utility/htmlTemplateBuilder"
 import { DiceContainer } from "./diceContainer";
-import { BattleRound } from "../../../../battle/battleResolver";
+import { BattleResult, BattleRound, GenreSide } from "../../../../battle/battleResolver";
 import { AsyncUtil } from "../../../../utility/async";
+import { EventHandler } from "../../../../utility/events/eventHandler";
+import { IEvent } from "../../../../utility/events/iEvent";
+
+import Carousel from "bootstrap/js/dist/carousel";
 
 export class DiceMenu
 {
     private readonly DICE_CONTAINER_COUNT: number = 2;
+    private readonly ROUND_START_DELAY: number = 1;
+    private readonly DICE_RESOLVE_DURATION: number = 1;
 
-    private _startRoundButton: HTMLElement | null = null;
+    get battleStartClicked(): IEvent<void>
+    {
+        return this._battleStartClicked;
+    }
+
+    private readonly _battleStartClicked: EventHandler<void>;
+
+    private _startBattleButton: HTMLElement | null = null;
+    private _roundCarousel: HTMLElement | null = null;
+    private _roundContainer: HTMLElement | null = null;
+    private _roundIndicatorContainer: HTMLElement | null = null;
     private _diceOverlay: HTMLElement | null = null;
-    private _lhsDiceContainer: DiceContainer | null = null;
-    private _rhsDiceContainer: DiceContainer | null = null;
 
-    private _canStartRound: boolean = false;
+    private readonly _roundToDiceContainers: Map<BattleRound, Array<DiceContainer>> = new Map();
 
     constructor( parent: HTMLElement )
     {
+        this._battleStartClicked = new EventHandler();
+
         new HtmlTemplateBuilder( html )
             .config( this.config )
             .build( parent );
@@ -25,79 +44,155 @@ export class DiceMenu
 
     private config = ( root: HTMLElement ): void =>
     {
-        this._diceOverlay = root.querySelector( ".dice-fight-overlay" );
-        this._startRoundButton = root.querySelector( ".btn-dice-fight" );
+        this._diceOverlay = root.querySelector( ".dice-fight-overlay" ) as HTMLElement;
 
-        this._startRoundButton?.addEventListener( "click", this.onStartRoundClicked );
+        this._startBattleButton = this._diceOverlay?.querySelector( ".btn-dice-fight" );
+        this._startBattleButton?.addEventListener( "click", this.onStartBattleClicked );
 
-        const containers = root.querySelectorAll( ".dice-container" );
-        if ( containers.length < this.DICE_CONTAINER_COUNT )
+        this._roundCarousel = root.querySelector( "#diceRounds" ) as HTMLElement;
+        this._roundIndicatorContainer = this._roundCarousel.querySelector( ".carousel-indicators" );
+        this._roundContainer = this._roundCarousel.querySelector( ".carousel-inner" );
+    }
+
+    private onStartBattleClicked = (): void =>
+    {
+        this.setDiceOverlayPositionY( "-100%" );
+        this._battleStartClicked.invoke( this );
+    }
+
+    initializeBattle( battle: BattleResult ): void
+    {
+        this.clear();
+
+        for ( let idx: number = 0; idx < battle.rounds.length; ++idx )
+        {
+            const round = battle.rounds[idx];
+
+            this.addRoundIndicator( idx );
+            this.addDiceRound( round );
+        }
+        
+        const firstIndicator = this._roundIndicatorContainer?.firstElementChild;
+        firstIndicator?.classList.add( "active" );
+
+        const firstRound = this._roundContainer?.firstElementChild;
+        firstRound?.classList.add( "active" );
+
+        this.normalizeRoundHeights();
+    }
+
+    private clear(): void
+    {
+        this._roundIndicatorContainer?.removeAllChildren();
+        this._roundContainer?.removeAllChildren();
+
+        this._roundToDiceContainers.clear();
+    }
+
+    private addRoundIndicator( index: number ): void
+    {
+        const indicatorElement = new HtmlTemplateBuilder( htmlRoundIndicator ).instant();
+        indicatorElement.setAttribute( "data-bs-slide-to", index.toString() );
+        this._roundIndicatorContainer?.appendChild( indicatorElement );
+    }
+
+    private addDiceRound( round: BattleRound ): void
+    {
+        const roundElement = new HtmlTemplateBuilder( htmlRound ).instant();
+        const diceContainers = roundElement.querySelectorAll( ".dice-container" );
+        if ( diceContainers.length < this.DICE_CONTAINER_COUNT )
         {
             throw new RangeError();
         }
 
-        this._lhsDiceContainer = new DiceContainer( containers[0] as HTMLElement );
-        this._rhsDiceContainer = new DiceContainer( containers[1] as HTMLElement );
+        const lhsDiceContainer = new DiceContainer( diceContainers[0] as HTMLElement );
+        lhsDiceContainer.update( round.lhsDiceRolls );
+        const rhsDiceContainer = new DiceContainer( diceContainers[1] as HTMLElement );
+        rhsDiceContainer.update( round.rhsDiceRolls );
+
+        this._roundToDiceContainers.set( round, [lhsDiceContainer, rhsDiceContainer] );
+        this._roundContainer?.appendChild( roundElement );
     }
 
-    private onStartRoundClicked = (): void =>
+    private normalizeRoundHeights(): void
     {
-        this._canStartRound = true;
+        if ( this._roundContainer === null )
+        {
+            return;
+        }
+
+        this._roundContainer.reflow();
+
+        let tallest: number = 0;
+        for ( let idx: number = 0; idx < this._roundContainer.children.length; ++idx )
+        {
+            const round = this._roundContainer.children.item( idx ) as HTMLElement;
+            round.reflow();
+
+            const roundHeight = round.scrollHeight;
+            if ( roundHeight > tallest )
+            {
+                tallest = roundHeight;
+            }
+        }
+
+        for ( let idx: number = 0; idx < this._roundContainer.children.length; ++idx )
+        {
+            const round = this._roundContainer.children.item( idx ) as HTMLElement;
+            round.style.minHeight = `${tallest}px`;
+        }
     }
 
     async update( round: BattleRound ): Promise<void>
     {
-        this._lhsDiceContainer?.update( round.lhsDiceRolls );
-        this._rhsDiceContainer?.update( round.rhsDiceRolls );
-
-        await AsyncUtil.until( () => this._canStartRound );
-        this._canStartRound = false;
-
-        if ( this._diceOverlay !== null )
-        {
-            let isOverlayHidden = false;
-            const onOverlayHidden = (): void =>
-            {
-                isOverlayHidden = true;
-                this._diceOverlay?.removeEventListener( "transitionend", onOverlayHidden );
-            };
-            this._diceOverlay.addEventListener( "transitionend", onOverlayHidden );
-
-            this._diceOverlay.style.transform = "translateY(-100%)";
-
-            await AsyncUtil.until( () => isOverlayHidden );
-        }
+        await AsyncUtil.delay( this.ROUND_START_DELAY );
 
         for ( let idx: number = 0; idx < round.winners.length; ++idx )
         {
-            await AsyncUtil.delay( 1 );
+            const diceContainers = this._roundToDiceContainers.get( round );
+            if ( diceContainers === undefined )
+            {
+                throw new RangeError();
+            }
 
-            const winningSide = round.winners[idx];
+            const lhsContainer = diceContainers[0];
+            const rhsContainer = diceContainers[1];
+
+            const winningSide: GenreSide = round.winners[idx];
             if ( winningSide !== 0 )
             {
-                this._lhsDiceContainer?.setWinAnimation( idx, winningSide < 0 );
-                this._rhsDiceContainer?.setWinAnimation( idx, winningSide > 0 );
+                lhsContainer?.setWinAnimation( idx, winningSide < 0 );
+                rhsContainer?.setWinAnimation( idx, winningSide > 0 );
             }
             else
             {
-                this._lhsDiceContainer?.setTieAnimation( idx );
-                this._rhsDiceContainer?.setTieAnimation( idx );
+                lhsContainer?.setTieAnimation( idx );
+                rhsContainer?.setTieAnimation( idx );
             }
-        }
 
-        if ( this._diceOverlay !== null )
+            await AsyncUtil.delay( this.DICE_RESOLVE_DURATION );
+        }
+    }
+
+    nextRound(): void
+    {
+        const carousel = new Carousel( this._roundCarousel as HTMLElement );
+        carousel.next();
+    }
+
+    async battleEnd(): Promise<void>
+    {
+        await this.setDiceOverlayPositionY( "0%" );
+    }
+
+    private async setDiceOverlayPositionY( positionY: string ): Promise<void>
+    {
+        if ( this._diceOverlay === null )
         {
-            let isOverlayShown = false;
-            const onOverlayShown = (): void =>
-            {
-                isOverlayShown = true;
-                this._diceOverlay?.removeEventListener( "transitionend", onOverlayShown );
-            };
-            this._diceOverlay.addEventListener( "transitionend", onOverlayShown );
-
-            this._diceOverlay.style.removeProperty( "transform" );
-
-            await AsyncUtil.until( () => isOverlayShown );
+            return;
         }
+
+        this._diceOverlay.style.transform = `translateY(${positionY})`;
+        await this._diceOverlay.waitForTransitionEnd();
     }
 }

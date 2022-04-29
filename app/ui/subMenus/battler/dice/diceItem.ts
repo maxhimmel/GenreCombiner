@@ -16,16 +16,22 @@ export class DiceItem
 
     playWinAnimation(): void
     {
-        this._side?.classList.add( "dice-win" );
+        this.playAnimation( "dice-win" );
     }
 
     playLoseAnimation(): void
     {
-        this._side?.classList.add( "dice-lose" );
+        this.playAnimation( "dice-lose" );
     }
 
     playTieAnimation(): void
     {
-        this._side?.classList.add( "dice-tie" );
+        this.playAnimation( "dice-tie" );
+    }
+
+    private playAnimation( animName: string ): void
+    {
+        this._side?.classList.remove( "side" );
+        this._side?.classList.add( animName );
     }
 }
