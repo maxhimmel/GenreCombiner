@@ -8,7 +8,7 @@ import { BattlerMenu } from "./battlerMenu";
 
 export class BattlerController implements IController
 {
-    private readonly BATTLE_START_DELAY: number = 1;
+    private readonly BATTLE_START_DELAY: number = 0.5;
 
     private readonly _battler: BattleBracket;
     private readonly _combos: GenreComboModel[];
@@ -40,6 +40,7 @@ export class BattlerController implements IController
 
     private onBattleStarted = async ( sender: any ): Promise<void> =>
     {
+        await this._menu?.open();
         await AsyncUtil.delay( this.BATTLE_START_DELAY );
 
         while ( this.isBattling() )
@@ -68,6 +69,8 @@ export class BattlerController implements IController
 
         if ( this._battler.isEmpty )
         {
+            console.error( "" );
+            this._menu?.battleStartClicked.unsubscribe( this.onBattleStarted );
         }
         else
         {

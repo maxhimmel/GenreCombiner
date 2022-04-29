@@ -56,8 +56,12 @@ export class DiceMenu
 
     private onStartBattleClicked = (): void =>
     {
-        this.setDiceOverlayPositionY( "-100%" );
         this._battleStartClicked.invoke( this );
+    }
+
+    async open(): Promise<void>
+    {
+        await this.setDiceOverlayPositionY( "-100%" );
     }
 
     initializeBattle( battle: BattleResult ): void

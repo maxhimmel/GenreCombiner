@@ -62,6 +62,11 @@ export class BattlerMenu extends SubMenu
         this._rhsComboItem = new BattleComboItem( this._rhsContainer as HTMLElement );
     }
 
+    async open(): Promise<void>
+    {
+        await this._diceMenu.open();
+    }
+
     async initializeBattle( battle: BattleResult ): Promise<void>
     {
         this._lhsComboItem?.update( battle.lhsCombo );
