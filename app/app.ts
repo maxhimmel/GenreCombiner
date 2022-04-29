@@ -1,4 +1,10 @@
-import { integrationTests } from "./integrationTests";
-import { AnimUtil } from "./utility/animations";
+import { appController } from "./appController";
+import { PoolSizeController } from "./ui/subMenus/poolSize/poolSizeController";
 
-integrationTests.run();
+
+window.addEventListener( "DOMContentLoaded", main );
+
+async function main(): Promise<void>
+{
+    appController.start( new PoolSizeController() );
+}
