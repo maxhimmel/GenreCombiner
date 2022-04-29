@@ -1,3 +1,4 @@
+import { appController } from "./appController";
 import { BattleAssigner } from "./battle/battleAssigner";
 import { BattleBracket } from "./battle/battleBracket";
 import { BattleResult, BattleRound } from "./battle/battleResolver";
@@ -5,6 +6,8 @@ import { GenreCombiner } from "./genre/genreCombiner";
 import { GenreComboModel } from "./genre/genreComboModel";
 import { GenreModel } from "./genre/genreModel";
 import { GenrePool } from "./genre/genrePool";
+import { BattleAssignerController } from "./ui/subMenus/battleAssigner/battleAssignerController";
+import { BattlerController } from "./ui/subMenus/battler/battlerController";
 import { ArrayUtil } from "./utility/arrays";
 import { AsyncUtil } from "./utility/async";
 import { DeltaArgs } from "./utility/observable";
@@ -12,48 +15,66 @@ import { Random } from "./utility/random";
 
 class IntegrationTests
 {
+    private readonly DELAY_TESTS: boolean = false;
     private readonly TEST_DELAY: number = 1;
 
     async run(): Promise<void>
     {
         console.error( "Starting integration testing ..." );
-        await AsyncUtil.delay( 1 );
+        await this.delay();
 
         /*-------------------------*/
 
         console.error( "Creating GenrePool ..." );
         const genrePool: GenrePool = this.testPoolInitialization();
-        await AsyncUtil.delay( this.TEST_DELAY );
+        await this.delay();
         
         console.error( "Replacing GenrePool items ..." );
         this.testPoolReplacement( genrePool );
-        await AsyncUtil.delay( this.TEST_DELAY );
+        await this.delay();
+
 
 
         console.error( "Creating GenreCombiner ..." );
         const genreCombiner: GenreCombiner = this.testCombinerInitialization( genrePool.export() );
-        await AsyncUtil.delay( this.TEST_DELAY );
+        await this.delay();
 
         console.error( "Swapping GenreCombiner items ..." );
         this.testCombinerSwapping( genreCombiner );
-        await AsyncUtil.delay( this.TEST_DELAY );
+        await this.delay();
+
 
 
         console.error( "Creating BattleAssigner ..." );
         const battleAssigner: BattleAssigner = this.testBattleAssignerInitialization( genreCombiner.export() );
-        await AsyncUtil.delay( this.TEST_DELAY );
+        await this.delay();
 
         console.error( "Adding battle points ..." );
         this.testBattlePointAdding( battleAssigner );
-        await AsyncUtil.delay( this.TEST_DELAY );
+        await this.delay();
+
+
 
         console.error( "Creating BattleBracket ..." );
-        const battleBracket: BattleBracket = this.testBattleBracketInitialization( battleAssigner.export() );
-        await AsyncUtil.delay( this.TEST_DELAY );
+        appController.start( new BattlerController( battleAssigner.export() ) );
+        // const battleBracket: BattleBracket = this.testBattleBracketInitialization( battleAssigner.export() );
+        // await this.delay();
 
-        console.error( "Resolving all battles ..." );
-        this.testBattling( battleBracket );
-        await AsyncUtil.delay( this.TEST_DELAY );
+        // console.error( "Resolving all battles ..." );
+        // this.testBattling( battleBracket );
+        // await this.delay();
+    }
+
+    private async delay(): Promise<void>
+    {
+        if ( !this.DELAY_TESTS )
+        {
+            return;
+        }
+        if ( this.TEST_DELAY > 0 )
+        {
+            await AsyncUtil.delay( this.TEST_DELAY );
+        }
     }
 
     //#region GenrePool
@@ -93,9 +114,10 @@ class IntegrationTests
             genre.changed.subscribe( this.onGenrePoolChanged );
         }
 
-        const maxReplacements: number = Math.min( genrePool.count, genrePool.unusedGenreCount );
-        let replacementTestCount: number = Random.range( 2, maxReplacements + 1 );
-        replacementTestCount = Math.min( genrePool.unusedGenreCount, replacementTestCount );
+        // const maxReplacements: number = Math.min( genrePool.count, genrePool.unusedGenreCount );
+        // let replacementTestCount: number = Random.range( 2, maxReplacements + 1 );
+        // replacementTestCount = Math.min( genrePool.unusedGenreCount, replacementTestCount );
+        const replacementTestCount = genrePool.replacementCount.item;
         console.warn( `Replacing ${replacementTestCount} genres.` );
 
         const randIndices: number[] = ArrayUtil.createRange( genrePool.count );
