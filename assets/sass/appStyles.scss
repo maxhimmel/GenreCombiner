@@ -58,8 +58,8 @@
     @extend .d-inline-flex;
     @extend .mt-2;
 
-    &.locked {
-        @extend .bg-container;
+    &.locked { 
+        @extend .bg-opacity-25;
         @extend .bg-dark;
     }
 }
