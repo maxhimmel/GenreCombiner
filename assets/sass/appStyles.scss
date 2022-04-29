@@ -9,7 +9,6 @@
 
 // Custom
 @import "./anims.scss";
-@import "./dice.scss";
 
 .main-container {
     @extend .p-5;
@@ -231,9 +230,15 @@
 .carousel-control-prev {
     left: 0.5rem;
     justify-content: left;
+    z-index: auto;
 }
 
 .carousel-control-next {
     right: 0.5rem;
     justify-content: right;
+    z-index: auto;
+}
+
+.carousel-indicators {
+    z-index: auto;
 }

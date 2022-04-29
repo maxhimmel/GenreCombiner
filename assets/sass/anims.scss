@@ -1,3 +1,11 @@
+@import "./dice.scss";
+
+:root {
+    --dice-win-color: var(--bs-success);
+    --dice-lose-color: var(--bs-danger);
+    --dice-tie-color: black;
+}
+
 .blink {
     animation-name: anim-blink;
     animation-duration: 1s;
@@ -12,7 +20,7 @@
 
 .smash {
     animation-duration: 1s;
-    animation-iteration-count: infinite;
+    animation-iteration-count: 1;
     animation-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
     &.lhs {
@@ -57,7 +65,7 @@
 
 .hurt {
     animation-duration: 1s;
-    animation-iteration-count: infinite;
+    animation-iteration-count: 1;
     animation-timing-function: cubic-bezier(0.12, 0.85, 0.64, 1.71);
 
     &.lhs {
@@ -122,51 +130,66 @@
 }
 
 .dice-lose {
+    @extend .side;
+    
     animation-name: anim-dice-lose;
     animation-duration: 1s;
-    animation-iteration-count: infinite;
+    animation-iteration-count: 1;
+    
+    border:4px solid var(--dice-lose-color);
 }
 
 @keyframes anim-dice-lose {
-    0% { border-color: white; }
-    10% { border-color: var(--bs-danger); }
-    20% { border-color: white; }
-    30% { border-color: var(--bs-danger); }
-    40% { border-color: white; }
-    50% { border-color: var(--bs-danger); }
-    60% { border-color: white; }
+    0% { border-color: var(--dice-lose-color); }
+    10% { border-color: white; }
+    20% { border-color: var(--dice-lose-color); }
+    30% { border-color: white; }
+    40% { border-color: var(--dice-lose-color); }
+    50% { border-color: white; }
+    60% { border-color: var(--dice-lose-color); }
+    100% { border-color: var(--dice-lose-color); }
 }
 
 .dice-win {
+    @extend .side;
+    
     animation-name: anim-dice-win;
     animation-duration: 1s;
-    animation-iteration-count: infinite;
+    animation-iteration-count: 1;
+    
+    border:4px solid var(--dice-win-color);
 }
 
 @keyframes anim-dice-win {
-    0% { border-color: white; }
-    10% { border-color: var(--bs-success); }
-    20% { border-color: white; }
-    30% { border-color: var(--bs-success); }
-    40% { border-color: white; }
-    50% { border-color: var(--bs-success); }
-    60% { border-color: white; }
+    0% { border-color: var(--dice-win-color); }
+    10% { border-color: white; }
+    20% { border-color: var(--dice-win-color); }
+    30% { border-color: white; }
+    40% { border-color: var(--dice-win-color); }
+    50% { border-color: white; }
+    60% { border-color: var(--dice-win-color); }
+    100% { border-color: var(--dice-win-color); }
 }
 
 .dice-tie {
+    @extend .side;
+
     animation-name: anim-dice-tie;
     animation-duration: 1s;
-    animation-iteration-count: infinite;
+    animation-iteration-count: 1;
+    
+    border:4px solid var(--dice-tie-color);
 }
 
 @keyframes anim-dice-tie {
-    0% { border-color: white; }
-    10% { border-color: black; }
-    20% { border-color: white; }
-    30% { border-color: black; }
-    40% { border-color: white; }
-    50% { border-color: black; }
-    60% { border-color: white; }
+    0% { border-color: var(--dice-tie-color); }
+    10% { border-color: white; }
+    20% { border-color: var(--dice-tie-color); }
+    30% { border-color: white; }
+    40% { border-color: var(--dice-tie-color); }
+    50% { border-color: white; }
+    60% { border-color: var(--dice-tie-color); }
+    100% { border-color: var(--dice-tie-color); }
 }
 
 .height-adjust {
@@ -188,4 +211,14 @@
     transition: 
         transform $duration ease-in-out,
         max-height $duration ease-in-out;
+}
+
+.anim-shrink {
+    transform: scale(1);
+    transition: transform 0.5s cubic-bezier(0.6, -0.28, 0.74, 0.05);
+}
+
+.anim-grow {
+    transform: scale(0);
+    transition: transform 0.5s ease-out;
 }
